@@ -3,7 +3,6 @@ import sys, os
 
 argsn = 0
 args = []
-
 def get_args():
     global argsn,args
     if __name__ == "__main__":
@@ -15,6 +14,12 @@ def change_windows():
 
 def change_linux():
     print("seted to linux mode")
+
+def run_windows():
+    print("runing windows")
+
+def run_linux():
+    print("runing linux")
 
 def get_help():
     print("use 'help' to a list of comands")
@@ -32,5 +37,10 @@ def main():
             change_windows()
         elif args[2] == "linux":
             change_linux()
+    elif argsn == 3 and args[1] == "run":
+        if args[2] == "windows":
+            run_windows()
+        elif args[2] == "linux":
+            run_linux()
 
 main()
