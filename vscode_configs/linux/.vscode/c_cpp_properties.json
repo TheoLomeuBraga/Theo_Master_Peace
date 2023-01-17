@@ -1,0 +1,20 @@
+{
+    "configurations": [
+        {
+            "name": "Linux",
+            "includePath": [
+                "${workspaceFolder}/src/Font_Reader",
+                "${workspaceFolder}/src/Theo_Master_Peace",
+                "${workspaceFolder}/src/Theo_Master_Peace_Core",
+                "${workspaceFolder}/include",
+                "${workspaceFolder}/include/freetype"
+            ],
+            "defines": [],
+            "compilerPath": "/usr/bin/gcc",
+            "cStandard": "gnu17",
+            "cppStandard": "gnu++17",
+            "intelliSenseMode": "linux-gcc-x64"
+        }
+    ],
+    "version": 4
+}
