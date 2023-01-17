@@ -1348,7 +1348,7 @@ typedef struct mesh_ogl_struct mesh_ogl;
 
 
 
-//AAAAA
+
 
 
 			//aplicar shader
