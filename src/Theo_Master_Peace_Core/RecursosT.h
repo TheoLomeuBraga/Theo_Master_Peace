@@ -1170,23 +1170,7 @@ public:
 			 return ret;
 		 }
 
-		 vector<string> pegar_retorno_comando(string comando) {
-			 vector<string> ret = {};
-			 char buffer[128];
-			 FILE* pipe = _popen(comando.c_str(), "r");
-			 if (!pipe) throw std::runtime_error("popen() failed!");
-			 try {
-				 while (fgets(buffer, sizeof buffer, pipe) != NULL)
-					 ret.push_back(string("") += buffer);
-			 }
-			 catch (...) {
-				 _pclose(pipe);
-				 throw;
-			 }
-
-
-			 return ret;
-		 }
+		 
 
 		 class lista_ponteiros {
 			 string tipo;

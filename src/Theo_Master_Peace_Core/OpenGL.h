@@ -905,8 +905,8 @@ typedef struct mesh_ogl_struct mesh_ogl;
 
 							
 							float pos_adi = pos_adi_char.x + rt->espaco_entre_letras;
-							pos_adi = max(pos_adi, rt->espaco_entre_letras_min);
-							pos_adi = min(pos_adi, rt->espaco_entre_letras_max);
+							pos_adi = std::max(pos_adi, rt->espaco_entre_letras_min);
+							pos_adi = std::min(pos_adi, rt->espaco_entre_letras_max);
 
 							pos_char.x += pos_adi;
 							

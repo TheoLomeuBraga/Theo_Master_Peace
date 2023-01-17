@@ -3,7 +3,10 @@
         {
             "name": "Linux",
             "includePath": [
-                "${workspaceFolder}/src"
+                "${workspaceFolder}/src/Font_Reader",
+                "${workspaceFolder}/src/Theo_Master_Peace",
+                "${workspaceFolder}/src/Theo_Master_Peace_Core",
+                "${workspaceFolder}/include"
             ],
             "defines": [],
             "compilerPath": "/usr/bin/gcc",
