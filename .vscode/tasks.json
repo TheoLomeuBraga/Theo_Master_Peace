@@ -12,6 +12,7 @@
                 "-I${workspaceFolder}/src/Theo_Master_Peace_Core",
                 "-I${workspaceFolder}/include",
                 "-L${workspaceFolder}/libs/linux",
+                "-I${workspaceFolder}/include/freetype",
                 "-llua",
                 "-lglfw3",
                 "-lGLEW",
