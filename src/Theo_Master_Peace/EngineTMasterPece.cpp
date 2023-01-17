@@ -203,15 +203,15 @@ void teste_soma_tread(float a, float b, float* ret) {
     *ret = a + b;
 }
 
+
+
 int main(int argc, char** argv)
 {
+    
+    
+    
 
-
-
-
-    escrever(transicionar(0.5, 5, 10));
-
-    escrever(pegar_estencao_arquivo("arquivo.abc"));
+    
     aplicar_argumentos(argc, argv);
 
     escrever("argumentos{");
@@ -225,10 +225,12 @@ int main(int argc, char** argv)
         setar_diretorio_aplicacao(argumentos[1]);
     }
     else {
-        setar_diretorio_aplicacao("C:/TMP_SDK/TMP_TECH_DEMO_3D");
+        setar_diretorio_aplicacao("C:/TMP_SDK/TMP_TECH_DEMO_GAME_1");
     }
     cout << "diretorio aplicação setado para " << pegar_local_aplicacao() << endl;
     cout << "nome do projeto: " << pegar_nome_arquivo(pegar_local_aplicacao()) << endl;
+
+    
 
     if (ManuseioDados::Existe("config/config window.txt")) {
         ifstream janela_config("config/config window.txt");

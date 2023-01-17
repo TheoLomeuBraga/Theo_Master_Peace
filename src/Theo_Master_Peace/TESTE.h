@@ -50,6 +50,7 @@ using namespace glm;
 #include "LoopPrincipal.h"
 #include "box_2d.h"
 #include "implementacao_lua.h"
+#include "implementacao_windows.cpp"
 
 //APIs
 #include "OpenGL.h"
@@ -176,8 +177,9 @@ shared_ptr<Objetos::objeto_jogo> camera_teste;
 void iniciarTeste3() {
 	
 	camera_teste = Objetos::novo_objeto_jogo();
+	funcoes_OS = new foncoes_Windows();
 	api_grafica = new OpenGL_API();
-	api_grafica->pos_processamento_info.shad = "recursos/Shaders/pos-procesamento";
+	api_grafica->pos_processamento_info.shad = "recursos/Shaders/post_processing";
 
 
 	Objetos::MatrizMundi = mat4(1.0f);
@@ -218,7 +220,7 @@ void iniciarTeste3() {
 	//pos processamento
 
 
-	api_grafica->pos_processamento_info.shad = "resources/Shaders/pos-procesamento";
+	api_grafica->pos_processamento_info.shad = "resources/Shaders/post_processing";
 	api_grafica->pos_processamento_info.cor = vec4(1, 1, 1, 1);
 	api_grafica->pos_processamento_info.gama = 1;
 	
