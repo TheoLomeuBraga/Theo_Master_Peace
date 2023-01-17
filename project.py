@@ -15,11 +15,11 @@ def change_windows():
 def change_linux():
     print("seted to linux mode")
 
-def run_windows():
-    print("runing windows")
+def built_windows():
+    print("builting windows")
 
-def run_linux():
-    print("runing linux")
+def built_linux():
+    print("builting linux")
 
 def get_help():
     print("use 'help' to a list of comands")
@@ -37,10 +37,10 @@ def main():
             change_windows()
         elif args[2] == "linux":
             change_linux()
-    elif argsn == 3 and args[1] == "run":
+    elif argsn == 3 and args[1] == "built":
         if args[2] == "windows":
-            run_windows()
+            built_windows()
         elif args[2] == "linux":
-            run_linux()
+            built_linux()
 
 main()
