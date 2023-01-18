@@ -21,5 +21,5 @@ built_path=./built
 
 windows:
 linux:
-	${compiler} ${flags} ${engine_cpp_linux_path}  ${includes} ${libs_path_linux} ${libs_linux} -o ${built_path}/engine_tmp
+	${compiler} ${flags} ${engine_cpp_linux_path}  ${includes} ${libs_path_linux} ${libs_linux} -o ${built_path}/engine_theo_master_peace
 	${compiler} ${flags} ${font_reader_cpp_path}  ${includes} ${libs_path_linux} ${libs_linux} -o ${built_path}/font_reader
