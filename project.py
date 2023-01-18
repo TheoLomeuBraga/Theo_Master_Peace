@@ -21,6 +21,12 @@ def built_windows():
 def built_linux():
     print("builting linux")
 
+def run_windows():
+    print("runing windows")
+
+def run_linux():
+    print("runing linux")
+
 def get_help():
     print("use 'help' to a list of comands")
     print("use 'change' to change to 'windows' or 'linux' os")
@@ -42,5 +48,11 @@ def main():
             built_windows()
         elif args[2] == "linux":
             built_linux()
+    elif argsn == 3 and args[1] == "run":
+        if args[2] == "windows":
+            run_windows()
+        elif args[2] == "linux":
+           run_linux()
+
 
 main()
