@@ -14,7 +14,7 @@ using namespace Objetos;
 
 #include "projetil.h"
 
-
+using lua_function = int(*)(lua_State*);
 
 mapeamento_assets<string> mapeamento_scripts_lua;
 
@@ -1642,68 +1642,68 @@ namespace funcoes_ponte {
 	}
 	
 
-	map<string, int(*)(lua_State*)> funcoes_ponte_map = {
+	map<string, lua_function> funcoes_ponte_map = {
 
 		//input
-		pair<string, int(*)(lua_State*)>("get_keyboard_input", funcoes_ponte::get_keyboard_input),
-		pair<string, int(*)(lua_State*)>("get_mouse_input", funcoes_ponte::get_mouse_input),
-		pair<string, int(*)(lua_State*)>("get_joystick_input", funcoes_ponte::get_joystick_input),
-		pair<string, int(*)(lua_State*)>("set_keyboard_text_input", funcoes_ponte::set_keyboard_text_input),
-		pair<string, int(*)(lua_State*)>("set_cursor_position", funcoes_ponte::set_cursor_position),
+		pair<string, lua_function>("get_keyboard_input", funcoes_ponte::get_keyboard_input),
+		pair<string, lua_function>("get_mouse_input", funcoes_ponte::get_mouse_input),
+		pair<string, lua_function>("get_joystick_input", funcoes_ponte::get_joystick_input),
+		pair<string, lua_function>("set_keyboard_text_input", funcoes_ponte::set_keyboard_text_input),
+		pair<string, lua_function>("set_cursor_position", funcoes_ponte::set_cursor_position),
 
 		
 		
 
 		//tempo
-		pair<string, int(*)(lua_State*)>("get_time", funcoes_ponte::get_time),
-		pair<string, int(*)(lua_State*)>("set_time_scale", funcoes_ponte::set_time_scale),
+		pair<string, lua_function>("get_time", funcoes_ponte::get_time),
+		pair<string, lua_function>("set_time_scale", funcoes_ponte::set_time_scale),
 
 		//memoria
-		pair<string, int(*)(lua_State*)>("clear_memory", funcoes_ponte::clear_memory),
-		pair<string, int(*)(lua_State*)>("load_asset", funcoes_ponte::load_asset),
-		pair<string, int(*)(lua_State*)>("asset_is_load", funcoes_ponte::asset_is_load),
+		pair<string, lua_function>("clear_memory", funcoes_ponte::clear_memory),
+		pair<string, lua_function>("load_asset", funcoes_ponte::load_asset),
+		pair<string, lua_function>("asset_is_load", funcoes_ponte::asset_is_load),
 
 		//assets
-		pair<string, int(*)(lua_State*)>("get_tile_set_size", funcoes_ponte::get_tile_set_size),
-		pair<string, int(*)(lua_State*)>("get_tile_set_tile", funcoes_ponte::get_tile_set_tile),
-		pair<string, int(*)(lua_State*)>("get_tilemap_size", funcoes_ponte::get_tilemap_size),
-		pair<string, int(*)(lua_State*)>("get_tilemap_layer_size", funcoes_ponte::get_tilemap_layer_size),
-		pair<string, int(*)(lua_State*)>("get_tilemap_data", funcoes_ponte::get_tilemap_data),
+		pair<string, lua_function>("get_tile_set_size", funcoes_ponte::get_tile_set_size),
+		pair<string, lua_function>("get_tile_set_tile", funcoes_ponte::get_tile_set_tile),
+		pair<string, lua_function>("get_tilemap_size", funcoes_ponte::get_tilemap_size),
+		pair<string, lua_function>("get_tilemap_layer_size", funcoes_ponte::get_tilemap_layer_size),
+		pair<string, lua_function>("get_tilemap_data", funcoes_ponte::get_tilemap_data),
 
-		pair<string, int(*)(lua_State*)>("get_scene_3D_json", funcoes_ponte::get_scene_3D_json),
+		pair<string, lua_function>("get_scene_3D_json", funcoes_ponte::get_scene_3D_json),
 		
 
 		//objeto
-		pair<string, int(*)(lua_State*)>("create_object", funcoes_ponte::create_object),
-		pair<string, int(*)(lua_State*)>("get_object_with_name", funcoes_ponte::get_object_with_name),
-		pair<string, int(*)(lua_State*)>("remove_object", funcoes_ponte::remove_object),
-		pair<string, int(*)(lua_State*)>("add_component", add_component),
-		pair<string, int(*)(lua_State*)>("remove_component", remove_component),
-		pair<string, int(*)(lua_State*)>("reset_components", funcoes_ponte::reset_components),
-		pair<string, int(*)(lua_State*)>("have_component", have_component),
+		pair<string, lua_function>("create_object", funcoes_ponte::create_object),
+		pair<string, lua_function>("get_object_with_name", funcoes_ponte::get_object_with_name),
+		pair<string, lua_function>("remove_object", funcoes_ponte::remove_object),
+		pair<string, lua_function>("add_component", add_component),
+		pair<string, lua_function>("remove_component", remove_component),
+		pair<string, lua_function>("reset_components", funcoes_ponte::reset_components),
+		pair<string, lua_function>("have_component", have_component),
 
 		
 
-		pair<string, int(*)(lua_State*)>("get_object_family_json", funcoes_ponte::get_object_family_json),
+		pair<string, lua_function>("get_object_family_json", funcoes_ponte::get_object_family_json),
 		
 
 		//movimento
-		pair<string, int(*)(lua_State*)>("to_move", funcoes_ponte::to_move),
-		pair<string, int(*)(lua_State*)>("in_ceiling", funcoes_ponte::in_ceiling),
-		pair<string, int(*)(lua_State*)>("in_floor", funcoes_ponte::in_floor),
-		pair<string, int(*)(lua_State*)>("get_gravity", funcoes_ponte::get_gravity),
-		pair<string, int(*)(lua_State*)>("set_gravity", funcoes_ponte::set_gravity),
+		pair<string, lua_function>("to_move", funcoes_ponte::to_move),
+		pair<string, lua_function>("in_ceiling", funcoes_ponte::in_ceiling),
+		pair<string, lua_function>("in_floor", funcoes_ponte::in_floor),
+		pair<string, lua_function>("get_gravity", funcoes_ponte::get_gravity),
+		pair<string, lua_function>("set_gravity", funcoes_ponte::set_gravity),
 
 		//transform
-		pair<string, int(*)(lua_State*)>("get_transform_json", funcoes_ponte::get_transform_json),
-		pair<string, int(*)(lua_State*)>("set_transform_json", funcoes_ponte::set_transform_json),
+		pair<string, lua_function>("get_transform_json", funcoes_ponte::get_transform_json),
+		pair<string, lua_function>("set_transform_json", funcoes_ponte::set_transform_json),
 
-		pair<string, int(*)(lua_State*)>("move_transform", funcoes_ponte::move_transform),
-		pair<string, int(*)(lua_State*)>("rotate_transform", funcoes_ponte::rotate_transform),
+		pair<string, lua_function>("move_transform", funcoes_ponte::move_transform),
+		pair<string, lua_function>("rotate_transform", funcoes_ponte::rotate_transform),
 
-		pair<string, int(*)(lua_State*)>("change_transfotm_position", funcoes_ponte::change_transfotm_position),
-		pair<string, int(*)(lua_State*)>("change_transfotm_rotation", funcoes_ponte::change_transfotm_rotation),
-		pair<string, int(*)(lua_State*)>("change_transfotm_scale", funcoes_ponte::change_transfotm_scale),
+		pair<string, lua_function>("change_transfotm_position", funcoes_ponte::change_transfotm_position),
+		pair<string, lua_function>("change_transfotm_rotation", funcoes_ponte::change_transfotm_rotation),
+		pair<string, lua_function>("change_transfotm_scale", funcoes_ponte::change_transfotm_scale),
 		
 	
 	
@@ -1711,89 +1711,89 @@ namespace funcoes_ponte {
 		
 
 		//camada render
-		pair<string, int(*)(lua_State*)>("set_render_layer", funcoes_ponte::set_render_layer),
-		pair<string, int(*)(lua_State*)>("get_render_layer", funcoes_ponte::get_render_layer),
+		pair<string, lua_function>("set_render_layer", funcoes_ponte::set_render_layer),
+		pair<string, lua_function>("get_render_layer", funcoes_ponte::get_render_layer),
 
 		//material
-		pair<string, int(*)(lua_State*)>("set_shader", funcoes_ponte::set_shader),
-		pair<string, int(*)(lua_State*)>("get_shader", funcoes_ponte::get_shader),
-		pair<string, int(*)(lua_State*)>("get_color", funcoes_ponte::get_color),
-		pair<string, int(*)(lua_State*)>("set_color", funcoes_ponte::set_color),
-		pair<string, int(*)(lua_State*)>("get_material_position_scale", funcoes_ponte::get_material_position_scale),
-		pair<string, int(*)(lua_State*)>("set_material_position_scale", funcoes_ponte::set_material_position_scale),
-		pair<string, int(*)(lua_State*)>("get_max_textures_material", funcoes_ponte::get_max_textures_material),
-		pair<string, int(*)(lua_State*)>("get_max_inputs_material", funcoes_ponte::get_max_inputs_material),
-		pair<string, int(*)(lua_State*)>("set_texture", funcoes_ponte::set_texture),
-		pair<string, int(*)(lua_State*)>("get_texture", funcoes_ponte::get_texture),
-		pair<string, int(*)(lua_State*)>("set_material_input", funcoes_ponte::set_material_input),
-		pair<string, int(*)(lua_State*)>("get_material_input", funcoes_ponte::get_material_input),
+		pair<string, lua_function>("set_shader", funcoes_ponte::set_shader),
+		pair<string, lua_function>("get_shader", funcoes_ponte::get_shader),
+		pair<string, lua_function>("get_color", funcoes_ponte::get_color),
+		pair<string, lua_function>("set_color", funcoes_ponte::set_color),
+		pair<string, lua_function>("get_material_position_scale", funcoes_ponte::get_material_position_scale),
+		pair<string, lua_function>("set_material_position_scale", funcoes_ponte::set_material_position_scale),
+		pair<string, lua_function>("get_max_textures_material", funcoes_ponte::get_max_textures_material),
+		pair<string, lua_function>("get_max_inputs_material", funcoes_ponte::get_max_inputs_material),
+		pair<string, lua_function>("set_texture", funcoes_ponte::set_texture),
+		pair<string, lua_function>("get_texture", funcoes_ponte::get_texture),
+		pair<string, lua_function>("set_material_input", funcoes_ponte::set_material_input),
+		pair<string, lua_function>("get_material_input", funcoes_ponte::get_material_input),
 
 		//pos-procesing
-		pair<string, int(*)(lua_State*)>("get_post_processing_json", funcoes_ponte::get_post_processing_json),
-		pair<string, int(*)(lua_State*)>("set_post_processing_json", funcoes_ponte::set_post_processing_json),
+		pair<string, lua_function>("get_post_processing_json", funcoes_ponte::get_post_processing_json),
+		pair<string, lua_function>("set_post_processing_json", funcoes_ponte::set_post_processing_json),
 
 		//camadas render
-		pair<string, int(*)(lua_State*)>("get_render_layer_instruction_json", funcoes_ponte::get_render_layer_instruction_json),
-		pair<string, int(*)(lua_State*)>("set_render_layer_instruction_json", funcoes_ponte::set_render_layer_instruction_json),
+		pair<string, lua_function>("get_render_layer_instruction_json", funcoes_ponte::get_render_layer_instruction_json),
+		pair<string, lua_function>("set_render_layer_instruction_json", funcoes_ponte::set_render_layer_instruction_json),
 		
 
 		//janela
-		pair<string, int(*)(lua_State*)>("set_window", funcoes_ponte::set_window),
-		pair<string, int(*)(lua_State*)>("get_window", funcoes_ponte::get_window),
+		pair<string, lua_function>("set_window", funcoes_ponte::set_window),
+		pair<string, lua_function>("get_window", funcoes_ponte::get_window),
 
 		//sprite
-		pair<string, int(*)(lua_State*)>("get_sprite_render_json", funcoes_ponte::get_sprite_render_json),
-		pair<string, int(*)(lua_State*)>("set_sprite_render_json", funcoes_ponte::set_sprite_render_json),
+		pair<string, lua_function>("get_sprite_render_json", funcoes_ponte::get_sprite_render_json),
+		pair<string, lua_function>("set_sprite_render_json", funcoes_ponte::set_sprite_render_json),
 		
 
 		//render tilemap
-		pair<string, int(*)(lua_State*)>("get_render_tilemap_json", funcoes_ponte::get_render_tilemap_json),
-		pair<string, int(*)(lua_State*)>("set_render_tilemap_json", funcoes_ponte::set_render_tilemap_json),
+		pair<string, lua_function>("get_render_tilemap_json", funcoes_ponte::get_render_tilemap_json),
+		pair<string, lua_function>("set_render_tilemap_json", funcoes_ponte::set_render_tilemap_json),
 		
 
 
 		//text
-		pair<string, int(*)(lua_State*)>("set_font", funcoes_ponte::set_font),
-		pair<string, int(*)(lua_State*)>("get_font", funcoes_ponte::get_font),
-		pair<string, int(*)(lua_State*)>("set_text", funcoes_ponte::set_text),
-		pair<string, int(*)(lua_State*)>("get_text", funcoes_ponte::get_text),
+		pair<string, lua_function>("set_font", funcoes_ponte::set_font),
+		pair<string, lua_function>("get_font", funcoes_ponte::get_font),
+		pair<string, lua_function>("set_text", funcoes_ponte::set_text),
+		pair<string, lua_function>("get_text", funcoes_ponte::get_text),
 
-		pair<string, int(*)(lua_State*)>("get_text_json", funcoes_ponte::get_text_json),
-		pair<string, int(*)(lua_State*)>("set_text_json", funcoes_ponte::set_text_json),
+		pair<string, lua_function>("get_text_json", funcoes_ponte::get_text_json),
+		pair<string, lua_function>("set_text_json", funcoes_ponte::set_text_json),
 		
 
 		//physic
-		pair<string, int(*)(lua_State*)>("add_force", funcoes_ponte::add_force),
-		pair<string, int(*)(lua_State*)>("get_physic_2D_json", funcoes_ponte::get_physic_2D_json),
-		pair<string, int(*)(lua_State*)>("set_physic_2D_json", funcoes_ponte::set_physic_2D_json),
+		pair<string, lua_function>("add_force", funcoes_ponte::add_force),
+		pair<string, lua_function>("get_physic_2D_json", funcoes_ponte::get_physic_2D_json),
+		pair<string, lua_function>("set_physic_2D_json", funcoes_ponte::set_physic_2D_json),
 		
 
 		//camera
-		pair<string, int(*)(lua_State*)>("get_camera", funcoes_ponte::get_camera),
-		pair<string, int(*)(lua_State*)>("set_camera", funcoes_ponte::set_camera),
+		pair<string, lua_function>("get_camera", funcoes_ponte::get_camera),
+		pair<string, lua_function>("set_camera", funcoes_ponte::set_camera),
 
 		//audio
-		pair<string, int(*)(lua_State*)>("get_audio", funcoes_ponte::get_audio),
-		pair<string, int(*)(lua_State*)>("set_audio", funcoes_ponte::set_audio),
+		pair<string, lua_function>("get_audio", funcoes_ponte::get_audio),
+		pair<string, lua_function>("set_audio", funcoes_ponte::set_audio),
 
 		//script
-		pair<string, int(*)(lua_State*)>("get_script_size", get_script_size),
-		pair<string, int(*)(lua_State*)>("get_script_name", get_script_name),
-		pair<string, int(*)(lua_State*)>("have_script", have_script),
-		pair<string, int(*)(lua_State*)>("add_script_lua", add_script_lua),
-		pair<string, int(*)(lua_State*)>("remove_script", remove_script),
-		pair<string, int(*)(lua_State*)>("get_script_var", get_script_var),
-		pair<string, int(*)(lua_State*)>("set_script_var", set_script_var),
-		pair<string, int(*)(lua_State*)>("call_script_function", call_script_function),
+		pair<string, lua_function>("get_script_size", get_script_size),
+		pair<string, lua_function>("get_script_name", get_script_name),
+		pair<string, lua_function>("have_script", have_script),
+		pair<string, lua_function>("add_script_lua", add_script_lua),
+		pair<string, lua_function>("remove_script", remove_script),
+		pair<string, lua_function>("get_script_var", get_script_var),
+		pair<string, lua_function>("set_script_var", set_script_var),
+		pair<string, lua_function>("call_script_function", call_script_function),
 
 		//mesh
 
-		pair<string, int(*)(lua_State*)>("get_mesh_json", funcoes_ponte::get_mesh_json),
-		pair<string, int(*)(lua_State*)>("set_mesh_json", funcoes_ponte::set_mesh_json),
+		pair<string, lua_function>("get_mesh_json", funcoes_ponte::get_mesh_json),
+		pair<string, lua_function>("set_mesh_json", funcoes_ponte::set_mesh_json),
 
 		//projetil
-			pair<string, int(*)(lua_State*)>("get_projectile_json", funcoes_ponte::get_projectile_json),
-			pair<string, int(*)(lua_State*)>("get_projectile_json", funcoes_ponte::get_projectile_json),
+			pair<string, lua_function>("get_projectile_json", funcoes_ponte::get_projectile_json),
+			pair<string, lua_function>("get_projectile_json", funcoes_ponte::get_projectile_json),
 			
 			
 	};
@@ -1808,14 +1808,14 @@ namespace funcoes_ponte {
 
 namespace funcoes_lua {
 
-	void adicionar_parte_funcoes_ponte_estado_lua(lua_State* L, vector<pair<string, int(*)(lua_State*)>> funcoes, int inicio, int tamanho) {
+	void adicionar_parte_funcoes_ponte_estado_lua(lua_State* L, vector<pair<string, lua_function>> funcoes, int inicio, int tamanho) {
 		for (int i = inicio; i < tamanho; i++) {
 			lua_register(L, funcoes[i].first.c_str(), funcoes[i].second);
 		}
 	}
 
 	void adicionar_funcoes_ponte_estado_lua(lua_State* L) {
-		vector<pair<string, int(*)(lua_State*)>> funcoes_ponte_pair = map_vetor<string, int(*)(lua_State*)>(funcoes_ponte::funcoes_ponte_map);
+		vector<pair<string, lua_function>> funcoes_ponte_pair = map_vetor<string, lua_function>(funcoes_ponte::funcoes_ponte_map);
 
 
 
@@ -1825,7 +1825,7 @@ namespace funcoes_lua {
 		//af.join();
 
 		//solu��o 1
-		for (pair<string, int(*)(lua_State*) > p : funcoes_ponte::funcoes_ponte_map) {
+		for (pair<string, lua_function > p : funcoes_ponte::funcoes_ponte_map) {
 			lua_register(L, p.first.c_str(), p.second);
 		}
 	}
