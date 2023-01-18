@@ -5,7 +5,7 @@ engine_cpp_linux_path=./src/Theo_Master_Peace/TMP_LINUX.cpp
 
 font_reader_cpp_path=./src/Font_Reader/leitor_de_fontes_TMP_linux.cpp
 
-flags=-std=c++17
+flags=-std=c++20
 
 includes=-I./src/Font_Reader -I./src/Theo_Master_Peace -I./src/Theo_Master_Peace_Core -I./include -I./include/freetype
 
