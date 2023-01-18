@@ -20,8 +20,9 @@ libs_linux=-llua -lglfw -lGLEW -lglut -lGL -lGLU -lfreetype -lbox2d -lsfml-audio
 built_path=./built
 
 windows:
-	${compiler} ${flags} ${engine_cpp_windows_path}  ${includes} ${libs_path_windows} ${libs_windows} -o ${built_path}/engine_theo_master_peace.exe
+	${compiler} ${flags} ${engine_cpp_windows_path}  ${includes} ${libs_path_windows} ${libs_windows} -o ${built_path}/engine_theo_master_peace.exe 
 	${compiler} ${flags} ${font_reader_cpp_path}  ${includes} ${libs_path_windows} ${libs_windows} -o ${built_path}/font_reader.exe
+	
 linux:
-	${compiler} ${flags} ${engine_cpp_linux_path}  ${includes} ${libs_path_linux} ${libs_linux} -o ${built_path}/engine_theo_master_peace
+	${compiler} ${flags} ${engine_cpp_linux_path}  ${includes} ${libs_path_linux} ${libs_linux} -o ${built_path}/engine_theo_master_peace 
 	${compiler} ${flags} ${font_reader_cpp_path}  ${includes} ${libs_path_linux} ${libs_linux} -o ${built_path}/font_reader
