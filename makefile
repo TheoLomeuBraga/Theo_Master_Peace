@@ -6,15 +6,15 @@ engine_cpp_linux_path=./src/Theo_Master_Peace/TMP_LINUX.cpp
 
 font_reader_cpp_path=./src/Font_Reader/leitor_de_fontes_TMP_linux.cpp
 
-tags=-std=c++17 -pipe
+tags=-std=c++17 
 
 includes=-I./src/Font_Reader -I./src/Theo_Master_Peace -I./src/Theo_Master_Peace_Core -I./include -I./include/freetype
 
 libs_path_windows=-L./libs/windows
 
 libs_path_linux=-L./libs/linux
-
-libs_windows=-llua54 -lglfw3 -lfreeglut_static -lfreetype -lbox2d -lsfml-audio -lsfml-graphics -lsfml-window -lsfml-system
+#-lfreeglut_static
+libs_windows=-llua54 -lglfw3  -lfreeglut_static -lbox2d -lsfml-audio -lsfml-graphics -lsfml-window -lsfml-system
 
 libs_linux=-llua -lglfw -lGLEW -lglut -lGL -lGLU -lfreetype -lbox2d -lsfml-audio -lsfml-graphics -lsfml-window -lsfml-system
 
