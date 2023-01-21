@@ -12,17 +12,23 @@ includes=-I./src/Font_Reader -I./src/Theo_Master_Peace -I./src/Theo_Master_Peace
 
 libs_path_windows=-L./libs/windows
 
-libs_path_linux=-L./libs/linux
-#-lfreeglut_static
-libs_windows=-llua54 -lglfw3  -lfreeglut_static -lbox2d -lsfml-audio -lsfml-graphics -lsfml-window -lsfml-system
 
-libs_linux=-llua -lglfw -lGLEW -lglut -lGL -lGLU -lfreetype -lbox2d -lsfml-audio -lsfml-graphics -lsfml-window -lsfml-system
+#-lfreeglut_static
+libs_windows=-llua54 -lglfw3  -lfreeglut -lbox2d -lsfml-audio -lsfml-graphics -lsfml-window -lsfml-system
+
+
 
 built_path=./built
 
 windows:
 	#${compiler_windows} ${tags} ${engine_cpp_windows_path}  ${includes} ${libs_path_windows} ${libs_windows} -o ${built_path}/engine_theo_master_peace.exe 
 	${compiler_windows} ${tags} ${font_reader_cpp_path}  ${includes} ${libs_path_windows} ${libs_windows} -o ${built_path}/font_reader.exe
+#
+
+libs_path_linux=-L./libs/linux
+
+libs_linux=-llua -lglfw -lGLEW -lglut -lGL -lGLU -lfreetype -lbox2d -lsfml-audio -lsfml-graphics -lsfml-window -lsfml-system
+
 linux:
 	${compiler_linux} ${tags} ${engine_cpp_linux_path}  ${includes} ${libs_path_linux} ${libs_linux} -o ${built_path}/engine_theo_master_peace 
 	${compiler_linux} ${tags} ${font_reader_cpp_path}  ${includes} ${libs_path_linux} ${libs_linux} -o ${built_path}/font_reader

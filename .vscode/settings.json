@@ -67,6 +67,7 @@
         "unordered_set": "cpp",
         "future": "cpp",
         "iomanip": "cpp",
-        "valarray": "cpp"
+        "valarray": "cpp",
+        "xstring": "cpp"
     }
 }
