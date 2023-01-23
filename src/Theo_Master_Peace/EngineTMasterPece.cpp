@@ -13,7 +13,6 @@
 #include <functional>
 #include <stdlib.h>
 #include <thread>
-#include <future>
 #include  <fstream>
 #include <type_traits>
 #include <iterator>
@@ -227,7 +226,7 @@ int main(int argc, char** argv)
     else {
         setar_diretorio_aplicacao("C:/TMP_SDK/TMP_TECH_DEMO_GAME_1");
     }
-    cout << "diretorio aplicação setado para " << pegar_local_aplicacao() << endl;
+    cout << "diretorio aplicaï¿½ï¿½o setado para " << pegar_local_aplicacao() << endl;
     cout << "nome do projeto: " << pegar_nome_arquivo(pegar_local_aplicacao()) << endl;
 
     
