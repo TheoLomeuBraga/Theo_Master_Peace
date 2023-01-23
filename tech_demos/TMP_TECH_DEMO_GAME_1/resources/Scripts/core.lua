@@ -293,13 +293,12 @@ end
 
 pos_cam = Vec3:new()
 
-
+temp = 0
+a = true
+b = true
+c = true
 rotation_value = 0
 function UPDATE()
-    Time:get()
-    background_3D.components[components.transform]:change_rotation(0,rotation_value,0)
-    
-    rotation_value = rotation_value + Time.delta
 end
 
 function COLIDE(Colision)

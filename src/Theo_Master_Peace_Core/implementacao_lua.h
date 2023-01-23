@@ -1908,9 +1908,15 @@ namespace funcoes_lua {
 		//buscar erros
 		if (i != LUA_OK) {
 			escrever("LUA NOT OK");
-			escrever(s);
-			string erro = lua_tostring(ret, -1);
-			escrever(erro);
+			
+			
+
+			
+			//get error
+			escrever(lua_tostring(ret, -1));
+			
+
+			
 		}
 
 

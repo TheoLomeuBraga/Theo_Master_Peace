@@ -26,6 +26,7 @@ def run_windows():
 
 def run_linux():
     print("runing linux")
+    os.system("./built/engine_theo_master_peace ./tech_demos/TMP_TECH_DEMO_GAME_1")
 
 def get_help():
     print("use 'help' to a list of comands")
