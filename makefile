@@ -16,7 +16,7 @@ built_path=./built
 
 libs_path_windows=-L./libs/windows
 
-libs_windows=-llua54 -lglfw3 -lfreeglut_static -lfreetype -lbox2d -lsfml-audio -lsfml-graphics -lsfml-window -lsfml-system
+libs_windows=-llua54 -lglfw3dll -lglew -lfreetype -lbox2d -lsfml-audio -lsfml-graphics -lsfml-window -lsfml-system
 
 windows:
 	${compiler_windows} ${tags} ${engine_cpp_windows_path}  ${includes} ${libs_path_windows} ${libs_windows} -o ${built_path}/engine_theo_master_peace.exe 
