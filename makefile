@@ -2,11 +2,11 @@ compiler_windows=g++
 compiler_linux=g++
 
 engine_cpp_windows_path=./src/Theo_Master_Peace/EngineTMasterPece.cpp
-engine_cpp_linux_path=./src/Theo_Master_Peace/TMP_LINUX.cpp
+
 
 font_reader_cpp_path=./src/Font_Reader/leitor_de_fontes_TMP_linux.cpp
 
-tags=-std=c++17 -pipe -Wa,-mbig-obj
+tags_windows=-std=c++17 -pipe -Wa,-mbig-obj
 
 includes=-I./src/Font_Reader -I./src/Theo_Master_Peace -I./src/Theo_Master_Peace_Core -I./include -I./include/freetype
 
@@ -21,16 +21,22 @@ definitions_windows=-D GLEW_STATIC
 libs_windows=-llua54 -lglfw3dll  -lglew32 -lopengl32 -lbox2d.dll -lfreetype -lsfml-audio -lsfml-network -lsfml-graphics -lsfml-window -lsfml-system
 
 windows:
-	${compiler_windows} ${tags} ${engine_cpp_windows_path}  ${includes} ${definitions_windows} ${libs_path_windows} ${libs_windows} -o ${built_path}/engine_theo_master_peace.exe 
-	${compiler_windows} ${tags} ${font_reader_cpp_path}  ${includes} ${definitions_windows} ${libs_path_windows} ${libs_windows} -o ${built_path}/font_reader.exe
+	mkdir built
+	${compiler_windows} ${tags_windows} ${engine_cpp_windows_path}  ${includes} ${definitions_windows} ${libs_path_windows} ${libs_windows} -o ${built_path}/engine_theo_master_peace.exe 
+	${compiler_windows} ${tags_windows} ${font_reader_cpp_path}  ${includes} ${definitions_windows} ${libs_path_windows} ${libs_windows} -o ${built_path}/font_reader.exe
 #
+
+engine_cpp_linux_path=./src/Theo_Master_Peace/TMP_LINUX.cpp
+
+tags_windows=-std=c++17 -pipe 
 
 libs_path_linux=-L./libs/linux
 
-libs_linux=-llua -lglfw -lGLEW -lglut -lGL -lGLU -lfreetype -lbox2d -lsfml-audio -lsfml-graphics -lsfml-window -lsfml-system
+libs_linux=-llua -lglfw -lGLEW -lglut -lGL -lGLU -lfreetype -lbox2d -lsfml-audio -lsfml-network -lsfml-graphics -lsfml-window -lsfml-system
 
 definitions_linux=
 
 linux:
+	mkdir built
 	${compiler_linux} ${tags} ${engine_cpp_linux_path}  ${includes} ${definitions_linux} ${libs_path_linux} ${libs_linux} -o ${built_path}/engine_theo_master_peace 
 	${compiler_linux} ${tags} ${font_reader_cpp_path}  ${includes} ${definitions_linux} ${libs_path_linux} ${libs_linux} -o ${built_path}/font_reader
