@@ -6,7 +6,7 @@ engine_cpp_linux_path=./src/Theo_Master_Peace/TMP_LINUX.cpp
 
 font_reader_cpp_path=./src/Font_Reader/leitor_de_fontes_TMP_linux.cpp
 
-tags=-std=c++17 -Wa,-mbig-obj
+tags=-std=c++17 -pipe -Wa,-mbig-obj
 
 includes=-I./src/Font_Reader -I./src/Theo_Master_Peace -I./src/Theo_Master_Peace_Core -I./include -I./include/freetype
 
@@ -16,7 +16,7 @@ built_path=./built
 
 libs_path_windows=-L./libs/windows
 
-libs_windows=-llua54 -lglfw3dll -lglew32.dll -lfreetype -lbox2d.dll -lsfml-audio -lsfml-graphics -lsfml-window -lsfml-system
+libs_windows=-llua54 -lglfw3dll -lglew32mx.dll -lbox2d.dll -lfreetype -lsfml-audio -lsfml-network -lsfml-graphics -lsfml-window -lsfml-system
 
 windows:
 	${compiler_windows} ${tags} ${engine_cpp_windows_path}  ${includes} ${libs_path_windows} ${libs_windows} -o ${built_path}/engine_theo_master_peace.exe 
