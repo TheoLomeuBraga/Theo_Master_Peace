@@ -8,7 +8,7 @@ require("math")
 json = require "libs.json"
 
 
-require("load_2D_map")
+require("TMP_libs.load_2D_map")
 
 --layer_list = layers_table:new()
 
