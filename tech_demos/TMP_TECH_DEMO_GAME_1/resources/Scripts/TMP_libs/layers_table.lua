@@ -1,5 +1,6 @@
 require("TMP_libs.objects")
 require("TMP_libs.definitions")
+require("TMP_libs.components.index")
 layers_table = {}
 function layers_table:new_2D()
     ret = {}

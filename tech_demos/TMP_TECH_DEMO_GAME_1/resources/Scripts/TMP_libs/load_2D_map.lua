@@ -1,4 +1,5 @@
 require("TMP_libs.definitions")
+require("TMP_libs.components.index")
 require("TMP_libs.objects")
 require("TMP_libs.stystems")
 require("TMP_libs.input")

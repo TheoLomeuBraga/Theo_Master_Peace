@@ -1,9 +1,8 @@
 require("TMP_libs.definitions")
-require("TMP_libs.definitions")
 require("TMP_libs.vectors")
 require("TMP_libs.assets")
 require("TMP_libs.functions")
-
+require("TMP_libs.components.index")
 require("math")
 
 json = require("libs.json")

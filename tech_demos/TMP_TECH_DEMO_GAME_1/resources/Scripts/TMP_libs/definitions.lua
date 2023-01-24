@@ -60,6 +60,7 @@ get_keys_input = false;
 keys = {}
 keys.text_input = ""
 
+--[[
 --components
 components = {}
 components.transform = "transform"
@@ -73,6 +74,7 @@ components.physics_2D = "physics_2D"
 components.character_physics_2D = "character_physics_2D"
 components.audio_source = "audio_source"
 components.lua_scripts = "lua_scripts"
+]]
 
 --boady_dynamics
 boady_dynamics = {}

@@ -1,5 +1,6 @@
 require("TMP_libs.functions")
 require("TMP_libs.definitions")
+require("TMP_libs.components.index")
 
 json = require "libs.json"
 
