@@ -25,18 +25,6 @@ function matreial:new()
     m.softness = 0
     m.textures = {}
     m.inputs = {}
-    --[[
-    i = 0
-    while i < get_max_textures_material() do
-        m.textures[i] = ""
-        i = i+1
-    end
-    i = 0
-    while i < get_max_inputs_material() do
-        m.inputs[i] = 0
-        i = i+1
-    end
-    ]]
     function m:get(object,material_id)
         self.shader = get_shader(object,material_id)
         self.color.r,self.color.a,self.color.b,self.color.a = get_color(object,material_id)
