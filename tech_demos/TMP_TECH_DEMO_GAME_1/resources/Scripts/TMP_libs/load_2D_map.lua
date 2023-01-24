@@ -1,7 +1,7 @@
-require("TMP_libs.TMP_core")
-require("TMP_libs.TMP_objects")
-require("TMP_libs.TMP_stystems")
-require("TMP_libs.TMP_input")
+require("TMP_libs.core")
+require("TMP_libs.objects")
+require("TMP_libs.stystems")
+require("TMP_libs.input")
 require("math")
 require("io")
 json = require "libs.json"

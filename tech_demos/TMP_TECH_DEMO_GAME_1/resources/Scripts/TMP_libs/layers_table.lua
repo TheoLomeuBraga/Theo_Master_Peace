@@ -1,5 +1,5 @@
-require("TMP_libs.TMP_objects")
-require("TMP_libs.TMP_core")
+require("TMP_libs.objects")
+require("TMP_libs.core")
 layers_table = {}
 function layers_table:new_2D()
     ret = {}

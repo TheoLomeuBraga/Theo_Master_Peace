@@ -1,11 +1,11 @@
-require("TMP_libs.TMP_core")
-require("TMP_libs.TMP_objects")
-require("TMP_libs.TMP_stystems")
-require("TMP_libs.TMP_input")
-require("TMP_libs.TMP_layers_table")
+require("TMP_libs.core")
+require("TMP_libs.components.index")
+require("TMP_libs.stystems")
+require("TMP_libs.input")
+require("TMP_libs.layers_table")
 
 require("math")
-json = require "libs.json"
+json = require("libs.json")
 
 
 require("TMP_libs.load_2D_map")

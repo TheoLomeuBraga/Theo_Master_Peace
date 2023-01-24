@@ -1,7 +1,7 @@
-require("TMP_libs.TMP_core")
-require("TMP_libs.TMP_vectors")
-require("TMP_libs.TMP_assets")
-require("TMP_libs.TMP_functions")
+require("TMP_libs.core")
+require("TMP_libs.vectors")
+require("TMP_libs.assets")
+require("TMP_libs.functions")
 
 require("math")
 
