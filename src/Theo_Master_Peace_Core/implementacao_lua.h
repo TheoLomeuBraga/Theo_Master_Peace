@@ -1914,6 +1914,7 @@ namespace funcoes_lua {
 
 			
 			//get error
+			cout << "error in file: " << s << "\n";
 			escrever(lua_tostring(ret, -1));
 			
 
