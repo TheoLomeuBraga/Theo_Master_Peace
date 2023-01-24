@@ -1,4 +1,4 @@
-require("TMP_libs.core")
+require("TMP_libs.definitions")
 require("TMP_libs.vectors")
 require("TMP_libs.assets")
 require("TMP_libs.functions")

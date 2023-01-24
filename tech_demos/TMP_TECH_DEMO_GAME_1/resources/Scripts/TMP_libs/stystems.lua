@@ -1,5 +1,5 @@
 require("TMP_libs.functions")
-require("TMP_libs.core")
+require("TMP_libs.definitions")
 
 json = require "libs.json"
 
