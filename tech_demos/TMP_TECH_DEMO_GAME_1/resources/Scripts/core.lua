@@ -86,8 +86,8 @@ function load_level(map,background_image_path,music_path)
     --background
     cenary = game_object:new(leyers.cenary)
     cenary:add_component(components.transform)
-    cenary.components[components.transform].position = Vec3:new(10,5,0)
-    cenary.components[components.transform].rotation = Vec3:new(0,0,0)
+    cenary.components[components.transform].position = Vec3:new(10,0,0)
+    cenary.components[components.transform].rotation = Vec3:new(0,90,0)
     cenary.components[components.transform].scale = Vec3:new(0.1,0.1,0.1)
     cenary.components[components.transform]:set()
     cenary:add_component(components.render_tile_map)
@@ -97,6 +97,8 @@ function load_level(map,background_image_path,music_path)
     cenary.components[components.render_tile_map].tile_set_image_folder = "resources/Leveis 2D/teste"
     cenary.components[components.render_tile_map].tile_map_local = map
     cenary.components[components.render_tile_map]:set()
+
+    
     
 
     
@@ -112,6 +114,8 @@ function load_level(map,background_image_path,music_path)
     background_image.components[components.render_shader].material.shader = "resources/Shaders/fundo"
     background_image.components[components.render_shader].material.textures[0] = background_image_path
     background_image.components[components.render_shader]:set()
+
+    
     
     
 
@@ -133,13 +137,7 @@ function load_level(map,background_image_path,music_path)
     background_3D.components[components.render_mesh].materials[1].shader = "resources/Shaders/test_geometry_shader"
     background_3D.components[components.render_mesh]:set()
     
-    background_3D:add_component(components.render_tile_map)
-    background_3D.components[components.render_tile_map].material.shader = "resources/Shaders/sprite"
-    background_3D.components[components.render_tile_map].render_only_tilemap_layer = 0
-    background_3D.components[components.render_tile_map].tile_set_local = "resources/Leveis 2D/teste/tile_set_test.json"
-    background_3D.components[components.render_tile_map].tile_set_image_folder = "resources/Leveis 2D/teste"
-    background_3D.components[components.render_tile_map].tile_map_local = map
-    background_3D.components[components.render_tile_map]:set()
+    
 
     scena_3D_teste = scene_3D:new()
     scena_3D_teste:get("resources/3D Models/cube_sphere.obj")
