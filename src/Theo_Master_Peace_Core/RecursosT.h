@@ -199,11 +199,11 @@ public:
 		struct tile_struct {
 			uint8 sprite_id = 0;
 			string nome = "";
-			uint8 tipo_colisao = 0;
+			//uint8 tipo_colisao = 0;
 			bool visivel = true;
-			bool interativel = false;
-			string script = "";
-			string comentario = "";
+			//bool interativel = false;
+			//string script = "";
+			//string comentario = "";
 		}; typedef struct tile_struct tile;
 
 		class tile_set : public asset {

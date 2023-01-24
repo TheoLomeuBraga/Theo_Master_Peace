@@ -303,15 +303,15 @@ namespace ManuseioDados {
 							if (name.compare("name") == 0) {
 								t.nome = propriedades_json[b]["value"].get<string>();
 							}
-							else if (name.compare("colision_type") == 0) {
-								t.tipo_colisao = propriedades_json[b]["value"].get<int>();
-							}
+							//else if (name.compare("colision_type") == 0) {
+							//	t.tipo_colisao = propriedades_json[b]["value"].get<int>();
+							//}
 							else if (name.compare("visible") == 0) {
 								t.visivel = propriedades_json[b]["value"].get<int>();
 							}
-							else if (name.compare("interactive") == 0) {
-								t.interativel = propriedades_json[b]["value"].get<int>();
-							}
+							//else if (name.compare("interactive") == 0) {
+							//	t.interativel = propriedades_json[b]["value"].get<int>();
+							//}
 							
 						}
 						

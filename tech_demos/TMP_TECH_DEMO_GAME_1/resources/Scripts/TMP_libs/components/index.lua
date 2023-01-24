@@ -8,8 +8,7 @@ require("math")
 json = require("libs.json")
 
 
---this object ptr
-this_object_ptr = ""
+
 
 matreial = {}
 function matreial:new()

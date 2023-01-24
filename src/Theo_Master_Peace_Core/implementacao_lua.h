@@ -320,12 +320,13 @@ namespace funcoes_ponte {
 
 		lua_pushnumber(L, output.sprite_id);
 		lua_pushstring(L, output.nome.c_str());
-		lua_pushnumber(L, output.tipo_colisao);
+		//lua_pushnumber(L, output.tipo_colisao);
 		lua_pushboolean(L, output.visivel);
-		lua_pushboolean(L, output.interativel);
-		lua_pushstring(L, output.script.c_str());
-		lua_pushstring(L, output.comentario.c_str());
-		return 7;
+		//lua_pushboolean(L, output.interativel);
+		//lua_pushstring(L, output.script.c_str());
+		//lua_pushstring(L, output.comentario.c_str());
+		//return 7;
+		return 3;
 	}
 
 	int get_tilemap_size(lua_State* L) {

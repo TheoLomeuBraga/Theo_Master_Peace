@@ -76,7 +76,7 @@ Objetos::objeto_jogo* fundo = new Objetos::objeto_jogo();
 
 
 
-
+/*
 vector<Objetos::objeto_jogo*> tilemap_objetos(shared_ptr<tile_set> ts, shared_ptr < tile_map_info> tm) {
 	vector<Objetos::objeto_jogo*> ret;
 
@@ -133,7 +133,7 @@ vector<Objetos::objeto_jogo*> tilemap_objetos(shared_ptr<tile_set> ts, shared_pt
 
 
 
-
+*/
 
 
 
