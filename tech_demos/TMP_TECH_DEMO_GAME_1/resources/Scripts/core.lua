@@ -9,7 +9,7 @@ require("math")
 json = require("libs.json")
 
 
-require("TMP_libs.load_2D_map")
+require("TMP_libs.short_cuts.load_2D_map")
 
 
 
