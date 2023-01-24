@@ -1,6 +1,9 @@
 require("TMP_libs.definitions")
 require("TMP_libs.components.component_table")
+require("TMP_libs.components.component_all")
 require("TMP_libs.components.component_index")
+require("TMP_libs.objects.game_object")
+require("TMP_libs.objects.time")
 require("TMP_libs.stystems")
 require("TMP_libs.input")
 require("TMP_libs.layers_table")
@@ -9,7 +12,7 @@ require("math")
 json = require("libs.json")
 
 
-require("TMP_libs.load_2D_map")
+require("TMP_libs.short_cuts.load_2D_map")
 
 
 
