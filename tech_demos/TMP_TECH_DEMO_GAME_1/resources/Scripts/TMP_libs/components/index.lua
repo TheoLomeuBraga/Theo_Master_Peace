@@ -5,7 +5,7 @@ require("TMP_libs.functions")
 
 require("math")
 
-json = require "libs.json"
+json = require("libs.json")
 
 
 --this object ptr
