@@ -1,9 +1,13 @@
 require("TMP_libs.definitions")
 require("TMP_libs.components.component_table")
+require("TMP_libs.components.component_all")
 require("TMP_libs.components.component_index")
+require("TMP_libs.objects.game_object")
+require("TMP_libs.objects.time")
 require("TMP_libs.stystems")
 require("TMP_libs.input")
 require("TMP_libs.layers_table")
+
 
 require("math")
 json = require("libs.json")
@@ -11,12 +15,11 @@ json = require("libs.json")
 
 require("TMP_libs.short_cuts.load_2D_map")
 
+require("TMP_libs.short_cuts.create_text")
 
+leyers = layers_table:new_2D()
 
---layer_list = layers_table:new()
-
-leyers = layers_table:new_2D()--{}
-
+cenary_info = nil
 
 hud = nil
 background_image = nil
@@ -56,18 +59,11 @@ function initialize_layers()
     background_image = game_object:new(leyers.background_image)
     background_3D = game_object:new(create_object(leyers.background_3D))
     background_3D2 = game_object:new(create_object(leyers.background_3D))
-    hud = game_object:new(leyers.hud)
-    hud:add_component(components.transform)
-    hud.components[components.transform].is_ui = true
-    hud.components[components.transform].position = Vec3:new(-0.9, 0.9, 0)
-    hud.components[components.transform].scale = Vec3:new(0.05, 0.05, 0.05)
-    hud.components[components.transform]:set()
-    hud:add_component(components.render_text)
-    hud.components[components.render_text].layer = 2
-    hud.components[components.render_text].material.shader = "resources/Shaders/text"
-    hud.components[components.render_text].font = "resources/Fonts/pixel_snas.json"
-    hud.components[components.render_text].text = "ola mundo"
-    hud.components[components.render_text]:set()
+
+
+    hud_material = matreial:new()
+    hud_material.shader = "resources/Shaders/text"
+    hub = create_text(leyers.hud, true, Vec3:new(-0.9, 0.9, 0),Vec3:new(0.0, 0.0, 0.0),Vec3:new(0.05, 0.05, 0.05), hud_material, 2, "ola mundo", "resources/Fonts/pixel_snas.json")
 end
 
 
@@ -86,23 +82,14 @@ function load_level(map,background_image_path,music_path)
 
     
 
-    --background
-    cenary = game_object:new(leyers.cenary)
-    cenary:add_component(components.transform)
-    cenary.components[components.transform].position = Vec3:new(10,0,0)
-    cenary.components[components.transform].rotation = Vec3:new(0,90,0)
-    cenary.components[components.transform].scale = Vec3:new(0.1,0.1,0.1)
-    cenary.components[components.transform]:set()
-    cenary:add_component(components.render_tile_map)
-    cenary.components[components.render_tile_map].material.shader = "resources/Shaders/sprite"
-    cenary.components[components.render_tile_map].render_only_tilemap_layer = 0
-    cenary.components[components.render_tile_map].tile_set_local = "resources/Leveis 2D/teste/tile_set_test.json"
-    cenary.components[components.render_tile_map].tile_set_image_folder = "resources/Leveis 2D/teste"
-    cenary.components[components.render_tile_map].tile_map_local = map
-    cenary.components[components.render_tile_map]:set()
+    
 
     
-    
+    cenary_mat = matreial:new()
+    cenary_mat.shader = "resources/Shaders/sprite"
+    cenari_all = load_2D_map(leyers.cenary,Vec3:new(10,0,0),Vec3:new(0,90,0),Vec3:new(0.1,0.1,0.1),map,"resources/Leveis 2D/teste/tile_set_test.json","resources/Leveis 2D/teste",cenary_mat)
+    cenary = cenari_all.map_object
+    cenary_info = cenari_all.map_info
 
     
     

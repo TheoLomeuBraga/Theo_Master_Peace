@@ -1,4 +1,4 @@
-require("TMP_libs.objects")
+
 require("TMP_libs.definitions")
 require("TMP_libs.components.component_index")
 layers_table = {}
