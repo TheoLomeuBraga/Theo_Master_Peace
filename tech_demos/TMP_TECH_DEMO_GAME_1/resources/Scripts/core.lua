@@ -157,7 +157,7 @@ function load_level(map,background_image_path,music_path)
     --camera.components[components.audio_source].volume = 10
     --camera.components[components.audio_source]:set()
     
-    audio = create_audio(music_path,true,5)
+    audio = create_audio(music_path,true,10)
 
     
     clear_memory()
