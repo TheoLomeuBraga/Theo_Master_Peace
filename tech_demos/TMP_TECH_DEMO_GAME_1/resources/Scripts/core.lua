@@ -150,12 +150,6 @@ function load_level(map,background_image_path,music_path)
     background_3D2.components[components.render_sprite].selected_tile = 2
     background_3D2.components[components.render_sprite].tile_set_local = "resources/Leveis 2D/personajem.json"
     background_3D2.components[components.render_sprite]:set()
-
-    
-    --camera.components[components.audio_source].path = music_path
-    --camera.components[components.audio_source].loop = true
-    --camera.components[components.audio_source].volume = 10
-    --camera.components[components.audio_source]:set()
     
     audio = create_audio(music_path,true,100)
 
