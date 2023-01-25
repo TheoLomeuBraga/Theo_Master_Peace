@@ -12,6 +12,7 @@ function layers_table:new_2D()
     ret.charter = ""
     ret.top = ""
     ret.hud = ""
+    ret.sound = ""
     function ret:create()
         self.camera = create_object()
         self.background_image = create_object()
@@ -21,6 +22,7 @@ function layers_table:new_2D()
         self.charter = create_object()
         self.top = create_object()
         self.hud = create_object()
+        self.sound = create_object()
     end
     return ret
 end

@@ -16,7 +16,6 @@ function load_2D_map(father,pos,rot,sca,tile_map_path,tile_set_path,tile_set_ima
     file = assert(io.open(tile_map_path, "rb"))
     file_content = file:read("*all")
     file:close()
-    print(file_content)
     ret.map_info = deepcopyjson(json.decode(file_content))
 
     --objects

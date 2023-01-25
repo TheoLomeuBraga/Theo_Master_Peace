@@ -14,8 +14,10 @@ json = require("libs.json")
 
 
 require("TMP_libs.short_cuts.load_2D_map")
-
 require("TMP_libs.short_cuts.create_text")
+require("TMP_libs.short_cuts.create_sound")
+
+
 
 leyers = layers_table:new_2D()
 
@@ -29,7 +31,7 @@ background = nil
 cenary = nil
 character = nil
 camera = nil
-
+audio = nil
 
 
 
@@ -150,10 +152,12 @@ function load_level(map,background_image_path,music_path)
     background_3D2.components[components.render_sprite]:set()
 
     
-    camera.components[components.audio_source].path = music_path
-    camera.components[components.audio_source].loop = true
-    camera.components[components.audio_source].volume = 5
-    camera.components[components.audio_source]:set()
+    --camera.components[components.audio_source].path = music_path
+    --camera.components[components.audio_source].loop = true
+    --camera.components[components.audio_source].volume = 10
+    --camera.components[components.audio_source]:set()
+    
+    audio = create_audio(music_path,true,5)
 
     --character.components[components.lua_scripts]:call_function("resources/Scripts/script_character.lua","wen_scene_is_loaded")
     clear_memory()
