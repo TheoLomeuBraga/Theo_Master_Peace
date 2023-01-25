@@ -1,4 +1,5 @@
-
+require("TMP_libs.components.transform")
+require("TMP_libs.components.audio_source")
 
 function create_audio(music_path,loop,volume)
     ret = game_object:new(create_object()) 
