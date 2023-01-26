@@ -18,6 +18,8 @@ require("TMP_libs.short_cuts.create_text")
 require("TMP_libs.short_cuts.create_sound")
 
 
+require("TMP_libs.material")
+
 
 leyers = layers_table:new_2D()
 
@@ -117,16 +119,21 @@ function load_level(map,background_image_path,music_path)
     background_3D.components[components.transform].rotation = Vec3:new(0,90,0)
     background_3D.components[components.transform].scale = Vec3:new(2,2,2)
     background_3D.components[components.transform]:set()
+
+
     
+    background_3D_material = material:new()
+    background_3D_material.textures[1] = background_image_path
+    background_3D_material.color.g = 0
+    background_3D_material.color.b = 0
+    background_3D_material.shader = "resources/Shaders/test_geometry_shader"
+
+
     background_3D:add_component(components.render_mesh)
     background_3D.components[components.render_mesh].layer = 1
     background_3D.components[components.render_mesh].meshes_cout = 1
     background_3D.components[components.render_mesh].meshes = {mesh_location:new("resources/3D Models/cube_sphere.obj","Cube")}
-    background_3D.components[components.render_mesh].materials = {matreial:new()}
-    background_3D.components[components.render_mesh].materials[1].textures[1] = background_image_path
-    background_3D.components[components.render_mesh].materials[1].color.g = 0
-    background_3D.components[components.render_mesh].materials[1].color.b = 0
-    background_3D.components[components.render_mesh].materials[1].shader = "resources/Shaders/test_geometry_shader"
+    background_3D.components[components.render_mesh].materials = {background_3D_material}
     background_3D.components[components.render_mesh]:set()
     
     

@@ -1,5 +1,5 @@
-matreial = {}
-function matreial:new()
+material = {}
+function material:new()
     m = {}
     m.shader = ""
     m.color = {}

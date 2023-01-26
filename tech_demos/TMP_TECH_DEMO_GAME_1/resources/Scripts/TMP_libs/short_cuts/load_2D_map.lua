@@ -31,7 +31,6 @@ function load_2D_map(father,pos,rot,sca,tile_map_path,tile_set_path,tile_set_ima
     ret.map_object.components[components.render_tile_map].tile_map_local = tile_map_path
     ret.map_object.components[components.render_tile_map].tile_set_local = tile_set_path
     ret.map_object.components[components.render_tile_map].tile_set_image_folder = tile_set_images_folder
-    --ret.map_object.components[components.render_tile_map].material.shader = "resources/Shaders/sprite"
     ret.map_object.components[components.render_tile_map].material = deepcopy(mat)
     ret.map_object.components[components.render_tile_map]:set()
 
