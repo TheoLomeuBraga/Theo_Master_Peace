@@ -29,7 +29,7 @@
 #include "ManusearArquivos.h"
 #include "Comandos.h"
 #include "TESTE.h"
-#include "box_2d.h"
+#include "components/box_2d.h"
 
 
 #include <bitset>

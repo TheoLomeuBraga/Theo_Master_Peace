@@ -48,14 +48,14 @@ using namespace glm;
 #include "Tempo.h"
 #include "Objetos.h"
 #include "LoopPrincipal.h"
-#include "box_2d.h"
-#include "implementacao_lua.h"
+#include "components/box_2d.h"
+#include "components/implementacao_lua.h"
 #include "implementacao_windows.cpp"
 
 //APIs
 #include "OpenGL.h"
 #include "implementacao_glfw.h"
-#include "sfml_audio.h"
+#include "components/sfml_audio.h"
 
 //#include "Box2D_classe.h"
 //#include  "box2D_antigo.h"
