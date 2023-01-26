@@ -280,39 +280,6 @@ public:
 
 		};
 
-
-		
-
-
-
-
-
-
-
-
-
-
-
-
-		
-		
-
-		
-		
-		
-
-
-		
-		
-
-		
-
-
-
-
-
-		
-
 		struct instrucoes_render_struct {
 			int camera = 0;
 			bool iniciar_render = true, limpar_buffer_cores = true, limpar_buffer_profundidade = true, desenhar_objetos = true, terminar_render = true,usar_profundidade = true;
@@ -899,7 +866,15 @@ public:
 		funcoes_OS_classe* funcoes_OS;
 		
 
-
+		class network_conection{
+		private:
+			string ip;
+			int port;
+		public:
+			network_conection();
+			void send(string s){}
+			string receve(){return "";}
+		};
 
 
 
@@ -970,20 +945,13 @@ public:
 
 		};
 
-		class requerimentos_cena{
-		public:
-			requerimentos_cena(){}
-			vector<string> fontes,imagens;
-		};
+		
 
-		vector<string> argumentos;
+		
 
-		void aplicar_argumentos(int argc, char** argv) {
-			argumentos.resize(argc);
-			for (int i = 0; i < argc; i++) {
-				argumentos[i] = argv[i];
-			}
-		}
+
+		
+
 
 		map<char, int> char_int = {
 			pair<char, int>('0',0),

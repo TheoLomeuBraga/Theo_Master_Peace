@@ -17,7 +17,6 @@ using namespace std;
 #include <glm/gtx/transform.hpp>
 
 #include "Converter_JSON.h"
-#include "OBJ_importer.h"
 #include "Objetos.h"
 
 #include <nlohmann/json.hpp>

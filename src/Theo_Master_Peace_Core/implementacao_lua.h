@@ -14,6 +14,8 @@ using namespace Objetos;
 
 #include "projetil.h"
 
+#include "args.h"
+
 using lua_function = int(*)(lua_State*);
 
 mapeamento_assets<string> mapeamento_scripts_lua;
