@@ -1,5 +1,11 @@
 require("TMP_libs.components.component_index")
 
+--tilemap
+
+function get_render_tilemap_json(object)
+end
+function set_render_tilemap_json(object,json)
+end
 
 render_tile_map_component = {}
 function render_tile_map_component:new(object_ptr)

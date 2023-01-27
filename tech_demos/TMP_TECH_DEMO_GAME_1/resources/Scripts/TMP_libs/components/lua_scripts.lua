@@ -1,5 +1,23 @@
 require("TMP_libs.components.component_index")
 
+function get_script_size(object)
+end
+function get_script_name(object,script_id)
+end
+function have_script(object,script)
+end
+function add_script(object,script)
+end
+function remove_script(object,script)
+end
+function get_var_script(object,script,variable,type)
+end
+function have_component(object,component)
+end
+function set_script_var(object,script,variable,type,value)
+end
+function call_script_function(object,script_name,function_name)
+end
 
 lua_scripts_component = {}
 function lua_scripts_component:new(object_ptr)

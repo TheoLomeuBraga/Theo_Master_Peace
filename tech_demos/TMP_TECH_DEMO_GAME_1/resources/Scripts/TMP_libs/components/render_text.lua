@@ -1,5 +1,20 @@
 require("TMP_libs.components.component_index")
 
+--text
+
+function set_font(object,font)
+end
+function get_font(object)
+end
+function set_text(object,text)
+end
+function get_text(object)
+end
+
+function get_text_json(object)
+end
+function set_text_json(object,json)
+end
 
 render_text_component = {}
 function render_text_component:new(object_ptr)

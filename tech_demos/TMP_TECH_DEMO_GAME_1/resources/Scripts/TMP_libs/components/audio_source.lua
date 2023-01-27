@@ -1,6 +1,13 @@
 require("TMP_libs.components.component_index")
 
 
+
+--audio
+function set_audio(object,path,pause,loop,time,speed,volume)
+end
+function get_audio(object)
+end
+
 audio_component = {}
 function audio_component:new(object_ptr)
     a = {}

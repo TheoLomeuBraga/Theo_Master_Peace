@@ -1,5 +1,9 @@
 require("TMP_libs.components.component_index")
 
+function in_ceiling(object)
+end
+function in_floor(object)
+end
 
 character_physics_2D_component = {}
 function character_physics_2D_component:new(object_ptr)

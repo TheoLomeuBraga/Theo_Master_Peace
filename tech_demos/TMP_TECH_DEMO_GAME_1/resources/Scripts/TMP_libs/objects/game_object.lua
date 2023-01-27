@@ -1,3 +1,20 @@
+--object
+function create_object()
+end
+function get_object_with_name(name)
+end
+function create_object(parent)
+end
+function remove_object(object)
+end
+function add_component(object,component)
+end
+function remove_component(object,component)
+end
+function get_object_family_json(object)
+end
+
+
 game_object = {}
 function game_object:new(object_ptr)
     obj = {}

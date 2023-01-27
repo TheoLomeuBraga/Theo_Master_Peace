@@ -1,5 +1,24 @@
 require("TMP_libs.components.component_index")
 
+--transform
+
+function get_transform_json(object)
+end
+function set_transform_json(object,json)
+end
+
+function move_transform(object,x,y,z)
+end
+function rotate_transform(object,x,y,z)
+end
+
+function change_transfotm_position(object,x,y,z)
+end
+function change_transfotm_rotation(object,x,y,z)
+end
+function change_transfotm_scale(object,x,y,z)
+end
+
 transform_component = {}
 function transform_component:new(object_ptr)
     t = {}

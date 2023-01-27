@@ -47,6 +47,7 @@ function asset_is_load(asset_type,path)
 end
 
 --asset tiles
+--[[
 function get_tile_set_size(path,image_folder)
 end
 function get_tile_set_tile(path,image_folder,tile_id)
@@ -58,7 +59,7 @@ function get_tilemap_layer_size(path)
 end
 function get_tilemap_data(path,layer,id)
 end
-
+]]
 
 
 --asset 3D scene
@@ -66,21 +67,7 @@ end
 function get_scene_3D_json(path)
 end
 
---object
-function create_object()
-end
-function get_object_with_name(name)
-end
-function create_object(parent)
-end
-function remove_object(object)
-end
-function add_component(object,component)
-end
-function remove_component(object,component)
-end
-function get_object_family_json(object)
-end
+
 
 
 
@@ -89,10 +76,7 @@ function to_move(object,x,y)
 end 
 function to_move(object,x,y,z)
 end 
-function in_ceiling(object)
-end
-function in_floor(object)
-end
+
 
 --gravity
 function get_gravity()
@@ -102,24 +86,7 @@ end
 
 
 
---transform
 
-function get_transform_json(object)
-end
-function set_transform_json(object,json)
-end
-
-function move_transform(object,x,y,z)
-end
-function rotate_transform(object,x,y,z)
-end
-
-function change_transfotm_position(object,x,y,z)
-end
-function change_transfotm_rotation(object,x,y,z)
-end
-function change_transfotm_scale(object,x,y,z)
-end
 
 --physic
 function get_physic_2D(object)
@@ -148,10 +115,7 @@ end
 function get_layers_can_colide(object,id_layer)
 end
 
-function get_physic_2D_json(object) 
-end
-function set_physic_2D_json(object,json) 
-end
+
 
 --render
 function set_resolution(x,y)
@@ -161,42 +125,14 @@ end
 function set_render_layer(object,layer)
 end
 
---sprite
-function set_tileset(object,tileset)
-end
-function get_tileset(object)
-end
-
-function get_sprite_render_json(object)
-end
-function set_sprite_render_json(object,json)
-end
 
 
---tilemap
-
-function get_render_tilemap_json(object)
-end
-function set_render_tilemap_json(object,json)
-end
-
---text
-
-function set_font(object,font)
-end
-function get_font(object)
-end
-function set_text(object,text)
-end
-function get_text(object)
-end
-
-function get_text_json(object)
-end
-function set_text_json(object,json)
-end
 
 
+
+
+
+--[[
 --material
 function get_max_textures_material()
 end
@@ -227,58 +163,26 @@ function set_material_input(object,material_id,input_id,input)
 end
 function get_material_input(object,material_id,input_id)
 end
+]]
 
---camera
-function set_camera(object, sizeX,sizeY,ncp,fcp)
-end
-function set_camera(object, zoom, resX,resY,ncp,fcp)
-end
-function get_camera(object)
-end
 
---audio
-function set_audio(object,path,pause,loop,time,speed,volume)
-end
-function get_audio(object)
-end
+
+
 
 --scripts
-function get_script_size(object)
-end
-function get_script_name(object,script_id)
-end
-function have_script(object,script)
-end
-function add_script(object,script)
-end
-function remove_script(object,script)
-end
-function get_var_script(object,script,variable,type)
-end
-function have_component(object,component)
-end
+
 --function set_var_script(object,script,variable,type,value)
 --end
 --function get_script_var(object,script,variable,type)
 --end
 
-function set_script_var(object,script,variable,type,value)
-end
-function call_script_function(object,script_name,function_name)
-end
 
---mesh
-function get_mesh_json(object)
-end
-function set_mesh_json(object,json)
-end
+
+
 
 --post-procesing
 
-function get_post_processing_json()
-end
-function set_post_processing_json(json)
-end
+
 
 --render layers
 function get_render_layer_instruction_json()

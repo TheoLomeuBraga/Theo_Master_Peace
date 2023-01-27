@@ -7,6 +7,7 @@ require("TMP_libs.objects.time")
 require("TMP_libs.stystems")
 require("TMP_libs.input")
 require("TMP_libs.layers_table")
+require("TMP_libs.objects.render_layer")
 
 
 require("math")
@@ -201,27 +202,27 @@ function initialize_render_layers()
     window:set()
     --]]
 
-    renders_layers_instructions.layers_size = 4
+    renders_layers.layers_size = 4
 
-    renders_layers_instructions.layers[1] = render_layer_instructions:new()
-    renders_layers_instructions.layers[1].end_render = false
-    renders_layers_instructions.layers[1].use_deeph = true
-    renders_layers_instructions.layers[1].clean_color = false
-    renders_layers_instructions.layers[1].start_render = true
+    renders_layers.layers[1] = render_layer:new()
+    renders_layers.layers[1].end_render = false
+    renders_layers.layers[1].use_deeph = true
+    renders_layers.layers[1].clean_color = false
+    renders_layers.layers[1].start_render = true
 
-    renders_layers_instructions.layers[2] = render_layer_instructions:new()
-    renders_layers_instructions.layers[2].end_render = false
-    renders_layers_instructions.layers[2].use_deeph = true
-    renders_layers_instructions.layers[2].clean_color = false
-    renders_layers_instructions.layers[2].start_render = false
+    renders_layers.layers[2] = render_layer:new()
+    renders_layers.layers[2].end_render = false
+    renders_layers.layers[2].use_deeph = true
+    renders_layers.layers[2].clean_color = false
+    renders_layers.layers[2].start_render = false
 
-    renders_layers_instructions.layers[3] = render_layer_instructions:new()
-    renders_layers_instructions.layers[3].end_render = true
-    renders_layers_instructions.layers[3].use_deeph = true
-    renders_layers_instructions.layers[3].clean_color = false
-    renders_layers_instructions.layers[3].start_render = false
+    renders_layers.layers[3] = render_layer:new()
+    renders_layers.layers[3].end_render = true
+    renders_layers.layers[3].use_deeph = true
+    renders_layers.layers[3].clean_color = false
+    renders_layers.layers[3].start_render = false
 
-    renders_layers_instructions:set()
+    renders_layers:set()
     
 end
 

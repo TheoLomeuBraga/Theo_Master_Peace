@@ -1,5 +1,15 @@
 require("TMP_libs.components.component_index")
 
+--sprite
+function set_tileset(object,tileset)
+end
+function get_tileset(object)
+end
+
+function get_sprite_render_json(object)
+end
+function set_sprite_render_json(object,json)
+end
 
 render_sprite_component = {}
 function render_sprite_component:new(object_ptr)

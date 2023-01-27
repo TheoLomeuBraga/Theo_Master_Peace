@@ -1,5 +1,10 @@
 require("TMP_libs.components.component_index")
 
+function get_physic_2D_json(object) 
+end
+function set_physic_2D_json(object,json) 
+end
+
 colision_layer_info = {}
 function colision_layer_info:new()
     cli = {}

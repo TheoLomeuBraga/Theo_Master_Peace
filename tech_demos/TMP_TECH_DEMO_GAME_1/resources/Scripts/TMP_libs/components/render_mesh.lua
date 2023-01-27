@@ -1,5 +1,11 @@
 require("TMP_libs.components.component_index")
 
+--mesh
+function get_mesh_json(object)
+end
+function set_mesh_json(object,json)
+end
+
 mesh_location = {}
 function mesh_location:new(file,name)
     ret = {}
