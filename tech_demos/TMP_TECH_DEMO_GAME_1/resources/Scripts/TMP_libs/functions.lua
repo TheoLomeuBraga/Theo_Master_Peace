@@ -31,7 +31,12 @@ function deepcopyjson(orig)
     return copy
 end
 
-
+function tablelength(T)
+    local count = 0
+    for _ in pairs(T) do count = count + 1 end
+    return count
+  end
+  
 
 --time
 function get_time()
@@ -93,8 +98,7 @@ function get_physic_2D(object)
 end
 function set_physic_2D(object,scale_x,scale_y,dynamic,shape,rotate,is_triger)
 end
-function add_force(object,force_x,force_y)
-end
+
 
 function get_physic_layer(object)
 end
