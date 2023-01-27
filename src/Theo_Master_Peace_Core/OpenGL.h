@@ -10,6 +10,8 @@
 #include "LoopPrincipal.h"
 using namespace Objetos;
 #include <GL/glew.h>
+#include "game_object.h"
+
 //#include "API_grafica_classe.h"
 
 

@@ -27,7 +27,6 @@
 #include "Config.h"
 #include "Console_Comando.h"
 #include "ManusearArquivos.h"
-#include "Comandos.h"
 #include "TESTE.h"
 #include "components/box_2d.h"
 

@@ -56,6 +56,8 @@ using namespace glm;
 #include "OpenGL.h"
 #include "implementacao_glfw.h"
 #include "components/sfml_audio.h"
+#include "game_object.h"
+
 
 //#include "Box2D_classe.h"
 //#include  "box2D_antigo.h"
@@ -71,14 +73,14 @@ imagem* imagemtexte3;
 imagem* imagem2texte3;
 info_camada ca;
 
-Objetos::objeto_jogo  *teste_memoria_obj_pai = new Objetos::objeto_jogo();
-Objetos::objeto_jogo* fundo = new Objetos::objeto_jogo();
+objeto_jogo  *teste_memoria_obj_pai = new objeto_jogo();
+objeto_jogo* fundo = new objeto_jogo();
 
 
 
 /*
-vector<Objetos::objeto_jogo*> tilemap_objetos(shared_ptr<tile_set> ts, shared_ptr < tile_map_info> tm) {
-	vector<Objetos::objeto_jogo*> ret;
+vector<objeto_jogo*> tilemap_objetos(shared_ptr<tile_set> ts, shared_ptr < tile_map_info> tm) {
+	vector<objeto_jogo*> ret;
 
 	
 
@@ -94,7 +96,7 @@ vector<Objetos::objeto_jogo*> tilemap_objetos(shared_ptr<tile_set> ts, shared_pt
 			}
 			
 			if (ts->tiles[tile_id].tipo_colisao != 0 ) {
-				Objetos::objeto_jogo* obj = new Objetos::objeto_jogo();
+				objeto_jogo* obj = new objeto_jogo();
 
 				
 
@@ -170,13 +172,13 @@ void depois_imgui() {
 }
 
 
-shared_ptr<Objetos::objeto_jogo> core;
+shared_ptr<objeto_jogo> core;
 
-shared_ptr<Objetos::objeto_jogo> camera_teste;
+shared_ptr<objeto_jogo> camera_teste;
 
 void iniciarTeste3() {
 	
-	camera_teste = Objetos::novo_objeto_jogo();
+	camera_teste = novo_objeto_jogo();
 	funcoes_OS = new foncoes_Windows();
 	api_grafica = new OpenGL_API();
 	api_grafica->pos_processamento_info.shad = "recursos/Shaders/post_processing";
@@ -233,7 +235,7 @@ void iniciarTeste3() {
 
 
 
-	core = Objetos::novo_objeto_jogo();
+	core = novo_objeto_jogo();
 	core->adicionar_componente<componente_lua>(componente_lua());
 	core->pegar_componente< componente_lua>()->adicionar_script("resources/Scripts/core.lua");
 	

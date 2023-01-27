@@ -4,6 +4,7 @@
 #include "Config.h"
 #include "RecursosT.h"
 #include "Objetos.h"
+#include "game_object.h"
 
 
 mapeamento_assets<sf::SoundBuffer> buffers_som_sfml;

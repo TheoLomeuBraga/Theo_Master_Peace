@@ -17,7 +17,7 @@ json = require("libs.json")
 require("TMP_libs.short_cuts.load_2D_map")
 require("TMP_libs.short_cuts.create_text")
 require("TMP_libs.short_cuts.create_sound")
-
+require("TMP_libs.short_cuts.create_mesh")
 
 require("TMP_libs.material")
 
@@ -62,7 +62,6 @@ function initialize_layers()
     leyers:create()
 
     background_image = game_object:new(leyers.background_image)
-    background_3D = game_object:new(create_object(leyers.background_3D))
     background_3D2 = game_object:new(create_object(leyers.background_3D))
 
 
@@ -114,13 +113,13 @@ function load_level(map,background_image_path,music_path)
     
     
 
-
+    --[[
     background_3D:add_component(components.transform)
     background_3D.components[components.transform].position = Vec3:new(10,5,0)
     background_3D.components[components.transform].rotation = Vec3:new(0,90,0)
     background_3D.components[components.transform].scale = Vec3:new(2,2,2)
     background_3D.components[components.transform]:set()
-
+    ]]
 
     
     background_3D_material = material:new()
@@ -130,14 +129,15 @@ function load_level(map,background_image_path,music_path)
     background_3D_material.shader = "resources/Shaders/test_geometry_shader"
 
 
+    --[[
     background_3D:add_component(components.render_mesh)
     background_3D.components[components.render_mesh].layer = 1
     background_3D.components[components.render_mesh].meshes_cout = 1
     background_3D.components[components.render_mesh].meshes = {mesh_location:new("resources/3D Models/cube_sphere.obj","Cube")}
     background_3D.components[components.render_mesh].materials = {background_3D_material}
     background_3D.components[components.render_mesh]:set()
-    
-    
+    ]]
+    background_3D = create_mesh(leyers.background_3D,false,Vec3:new(10,5,0),Vec3:new(0,90,0),Vec3:new(2,2,2),{background_3D_material},{mesh_location:new("resources/3D Models/cube_sphere.obj","Cube")})
 
     scena_3D_teste = scene_3D:new()
     scena_3D_teste:get("resources/3D Models/cube_sphere.obj")

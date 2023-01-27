@@ -5,6 +5,7 @@
 #include "Tempo.h"
 
 #include"box2d/box2d.h"
+#include "game_object.h"
 
 using namespace Objetos;
 
@@ -411,7 +412,7 @@ public:
 	vec2 escala= vec2(0.5,1);
 	
 	bool chao = false, teto = false;
-	shared_ptr<Objetos::objeto_jogo> detec_chao, detec_teto;
+	shared_ptr<objeto_jogo> detec_chao, detec_teto;
 
 
 	fisica_char_B2D(){}

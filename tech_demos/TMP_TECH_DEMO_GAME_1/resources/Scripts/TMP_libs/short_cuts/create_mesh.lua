@@ -16,8 +16,8 @@ function create_mesh(father,is_ui,pos,rot,sca,mats,meshes_locations)
     ret:add_component(components.render_mesh)
     ret.components[components.render_mesh].layer = 1
     ret.components[components.render_mesh].meshes_cout = math.min(tablelength(meshes_locations),tablelength(mats))
-    ret.components[components.render_mesh].meshes = meshes_locations
-    ret.components[components.render_mesh].materials = mats
+    ret.components[components.render_mesh].meshes = deepcopy(meshes_locations)
+    ret.components[components.render_mesh].materials = deepcopy(mats)
     ret.components[components.render_mesh]:set()
     return ret
 end

@@ -15,6 +15,8 @@ using namespace Objetos;
 #include "projetil.h"
 
 #include "args.h"
+#include "game_object.h"
+
 
 using lua_function = int(*)(lua_State*);
 
