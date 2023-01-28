@@ -7,7 +7,7 @@
 
 class projetil : public componente {
 private:
-	shared_ptr<Objetos::transform> tf = NULL;
+	shared_ptr<transform_> tf = NULL;
 	shared_ptr<box_2D> b2D = NULL;
 public:
 	projetil() {}
@@ -17,12 +17,12 @@ public:
 	
 	vector<vec3> alvos_atracao = {};
 	float distancia_atracao = 0,forca_atracao = 0;
-	shared_ptr<Objetos::transform> alvo = NULL;
+	shared_ptr<transform_> alvo = NULL;
 
 
 
 	void atualisar() {
-		if (tf == NULL) { tf = esse_objeto->pegar_componente<Objetos::transform>(); }
+		if (tf == NULL) { tf = esse_objeto->pegar_componente<transform_>(); }
 		if (b2D == NULL) { b2D = esse_objeto->pegar_componente<box_2D>(); }
 
 		if (tf != NULL) {

@@ -58,7 +58,8 @@ using namespace glm;
 #include "components/sfml_audio.h"
 #include "game_object.h"
 
-
+#include "components/camera.h"
+#include "components/transform.h"
 //#include "Box2D_classe.h"
 //#include  "box2D_antigo.h"
 
@@ -184,7 +185,7 @@ void iniciarTeste3() {
 	api_grafica->pos_processamento_info.shad = "recursos/Shaders/post_processing";
 
 
-	Objetos::MatrizMundi = mat4(1.0f);
+	MatrizMundi = mat4(1.0f);
 
 
 	

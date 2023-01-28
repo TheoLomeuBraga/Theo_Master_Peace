@@ -11,7 +11,8 @@
 using namespace Objetos;
 #include <GL/glew.h>
 #include "game_object.h"
-
+#include "components/camera.h"
+#include "components/transform.h"
 //#include "API_grafica_classe.h"
 
 
@@ -226,18 +227,18 @@ typedef struct mesh_ogl_struct mesh_ogl;
 		
 
 
-		shared_ptr<Objetos::transform> teste_tf;
+		shared_ptr<transform_> teste_tf;
 		shared_ptr<objeto_jogo> teste_cam = NULL;
 		void iniciar_teste_tf_teste_cam() {
-			teste_tf = make_shared<Objetos::transform>(Objetos::transform(false, vec3(10, 0, 0), vec3(0, 0, 0), vec3(1, 1, 1)));
+			teste_tf = make_shared<transform_>(transform_(false, vec3(10, 0, 0), vec3(0, 0, 0), vec3(1, 1, 1)));
 			teste_cam = novo_objeto_jogo();
 
-			//teste_cam->adicionar_componente<Objetos::camera>(Objetos::camera(vec3(0.0f, 0.0f, 0.0f), vec3(1.0f, 0.0f, 0.0f), vec3(0.0f, 1.0f, 0.0f), 90, 1, 1, 0.01, 100));
-			teste_cam->adicionar_componente<Objetos::camera>(Objetos::camera(vec3(0.0f, 0.0f, 0.0f), vec3(1.0f, 0.0f, 0.0f), vec3(0.0f, 1.0f, 0.0f), 10, 10, 0.01, 100));
+			//teste_cam->adicionar_componente<camera>(camera(vec3(0.0f, 0.0f, 0.0f), vec3(1.0f, 0.0f, 0.0f), vec3(0.0f, 1.0f, 0.0f), 90, 1, 1, 0.01, 100));
+			teste_cam->adicionar_componente<camera>(camera(vec3(0.0f, 0.0f, 0.0f), vec3(1.0f, 0.0f, 0.0f), vec3(0.0f, 1.0f, 0.0f), 10, 10, 0.01, 100));
 
-			teste_cam->adicionar_componente<Objetos::transform>(Objetos::transform(false, vec3(0, 0, 0), vec3(0, 0, 0), vec3(1, 1, 1)));
-			teste_cam->pegar_componente<Objetos::camera>()->paiTF = teste_cam->pegar_componente<Objetos::transform>().get();
-			teste_cam->pegar_componente<Objetos::camera>()->atualizar_tf();
+			teste_cam->adicionar_componente<transform_>(transform_(false, vec3(0, 0, 0), vec3(0, 0, 0), vec3(1, 1, 1)));
+			teste_cam->pegar_componente<camera>()->paiTF = teste_cam->pegar_componente<transform_>().get();
+			teste_cam->pegar_componente<camera>()->atualizar_tf();
 		}
 
 		void teste_desenhar_malha() {
@@ -246,7 +247,7 @@ typedef struct mesh_ogl_struct mesh_ogl;
 			}
 			teste_desenhar_malha(teste_tf, teste_cam);
 		}
-		void teste_desenhar_malha(shared_ptr<Objetos::transform> tf, shared_ptr<objeto_jogo> cam) {
+		void teste_desenhar_malha(shared_ptr<transform_> tf, shared_ptr<objeto_jogo> cam) {
 			
 			unsigned int shader_s = pegar_shader("resources/Shaders/teste_malha");
 			glUseProgram(shader_s);
@@ -254,8 +255,8 @@ typedef struct mesh_ogl_struct mesh_ogl;
 			//transform
 			glUniform1i(glGetUniformLocation(shader_s, "ui"), tf->UI);
 			glUniformMatrix4fv(glGetUniformLocation(shader_s, "transform"), 1, GL_FALSE, &tf->matrizTransform[0][0]);
-			glUniformMatrix4fv(glGetUniformLocation(shader_s, "vision"), 1, GL_FALSE, &cam->pegar_componente<Objetos::camera>()->matrizVisao[0][0]);
-			glUniformMatrix4fv(glGetUniformLocation(shader_s, "projection"), 1, GL_FALSE, &cam->pegar_componente<Objetos::camera>()->matrizProjecao[0][0]);
+			glUniformMatrix4fv(glGetUniformLocation(shader_s, "vision"), 1, GL_FALSE, &cam->pegar_componente<camera>()->matrizVisao[0][0]);
+			glUniformMatrix4fv(glGetUniformLocation(shader_s, "projection"), 1, GL_FALSE, &cam->pegar_componente<camera>()->matrizProjecao[0][0]);
 
 			for (int i = 0; i < 4; i++) {
 				glEnableVertexAttribArray(i);
@@ -294,7 +295,7 @@ typedef struct mesh_ogl_struct mesh_ogl;
 		for (pair<shared_ptr<objeto_jogo>, unsigned int> p : oclusion_queries) {
 
 
-			shared_ptr<Objetos::transform> tf = p.first->pegar_componente<Objetos::transform>();
+			shared_ptr<transform_> tf = p.first->pegar_componente<transform_>();
 			shared_ptr<render_malha> rm = p.first->pegar_componente<render_malha>();
 
 			if(tf != NULL && rm != NULL && rm->usar_oclusao){
@@ -317,8 +318,8 @@ typedef struct mesh_ogl_struct mesh_ogl;
 				mat4 transform = scale(tf->matrizTransform, tamanho);
 				glUniform1i(glGetUniformLocation(shader_s, "ui"), tf->UI);
 				glUniformMatrix4fv(glGetUniformLocation(shader_s, "transform"), 1, GL_FALSE, &transform[0][0]);
-				glUniformMatrix4fv(glGetUniformLocation(shader_s, "vision"), 1, GL_FALSE, &cam->pegar_componente<Objetos::camera>()->matrizVisao[0][0]);
-				glUniformMatrix4fv(glGetUniformLocation(shader_s, "projection"), 1, GL_FALSE, &cam->pegar_componente<Objetos::camera>()->matrizProjecao[0][0]);
+				glUniformMatrix4fv(glGetUniformLocation(shader_s, "vision"), 1, GL_FALSE, &cam->pegar_componente<camera>()->matrizVisao[0][0]);
+				glUniformMatrix4fv(glGetUniformLocation(shader_s, "projection"), 1, GL_FALSE, &cam->pegar_componente<camera>()->matrizProjecao[0][0]);
 				selecionar_desenhar_malha_querie(oclusion_box.get());
 				glEndQuery(GL_SAMPLES_PASSED);
 				
@@ -720,15 +721,15 @@ typedef struct mesh_ogl_struct mesh_ogl;
 			
 
 
-			if (obj->pegar_componente<Objetos::transform>() != NULL && cam->pegar_componente<Objetos::transform>() != NULL && cam->pegar_componente<Objetos::camera>() != NULL) {
+			if (obj->pegar_componente<transform_>() != NULL && cam->pegar_componente<transform_>() != NULL && cam->pegar_componente<camera>() != NULL) {
 				
-				shared_ptr<Objetos::transform> tf = obj->pegar_componente<Objetos::transform>();
+				shared_ptr<transform_> tf = obj->pegar_componente<transform_>();
 
 
 
 
 
-				shared_ptr<Objetos::camera> ca = cam->pegar_componente<Objetos::camera>();
+				shared_ptr<camera> ca = cam->pegar_componente<camera>();
 
 
 
@@ -1294,7 +1295,7 @@ typedef struct mesh_ogl_struct mesh_ogl;
 				if (obj[i] > 0 && cam > 0) {
 					//iniciar_teste_tf_teste_cam();
 					//teste_desenhar_malha(teste_tf, cam);
-					//teste_desenhar_malha(obj[i]->pegar_componente<Objetos::transform>(), cam);
+					//teste_desenhar_malha(obj[i]->pegar_componente<transform_>(), cam);
 
 					reindenizar_objeto(obj[i], cam);
 					

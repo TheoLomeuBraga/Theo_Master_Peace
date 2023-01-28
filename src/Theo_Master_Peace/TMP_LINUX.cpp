@@ -29,6 +29,8 @@
 #include "ManusearArquivos.h"
 #include "TESTE.h"
 #include "components/box_2d.h"
+#include "components/camera.h"
+#include "components/transform.h"
 
 
 #include <bitset>
@@ -164,9 +166,9 @@ void experimento_ponteiros3() {
 
 void experimento_objeto() {
     objeto_jogo obj;
-    obj.adicionar_componente<Objetos::transform>(Objetos::transform());
-    obj.adicionar_componente<Objetos::camera>(Objetos::camera());
-    obj.remover_componente<Objetos::transform>();
+    obj.adicionar_componente<transform_>(transform_());
+    obj.adicionar_componente<camera>(camera());
+    obj.remover_componente<transform_>();
     cout << "teste obj componentes: " << obj.pegar_lista_componentes().size() << " " << obj.pegar_lista_componentes()[0] << endl;
 }
 

@@ -572,7 +572,7 @@ namespace funcoes_ponte {
 		if (argumentos > 0) {
 			obj = string_ponteiro<objeto_jogo>(lua_tostring(L, 1));
 		}
-		shared_ptr<Objetos::transform> tf = obj->pegar_componente<Objetos::transform>();
+		shared_ptr<transform_> tf = obj->pegar_componente<transform_>();
 		if (argumentos == 1 && tf != NULL) {
 			json JSON;
 
@@ -596,7 +596,7 @@ namespace funcoes_ponte {
 		if (argumentos > 0) {
 			obj = string_ponteiro<objeto_jogo>(lua_tostring(L, 1));
 		}
-		shared_ptr<Objetos::transform> tf = obj->pegar_componente<Objetos::transform>();
+		shared_ptr<transform_> tf = obj->pegar_componente<transform_>();
 		if (argumentos == 2 && obj != NULL && tf != NULL) {
 			json JSON = json::parse(lua_tostring(L, 2));
 			tf->UI = JSON["is_ui"].get<bool>();
@@ -616,7 +616,7 @@ namespace funcoes_ponte {
 		if (argumentos > 0) {
 			obj = string_ponteiro<objeto_jogo>(lua_tostring(L, 1));
 		}
-		shared_ptr<Objetos::transform> tf = obj->pegar_componente<Objetos::transform>();
+		shared_ptr<transform_> tf = obj->pegar_componente<transform_>();
 		if (tf != NULL) {
 			vec3 v3 = vec3(lua_tonumber(L, 2), lua_tonumber(L, 3), lua_tonumber(L, 4));
 			tf->pos += v3;
@@ -630,7 +630,7 @@ namespace funcoes_ponte {
 		if (argumentos > 0) {
 			obj = string_ponteiro<objeto_jogo>(lua_tostring(L, 1));
 		}
-		shared_ptr<Objetos::transform> tf = obj->pegar_componente<Objetos::transform>();
+		shared_ptr<transform_> tf = obj->pegar_componente<transform_>();
 		if (tf != NULL) {
 			
 			vec3 v3a = vec3(lua_tonumber(L, 2), lua_tonumber(L, 3), lua_tonumber(L, 4)),v3b = tf->pegar_angulo_graus(),v3c = vec3(v3a.x + v3b.x, v3a.y + v3b.y, v3a.z + v3b.z);
@@ -645,7 +645,7 @@ namespace funcoes_ponte {
 		if (argumentos > 0) {
 			obj = string_ponteiro<objeto_jogo>(lua_tostring(L, 1));
 		}
-		shared_ptr<Objetos::transform> tf = obj->pegar_componente<Objetos::transform>();
+		shared_ptr<transform_> tf = obj->pegar_componente<transform_>();
 		if (tf != NULL) {
 			vec3 v3 = vec3(lua_tonumber(L, 2), lua_tonumber(L, 3), lua_tonumber(L, 4));
 			tf->pos = v3;
@@ -659,7 +659,7 @@ namespace funcoes_ponte {
 		if (argumentos > 0) {
 			obj = string_ponteiro<objeto_jogo>(lua_tostring(L, 1));
 		}
-		shared_ptr<Objetos::transform> tf = obj->pegar_componente<Objetos::transform>();
+		shared_ptr<transform_> tf = obj->pegar_componente<transform_>();
 		if (tf != NULL) {
 			vec3 v3 = vec3(lua_tonumber(L, 2), lua_tonumber(L, 3), lua_tonumber(L, 4));
 			tf->mudar_angulo_graus(v3);
@@ -673,7 +673,7 @@ namespace funcoes_ponte {
 		if (argumentos > 0) {
 			obj = string_ponteiro<objeto_jogo>(lua_tostring(L, 1));
 		}
-		shared_ptr<Objetos::transform> tf = obj->pegar_componente<Objetos::transform>();
+		shared_ptr<transform_> tf = obj->pegar_componente<transform_>();
 		if (tf != NULL) {
 			vec3 v3 = vec3(lua_tonumber(L, 2), lua_tonumber(L, 3), lua_tonumber(L, 4));
 			tf->esca = v3;
@@ -2173,8 +2173,8 @@ public:
 };
 
 map<string,void(*)(objeto_jogo*,bool)> add_remove_component_by_string = {
-	pair<string,void(*)(objeto_jogo*,bool)>("transform",[](objeto_jogo* obj,bool add){if(add){obj->adicionar_componente<Objetos::transform>(Objetos::transform());}else{obj->remover_componente<Objetos::transform>();}}),
-	pair<string,void(*)(objeto_jogo*,bool)>("camera",[](objeto_jogo* obj,bool add){if(add){obj->adicionar_componente<Objetos::camera>(Objetos::camera());}else{obj->remover_componente<Objetos::camera>();}}),
+	pair<string,void(*)(objeto_jogo*,bool)>("transform",[](objeto_jogo* obj,bool add){if(add){obj->adicionar_componente<transform_>(transform_());}else{obj->remover_componente<transform_>();}}),
+	pair<string,void(*)(objeto_jogo*,bool)>("camera",[](objeto_jogo* obj,bool add){if(add){obj->adicionar_componente<camera>(camera());}else{obj->remover_componente<camera>();}}),
 	pair<string,void(*)(objeto_jogo*,bool)>("render_text",[](objeto_jogo* obj,bool add){if(add){obj->adicionar_componente<render_texto>(render_texto());}else{obj->remover_componente<render_texto>();}}),
 	pair<string,void(*)(objeto_jogo*,bool)>("render_sprite",[](objeto_jogo* obj,bool add){if(add){obj->adicionar_componente<render_sprite>(render_sprite());}else{obj->remover_componente<render_sprite>();}}),
 	pair<string,void(*)(objeto_jogo*,bool)>("render_shader",[](objeto_jogo* obj,bool add){if(add){obj->adicionar_componente<render_shader>(render_shader());}else{obj->remover_componente<render_shader>();}}),
@@ -2231,8 +2231,8 @@ int get_component_size(lua_State* L) {
 
 
 map<string,bool(*)(objeto_jogo*)> have_component_by_string = {
-	pair<string,bool(*)(objeto_jogo*)>("transform",[](objeto_jogo* obj){return obj->tem_componente<Objetos::transform>();}),
-	pair<string,bool(*)(objeto_jogo*)>("camera",[](objeto_jogo* obj){return obj->tem_componente<Objetos::camera>();}),
+	pair<string,bool(*)(objeto_jogo*)>("transform",[](objeto_jogo* obj){return obj->tem_componente<transform_>();}),
+	pair<string,bool(*)(objeto_jogo*)>("camera",[](objeto_jogo* obj){return obj->tem_componente<camera>();}),
 	pair<string,bool(*)(objeto_jogo*)>("render_text",[](objeto_jogo* obj){return obj->tem_componente<render_texto>();}),
 	pair<string,bool(*)(objeto_jogo*)>("render_sprite",[](objeto_jogo* obj){return obj->tem_componente<render_sprite>();}),
 	pair<string,bool(*)(objeto_jogo*)>("render_shader",[](objeto_jogo* obj){return obj->tem_componente<render_shader>();}),

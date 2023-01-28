@@ -146,9 +146,9 @@ public:
 		else if (dinamica == dinamico) {
 			BodyDef.type = b2_dynamicBody;
 		}
-		if (esse_objeto->pegar_componente<Objetos::transform>() != NULL) {
-			BodyDef.position = converter(esse_objeto->pegar_componente<Objetos::transform>()->pegar_pos_global());
-			vec3 rot = glm::radians(quat_graus(esse_objeto->pegar_componente<Objetos::transform>()->pegar_graus_global()));
+		if (esse_objeto->pegar_componente<transform_>() != NULL) {
+			BodyDef.position = converter(esse_objeto->pegar_componente<transform_>()->pegar_pos_global());
+			vec3 rot = glm::radians(quat_graus(esse_objeto->pegar_componente<transform_>()->pegar_graus_global()));
 			BodyDef.angle = rot.z;
 		}
 		BodyDef.fixedRotation = !rotacionar;
@@ -173,7 +173,7 @@ public:
 			
 		}
 		else if (forma == convexo) {
-			if (esse_objeto->pegar_componente<Objetos::transform>() != NULL) {
+			if (esse_objeto->pegar_componente<transform_>() != NULL) {
 				vertices_B2 = converter(vertices, escala);
 				Vertex_shape.Set(&vertices_B2[0], vertices_B2.size());
 			}
@@ -218,9 +218,9 @@ public:
 		corpo_obj.insert(pair<b2Body*, shared_ptr<objeto_jogo>>(corpo,esse_objeto));
 
 		
-		if (esse_objeto->pegar_componente<Objetos::transform>() != NULL) {
-			vec3 pos = esse_objeto->pegar_componente<Objetos::transform>()->pegar_pos_global();
-			float rot = esse_objeto->pegar_componente<Objetos::transform>()->pegar_graus_global().z;
+		if (esse_objeto->pegar_componente<transform_>() != NULL) {
+			vec3 pos = esse_objeto->pegar_componente<transform_>()->pegar_pos_global();
+			float rot = esse_objeto->pegar_componente<transform_>()->pegar_graus_global().z;
 			corpo->SetTransform(b2Vec2(pos.x, pos.y), rot);
 		}
 		
@@ -237,10 +237,10 @@ public:
 
 		corpo->SetGravityScale(escala_gravidade);
 		
-		if (esse_objeto->pegar_componente<Objetos::transform>() != NULL) {
+		if (esse_objeto->pegar_componente<transform_>() != NULL) {
 			b2Vec2 pos = corpo->GetPosition();
-			esse_objeto->pegar_componente<Objetos::transform>()->pos = vec3(pos.x, pos.y,esse_objeto->pegar_componente<Objetos::transform>()->pos.z);
-			esse_objeto->pegar_componente<Objetos::transform>()->quater = quat(vec3(0, 0, corpo->GetAngle()));
+			esse_objeto->pegar_componente<transform_>()->pos = vec3(pos.x, pos.y,esse_objeto->pegar_componente<transform_>()->pos.z);
+			esse_objeto->pegar_componente<transform_>()->quater = quat(vec3(0, 0, corpo->GetAngle()));
 		}
 	}
 
@@ -424,7 +424,7 @@ public:
 		}
 
 		detec_chao = novo_objeto_jogo();
-		detec_chao->adicionar_componente(Objetos::transform(false, vec3(0, 0, 0), vec3(0, 0, 0), vec3(1, 1, 1)));
+		detec_chao->adicionar_componente(transform_(false, vec3(0, 0, 0), vec3(0, 0, 0), vec3(1, 1, 1)));
 		box_2D b2d;
 		b2d.gatilho = true;
 		b2d.dinamica = dinamico;
@@ -434,7 +434,7 @@ public:
 		Objetos::cena_objetos_selecionados->adicionar_objetos({ detec_chao });
 
 		detec_teto = novo_objeto_jogo();
-		detec_teto->adicionar_componente(Objetos::transform(false, vec3(0, 0, 0), vec3(0, 0, 0), vec3(1, 1, 1)));
+		detec_teto->adicionar_componente(transform_(false, vec3(0, 0, 0), vec3(0, 0, 0), vec3(1, 1, 1)));
 		b2d.gatilho = true;
 		b2d.dinamica = dinamico;
 		b2d.escala_gravidade = 0;
@@ -456,7 +456,7 @@ public:
 			}
 		
 
-		vec3 pos = esse_objeto->pegar_componente<Objetos::transform>()->pos;
+		vec3 pos = esse_objeto->pegar_componente<transform_>()->pos;
 
 		detec_chao->pegar_componente<box_2D>()->mudar_pos(vec2(pos.x,pos.y-escala.y));
 		detec_teto->pegar_componente<box_2D>()->mudar_pos(vec2(pos.x, pos.y + escala.y));
