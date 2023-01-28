@@ -6,7 +6,7 @@ using namespace std;
 #include "RecursosT.h"
 #include "game_object.h"
 
-enum tipo_luz {
+	enum tipo_luz {
 		ponto = 0,
 		holofote = 1,
 		direcional = 2,//tipo um sol
