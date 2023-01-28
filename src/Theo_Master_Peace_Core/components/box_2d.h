@@ -7,7 +7,6 @@
 #include"box2d/box2d.h"
 #include "game_object.h"
 
-using namespace Objetos;
 
 
 
@@ -431,7 +430,7 @@ public:
 		b2d.escala = vec2(escala.x - 0.1f, 0.1f);
 		b2d.forma = caixa;
 		detec_chao->adicionar_componente(b2d);
-		Objetos::cena_objetos_selecionados->adicionar_objetos({ detec_chao });
+		cena_objetos_selecionados->adicionar_objetos({ detec_chao });
 
 		detec_teto = novo_objeto_jogo();
 		detec_teto->adicionar_componente(transform_(false, vec3(0, 0, 0), vec3(0, 0, 0), vec3(1, 1, 1)));
@@ -441,7 +440,7 @@ public:
 		b2d.escala = vec2(escala.x - 0.1f, 0.1f);
 		b2d.forma = caixa;
 		detec_teto->adicionar_componente(b2d);
-		Objetos::cena_objetos_selecionados->adicionar_objetos({ detec_teto });
+		cena_objetos_selecionados->adicionar_objetos({ detec_teto });
 
 
 
@@ -484,8 +483,8 @@ public:
 		
 	}
 	void finalisar() {
-		Objetos::cena_objetos_selecionados->remover_objeto({ detec_chao });
-		Objetos::cena_objetos_selecionados->remover_objeto({ detec_teto });
+		cena_objetos_selecionados->remover_objeto({ detec_chao });
+		cena_objetos_selecionados->remover_objeto({ detec_teto });
 	}
 
 	

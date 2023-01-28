@@ -21,67 +21,7 @@ using namespace std;
 
 
 
-namespace Objetos {
-
-
-	
-	//adicionar suporte a proje��o oblica
-
-	
-
-
-	
-
-	
-
-
-	
-
-	
-	
-
-	
-
-
-
-
-
-
-	
-
-	
-
-
-
-
-	
-
-
-
-
-	
-
-
-
-	//refaser
-	
-	
-
-
-	
-	
-
-
-	
-
-	
-
-
-	
-	
-
-
-	vector<shared_ptr<objeto_jogo>> lixeira;
+vector<shared_ptr<objeto_jogo>> lixeira;
 	void esvasiar_lixeira() {
 		vector<shared_ptr<objeto_jogo>> vazio;
 		lixeira.swap(vazio);
@@ -390,13 +330,3 @@ namespace Objetos {
 
 	cena_objetos* cena_objetos_selecionados;
 	//cena_objetos cena_objetos_selecionados;
-
-
-
-
-
-	
-
-
-};
-

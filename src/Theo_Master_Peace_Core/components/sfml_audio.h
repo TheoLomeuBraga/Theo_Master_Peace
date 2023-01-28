@@ -5,6 +5,7 @@
 #include "RecursosT.h"
 #include "sceane.h"
 #include "game_object.h"
+#include "components/transform.h"
 
 
 mapeamento_assets<sf::SoundBuffer> buffers_som_sfml;
@@ -22,12 +23,14 @@ void carregar_audio_buffer_thread(string local, shared_ptr<sf::SoundBuffer>* ret
 }
 
 
-//"recursos\\Som\\teste de audio.wav"
+
+shared_ptr<transform_> listener_transform = NULL;
+
 class sfml_audio : public componente {
 public:
 
 	
-
+	//https://www.sfml-dev.org/tutorials/2.5/audio-spatialization.php
 	
 
 	

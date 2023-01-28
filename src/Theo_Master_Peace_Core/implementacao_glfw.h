@@ -512,9 +512,9 @@ void Reindenizar() {
 	
 	
 
-	Objetos::cena_objetos_selecionados->atualisar();
-	Objetos::cena_objetos_selecionados->atualisar_transforms();
-	Objetos::cena_objetos_selecionados->atualisar_Logica_Scripst();
+	cena_objetos_selecionados->atualisar();
+	cena_objetos_selecionados->atualisar_transforms();
+	cena_objetos_selecionados->atualisar_Logica_Scripst();
 
 	
 	

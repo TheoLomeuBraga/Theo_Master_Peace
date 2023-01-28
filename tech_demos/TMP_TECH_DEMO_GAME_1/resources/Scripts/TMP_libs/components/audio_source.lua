@@ -7,6 +7,8 @@ function set_audio(object,path,pause,loop,time,speed,volume)
 end
 function get_audio(object)
 end
+function set_lisener_object(object)
+end
 
 audio_component = {}
 function audio_component:new(object_ptr)

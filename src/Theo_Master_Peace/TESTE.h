@@ -63,7 +63,7 @@ using namespace glm;
 //#include "Box2D_classe.h"
 //#include  "box2D_antigo.h"
 
-using namespace Objetos;
+
 using namespace loop_principal;
 //teste3
 cena_objetos cena("Teste3");
@@ -102,7 +102,7 @@ vector<objeto_jogo*> tilemap_objetos(shared_ptr<tile_set> ts, shared_ptr < tile_
 				
 
 				vec3 pos = (ivec3(b % tm->res.x, (float)(int)b / tm->res.x, a) * ivec3(2, -2, 0));
-				obj->adicionar_componente<Objetos::transform>(Objetos::transform(false, pos, vec3(0, 0, 0), vec3(1, 1, 1)));
+				obj->adicionar_componente<transform>(transform(false, pos, vec3(0, 0, 0), vec3(1, 1, 1)));
 				
 				if (ts->tiles[tile_id].tipo_colisao != 0) {
 					box_2D b2d;
@@ -240,15 +240,15 @@ void iniciarTeste3() {
 	core->adicionar_componente<componente_lua>(componente_lua());
 	core->pegar_componente< componente_lua>()->adicionar_script("resources/Scripts/core.lua");
 	
-	Objetos::cena_objetos_selecionados = &cena;
+	cena_objetos_selecionados = &cena;
 	
 	
 	
 	
 	
-	//Objetos::cena_objetos_selecionados->adicionar_objeto(test_3D);
-	Objetos::cena_objetos_selecionados->adicionar_objeto(core);
-	Objetos::cena_objetos_selecionados->adicionar_objeto(camera_teste);
+	//cena_objetos_selecionados->adicionar_objeto(test_3D);
+	cena_objetos_selecionados->adicionar_objeto(core);
+	cena_objetos_selecionados->adicionar_objeto(camera_teste);
 	
 	
 	

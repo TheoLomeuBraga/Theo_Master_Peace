@@ -8,7 +8,7 @@
 #include "Tempo.h"
 #include "sceane.h"
 #include "LoopPrincipal.h"
-using namespace Objetos;
+
 #include <GL/glew.h>
 #include "game_object.h"
 #include "components/camera.h"
@@ -1477,8 +1477,8 @@ typedef struct mesh_ogl_struct mesh_ogl;
 				}
 
 				if (info_render[a].desenhar_objetos) {
-					if (Objetos::cena_objetos_selecionados->cameras.size() >= relevancia_camera + 1 && Objetos::cena_objetos_selecionados->cameras[relevancia_camera] != NULL) {
-						reindenizar_camada_objetos(Objetos::cena_objetos_selecionados->objetos_camadas_render[a], Objetos::cena_objetos_selecionados->cameras[relevancia_camera]);
+					if (cena_objetos_selecionados->cameras.size() >= relevancia_camera + 1 && cena_objetos_selecionados->cameras[relevancia_camera] != NULL) {
+						reindenizar_camada_objetos(cena_objetos_selecionados->objetos_camadas_render[a], cena_objetos_selecionados->cameras[relevancia_camera]);
 						
 					}
 					else {
@@ -1487,7 +1487,7 @@ typedef struct mesh_ogl_struct mesh_ogl;
 				}
 
 				
-				rodar_oclusion_queries(Objetos::cena_objetos_selecionados->cameras[relevancia_camera]);
+				rodar_oclusion_queries(cena_objetos_selecionados->cameras[relevancia_camera]);
 
 				if (info_render[a].terminar_render) {
 					ogl_aplicar_pos_processamento();

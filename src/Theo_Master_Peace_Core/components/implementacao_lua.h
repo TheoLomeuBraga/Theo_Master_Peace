@@ -7,7 +7,6 @@
 #include "Tempo.h"
 using namespace Tempo;
 #include "sceane.h"
-using namespace Objetos;
 #include "box_2d.h"
 #include "sfml_audio.h"
 #include "lua/lua.hpp"
@@ -176,10 +175,10 @@ namespace funcoes_ponte {
 		int argumentos = lua_gettop(L);
 		shared_ptr<objeto_jogo> obj = novo_objeto_jogo();
 		if (argumentos == 0) {
-			Objetos::cena_objetos_selecionados->adicionar_objeto(obj);
+			cena_objetos_selecionados->adicionar_objeto(obj);
 		}
 		else if (argumentos == 1) {
-			Objetos::cena_objetos_selecionados->adicionar_objeto(string_ponteiro<objeto_jogo>(lua_tostring(L, 1)), obj);
+			cena_objetos_selecionados->adicionar_objeto(string_ponteiro<objeto_jogo>(lua_tostring(L, 1)), obj);
 		}
 
 
@@ -189,7 +188,7 @@ namespace funcoes_ponte {
 
 	int get_object_with_name(lua_State* L) {
 		string output = "";
-		shared_ptr<objeto_jogo> obj = (*Objetos::cena_objetos_selecionados)[lua_tostring(L, 1)];
+		shared_ptr<objeto_jogo> obj = (*cena_objetos_selecionados)[lua_tostring(L, 1)];
 		output = ponteiro_string(obj.get());
 		lua_pushstring(L, output.c_str());
 		return 1;
@@ -1107,6 +1106,16 @@ namespace funcoes_ponte {
 		return 6;
 	}
 
+	int set_lisener_object(lua_State* L){
+		int argumentos = lua_gettop(L);
+		objeto_jogo* obj = NULL;
+		audio_info output;
+		if (argumentos > 0) {
+			obj = string_ponteiro<objeto_jogo>(lua_tostring(L, 1));
+		}
+		listener_transform = obj->pegar_componente<transform_>();
+		return 0;
+	}
 	//geral render
 
 
@@ -1782,6 +1791,8 @@ namespace funcoes_ponte {
 		//audio
 		pair<string, lua_function>("get_audio", funcoes_ponte::get_audio),
 		pair<string, lua_function>("set_audio", funcoes_ponte::set_audio),
+		pair<string, lua_function>("set_lisener_object", funcoes_ponte::set_lisener_object),
+		
 
 		//script
 		pair<string, lua_function>("get_script_size", get_script_size),
