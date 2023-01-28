@@ -7,18 +7,18 @@
 
 
 
-#include "args.h"
 #include <iostream>
 #include <fstream>
 #include <functional>
 #include <stdlib.h>
 #include <thread>
+#include <future>
 #include  <fstream>
 #include <type_traits>
 #include <iterator>
 
 
-
+#include "args.h"
 
 
 #include "Tempo.h"
@@ -26,9 +26,10 @@
 #include "Config.h"
 #include "Console_Comando.h"
 #include "ManusearArquivos.h"
-#include "Comandos.h"
 #include "TESTE.h"
-#include "box_2d.h"
+#include "components/box_2d.h"
+#include "components/camera.h"
+#include "components/transform.h"
 
 
 #include <bitset>
