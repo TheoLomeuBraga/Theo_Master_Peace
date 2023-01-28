@@ -505,11 +505,7 @@ public:
 			return ret;
 		}
 		
-		enum tipo_luz {
-			ponto = 0,
-			holofote = 1,
-			direcional = 2,
-		};
+		
 
 #define NO_TEXTURAS 6
 #define NO_INPUTS 16

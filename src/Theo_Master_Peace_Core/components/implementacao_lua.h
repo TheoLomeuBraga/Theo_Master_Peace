@@ -6,7 +6,7 @@
 #include "input.h"
 #include "Tempo.h"
 using namespace Tempo;
-#include "Objetos.h"
+#include "sceane.h"
 using namespace Objetos;
 #include "box_2d.h"
 #include "sfml_audio.h"

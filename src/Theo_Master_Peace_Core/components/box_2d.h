@@ -1,7 +1,7 @@
 #pragma once
 #include <set>
 #include "RecursosT.h"
-#include "Objetos.h"
+#include "sceane.h"
 #include "Tempo.h"
 
 #include"box2d/box2d.h"

@@ -34,7 +34,7 @@ using namespace glm;
 #include "Config.h"
 #include "input.h"
 #include "Tempo.h"
-#include "Objetos.h"
+#include "sceane.h"
 using namespace Objetos;
 
 

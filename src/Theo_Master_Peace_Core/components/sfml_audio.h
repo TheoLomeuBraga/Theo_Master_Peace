@@ -3,7 +3,7 @@
 #include <SFML/Audio.hpp>
 #include "Config.h"
 #include "RecursosT.h"
-#include "Objetos.h"
+#include "sceane.h"
 #include "game_object.h"
 
 

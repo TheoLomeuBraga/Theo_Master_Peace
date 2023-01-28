@@ -2,7 +2,7 @@
 #include <iostream>
 #include "Config.h"
 #include "RecursosT.h"
-#include "Objetos.h"
+#include "sceane.h"
 #include "components/box_2d.h"
 
 class projetil : public componente {

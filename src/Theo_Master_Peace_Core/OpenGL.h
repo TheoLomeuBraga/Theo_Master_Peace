@@ -6,7 +6,7 @@
 #include "Config.h"
 #include "input.h"
 #include "Tempo.h"
-#include "Objetos.h"
+#include "sceane.h"
 #include "LoopPrincipal.h"
 using namespace Objetos;
 #include <GL/glew.h>
