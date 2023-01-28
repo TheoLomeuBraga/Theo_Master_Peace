@@ -11,8 +11,10 @@ using namespace Objetos;
 #include "box_2d.h"
 #include "sfml_audio.h"
 #include "lua/lua.hpp"
-
+#include "components/render_mesh.h"
 #include "projetil.h"
+#include "components/render_sprite.h"
+#include "components/render_tilemap.h"
 
 #include "args.h"
 #include "game_object.h"
@@ -2173,9 +2175,9 @@ public:
 map<string,void(*)(objeto_jogo*,bool)> add_remove_component_by_string = {
 	pair<string,void(*)(objeto_jogo*,bool)>("transform",[](objeto_jogo* obj,bool add){if(add){obj->adicionar_componente<Objetos::transform>(Objetos::transform());}else{obj->remover_componente<Objetos::transform>();}}),
 	pair<string,void(*)(objeto_jogo*,bool)>("camera",[](objeto_jogo* obj,bool add){if(add){obj->adicionar_componente<Objetos::camera>(Objetos::camera());}else{obj->remover_componente<Objetos::camera>();}}),
-	pair<string,void(*)(objeto_jogo*,bool)>("render_text",[](objeto_jogo* obj,bool add){if(add){obj->adicionar_componente<Objetos::render_texto>(Objetos::render_texto());}else{obj->remover_componente<Objetos::render_texto>();}}),
-	pair<string,void(*)(objeto_jogo*,bool)>("render_sprite",[](objeto_jogo* obj,bool add){if(add){obj->adicionar_componente<Objetos::render_sprite>(Objetos::render_sprite());}else{obj->remover_componente<Objetos::render_sprite>();}}),
-	pair<string,void(*)(objeto_jogo*,bool)>("render_shader",[](objeto_jogo* obj,bool add){if(add){obj->adicionar_componente<Objetos::render_shader>(Objetos::render_shader());}else{obj->remover_componente<Objetos::render_shader>();}}),
+	pair<string,void(*)(objeto_jogo*,bool)>("render_text",[](objeto_jogo* obj,bool add){if(add){obj->adicionar_componente<render_texto>(render_texto());}else{obj->remover_componente<render_texto>();}}),
+	pair<string,void(*)(objeto_jogo*,bool)>("render_sprite",[](objeto_jogo* obj,bool add){if(add){obj->adicionar_componente<render_sprite>(render_sprite());}else{obj->remover_componente<render_sprite>();}}),
+	pair<string,void(*)(objeto_jogo*,bool)>("render_shader",[](objeto_jogo* obj,bool add){if(add){obj->adicionar_componente<render_shader>(render_shader());}else{obj->remover_componente<render_shader>();}}),
 	pair<string,void(*)(objeto_jogo*,bool)>("physics_2D",[](objeto_jogo* obj,bool add){if(add){obj->adicionar_componente<box_2D>(box_2D());}else{obj->remover_componente<box_2D>();}}),
 	pair<string,void(*)(objeto_jogo*,bool)>("character_physics_2D",[](objeto_jogo* obj,bool add){if(add){obj->adicionar_componente<fisica_char_B2D>(fisica_char_B2D());}else{obj->remover_componente<fisica_char_B2D>();}}),
 	pair<string,void(*)(objeto_jogo*,bool)>("audio_source",[](objeto_jogo* obj,bool add){if(add){obj->adicionar_componente<sfml_audio>(sfml_audio());}else{obj->remover_componente<sfml_audio>();}}),
@@ -2231,15 +2233,15 @@ int get_component_size(lua_State* L) {
 map<string,bool(*)(objeto_jogo*)> have_component_by_string = {
 	pair<string,bool(*)(objeto_jogo*)>("transform",[](objeto_jogo* obj){return obj->tem_componente<Objetos::transform>();}),
 	pair<string,bool(*)(objeto_jogo*)>("camera",[](objeto_jogo* obj){return obj->tem_componente<Objetos::camera>();}),
-	pair<string,bool(*)(objeto_jogo*)>("render_text",[](objeto_jogo* obj){return obj->tem_componente<Objetos::render_texto>();}),
-	pair<string,bool(*)(objeto_jogo*)>("render_sprite",[](objeto_jogo* obj){return obj->tem_componente<Objetos::render_sprite>();}),
-	pair<string,bool(*)(objeto_jogo*)>("render_shader",[](objeto_jogo* obj){return obj->tem_componente<Objetos::render_shader>();}),
+	pair<string,bool(*)(objeto_jogo*)>("render_text",[](objeto_jogo* obj){return obj->tem_componente<render_texto>();}),
+	pair<string,bool(*)(objeto_jogo*)>("render_sprite",[](objeto_jogo* obj){return obj->tem_componente<render_sprite>();}),
+	pair<string,bool(*)(objeto_jogo*)>("render_shader",[](objeto_jogo* obj){return obj->tem_componente<render_shader>();}),
 	pair<string,bool(*)(objeto_jogo*)>("physics_2D",[](objeto_jogo* obj){return obj->tem_componente<box_2D>();}),
 	pair<string,bool(*)(objeto_jogo*)>("character_physics_2D",[](objeto_jogo* obj){return obj->tem_componente<fisica_char_B2D>();}),
 	pair<string,bool(*)(objeto_jogo*)>("audio_source",[](objeto_jogo* obj){return obj->tem_componente<sfml_audio>();}),
 	pair<string,bool(*)(objeto_jogo*)>("lua_scripts",[](objeto_jogo* obj){return obj->tem_componente<componente_lua>();}),
-	pair<string,bool(*)(objeto_jogo*)>("render_tile_map",[](objeto_jogo* obj){return obj->tem_componente<Objetos::render_tilemap>();}),
-	pair<string,bool(*)(objeto_jogo*)>("render_mesh",[](objeto_jogo* obj){return obj->tem_componente<Objetos::render_malha>();}),
+	pair<string,bool(*)(objeto_jogo*)>("render_tile_map",[](objeto_jogo* obj){return obj->tem_componente<render_tilemap>();}),
+	pair<string,bool(*)(objeto_jogo*)>("render_mesh",[](objeto_jogo* obj){return obj->tem_componente<render_malha>();}),
 };
 int have_component(lua_State* L) {
 	int argumentos = lua_gettop(L);

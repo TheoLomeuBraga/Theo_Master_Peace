@@ -7,6 +7,13 @@ using namespace std;
 
 #include "RecursosT.h"
 #include "components/light.h"
+#include "components/render_mesh.h"
+#include "components/render_sprite.h"
+#include "components/render_tilemap.h"
+#include "components/render_text.h"
+#include "components/render_shader.h"
+#include "components/camera.h"
+#include "components/transform.h"
 #include "game_object.h"
 
 
@@ -308,82 +315,15 @@ namespace Objetos {
 
 
 
-	class render_shader : public componente {
-	public:
-		Material mat;
-		bool ligado = true;
-		uint8_t camada = 0;
-		
-		uint8_t tamanho = 6;
-		render_shader() {}
-	};
+	
 
-	class render_texto : public componente {
-	public:
-		Material mat;
-		shared_ptr<fonte> font;
-		bool ligado = true;
-		uint8_t camada = 0;
-		float tamanho_max_linha = 34;
-		float tamanho_espaco = 1;
-		float espaco_entre_letras = 0.0f;
-		float espaco_entre_letras_max = 3.0f, espaco_entre_letras_min = 0.0f;
-		float espaco_entre_linhas = 3;
-		string texto = "";
+	
 
 
+	
 
-
-
-		render_texto() {}
-
-
-
-	};
-
-
-	class render_tilemap : public componente {
-	public:
-		render_tilemap(){}
-		Material mat;
-		bool ligado = true;
-		uint8_t camada = 0;
-		int apenas_camada = 1;
-		shared_ptr<tile_set> tiles;
-		shared_ptr<tile_map_info> map_info;
-		
-
-
-	};
-
-	class render_sprite : public componente {
-	public:
-		render_sprite() {}
-		Material mat;
-		bool ligado = true;
-		uint8_t camada = 0;
-		uint16_t tile_selecionado;
-		shared_ptr<tile_set> tiles;
-
-
-
-	};
-	class render_malha : public componente {
-		public:
-		render_malha() {}
-		bool ligado = true;
-		char lado_render = lado_render_malha::both;
-		bool usar_oclusao = true;
-		float porcentagem_pode_ocupar_tela = 1;
-		uint8_t camada = 0;
-		map<string,float> shape_keys_state;
-		vector<shared_ptr<malha>> minhas_malhas;
-		vector<Material> mats;
-
-
-
-
-	};
+	
+	
 
 	
 
