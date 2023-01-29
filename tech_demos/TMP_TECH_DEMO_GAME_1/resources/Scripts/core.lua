@@ -242,7 +242,7 @@ function START()
     initialize_layers()
     
     
-    camera = create_camera_ortho(leyers.camera,Vec3:new(0, 0, 0),Vec3:new(0, 0, 0),20,20,720,720,0.1,100)
+    camera = create_camera_ortho(leyers.camera,Vec3:new(-1, 0, 0),Vec3:new(0, 0, 0),20,20,720,720,0.1,100)
     camera:add_component(components.audio_source)
     set_lisener_object(camera.object_ptr)
 
