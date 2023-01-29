@@ -81,6 +81,8 @@ public:
 	}
 
 	void atualisar(){
+		sf::Listener::setUpVector(1.f, 1.f, 0.f);
+
 		if(listener_transform != NULL){
 			vec3 lpos = listener_transform->pegar_pos_global();
 			sf::Listener::setPosition(lpos.x, lpos.y, lpos.z);
