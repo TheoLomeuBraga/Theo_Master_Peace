@@ -18,6 +18,7 @@ require("TMP_libs.short_cuts.load_2D_map")
 require("TMP_libs.short_cuts.create_text")
 require("TMP_libs.short_cuts.create_sound")
 require("TMP_libs.short_cuts.create_mesh")
+require("TMP_libs.short_cuts.create_camera")
 
 require("TMP_libs.material")
 
@@ -240,38 +241,10 @@ function START()
 
     initialize_layers()
     
-    --camera
-    camera = game_object:new(create_object(leyers.camera))
-    camera:add_component(components.camera)
-    camera:add_component(components.transform)
+    
+    camera = create_camera_ortho(leyers.camera,Vec3:new(0, 0, 0),Vec3:new(0, 0, 0),20,20,720,720,0.1,100)
     camera:add_component(components.audio_source)
-    
-    camera.components[components.transform].position = Vec3:new(0, 0, 0)
-    
-
-    
-    camera.components[components.camera].type = camera_view_types.perspective
-    camera.components[components.camera].resolution = Vec2:new(720,720)
-    camera.components[components.camera].zoom = 90
-    camera.components[components.camera].size = Vec2:new(20,20)
-
-    camera.components[components.camera].type = camera_view_types.ortho
-    
-    
-    
-    
-    camera.components[components.camera].ncp = 0.1
-    camera.components[components.camera].fcp = 100
-
-    
-    
-    
-
-    
-    camera.components[components.transform]:set()
-    camera.components[components.camera]:set()
-    
-    
+    set_lisener_object(camera.object_ptr)
 
     --give camera to char
     --character.components[components.lua_scripts]:set_variable("resources/Scripts/script_character.lua","camera",variable_types.string,camera.object_ptr)
