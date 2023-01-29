@@ -1068,7 +1068,7 @@ namespace funcoes_ponte {
 			obj = string_ponteiro<objeto_jogo>(lua_tostring(L, 1));
 		}
 
-		if (obj->pegar_componente<sfml_audio>() != NULL && argumentos == 7) {
+		if (obj->pegar_componente<sfml_audio>() != NULL && argumentos == 9) {
 
 			audio_info* info = &obj->pegar_componente<sfml_audio>()->info;
 			info->nome = lua_tostring(L, 2);
@@ -1077,7 +1077,8 @@ namespace funcoes_ponte {
 			info->tempo = lua_tonumber(L, 5);
 			info->velocidade = lua_tonumber(L, 6);
 			info->volume = lua_tonumber(L, 7);
-
+			info->min_distance = lua_tonumber(L, 8);
+			info->atenuation = lua_tonumber(L, 9);
 
 			obj->pegar_componente<sfml_audio>()->aplicar_info();
 		}
@@ -1103,6 +1104,8 @@ namespace funcoes_ponte {
 		lua_pushnumber(L, output.tempo);
 		lua_pushnumber(L, output.velocidade);
 		lua_pushnumber(L, output.volume);
+		lua_pushnumber(L, output.min_distance);
+		lua_pushnumber(L, output.atenuation);
 		return 6;
 	}
 

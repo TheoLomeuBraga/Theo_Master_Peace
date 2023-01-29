@@ -38,6 +38,7 @@ public:
 	audio_info info;
 	sf::Sound som;
 	shared_ptr<sf::SoundBuffer> buffer;
+	float min_distance = 0,atenuation = 0;
 
 	void aplicar_info() {
 		carregar_audio_buffer_sfml(info.nome);
@@ -79,7 +80,11 @@ public:
 		
 	}
 
-	
+	void atualisar(){
+		if(listener_transform != NULL){
+
+		}
+	}
 
 	sfml_audio() {
 		

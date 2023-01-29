@@ -444,7 +444,7 @@ public:
 			tag_audio tag;
 			
 			bool pausa = false, loop = false;
-			float tempo = 0.001f,velocidade = 1,volume = 1;
+			float tempo = 0.001f,velocidade = 1,volume = 1 ,min_distance = 1,atenuation = 5;
 
 			audio_info(){}
 			audio_info(string n) { nome = n; }
