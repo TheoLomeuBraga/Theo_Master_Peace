@@ -82,7 +82,10 @@ public:
 
 	void atualisar(){
 		if(listener_transform != NULL){
-
+			vec3 lpos = listener_transform->pegar_pos_global();
+			sf::Listener::setPosition(lpos.x, lpos.y, lpos.z);
+		}else{
+			sf::Listener::setPosition(0,0,0);
 		}
 	}
 
