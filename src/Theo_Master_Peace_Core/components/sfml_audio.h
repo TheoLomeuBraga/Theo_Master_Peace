@@ -60,13 +60,10 @@ public:
 		{
 			som.play();
 		}
-
+		som.setMinDistance(info.min_distance);
+			som.setAttenuation(info.atenuation);
 		tf = esse_objeto->pegar_componente<transform_>();
-		if(tf != NULL){
-			vec3 gpos = tf->pegar_pos_global();
-			som.setPosition(gpos.x, gpos.y, gpos.z);
-			som.setRelativeToListener(true);
-		}
+		
 		
 	}
 
@@ -78,7 +75,8 @@ public:
 		ret.volume =som.getVolume();
 		ret.loop =som.getLoop();
 		ret.velocidade = som.getPitch();
-		
+		ret.min_distance = som.getMinDistance();
+		ret.atenuation = som.getAttenuation();
 
 		return ret;
 	}
@@ -91,13 +89,22 @@ public:
 	}
 
 	void atualisar(){
-		sf::Listener::setUpVector(1.f, 1.f, 0.f);
+		
 
 		if(listener_transform != NULL){
-			vec3 lpos = listener_transform->pegar_pos_global();
+			vec3 lpos = listener_transform->pegar_pos_global(),ldir;
 			sf::Listener::setPosition(lpos.x, lpos.y, lpos.z);
+			ldir = listener_transform->pegar_direcao_local(vec3(1,0,0));
+			sf::Listener::setUpVector(ldir.x, ldir.y, ldir.z);
+
+			if(tf != NULL){
+				vec3 gpos = tf->pegar_pos_global();
+				som.setPosition(gpos.x, gpos.y, gpos.z);
+			}
+			
 		}else{
 			sf::Listener::setPosition(0,0,0);
+			sf::Listener::setUpVector(1,0,0);
 		}
 	}
 

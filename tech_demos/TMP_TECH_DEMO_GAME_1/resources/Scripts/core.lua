@@ -160,8 +160,10 @@ function load_level(map,background_image_path,music_path)
     background_3D2.components[components.render_sprite].tile_set_local = "resources/Leveis 2D/personajem.json"
     background_3D2.components[components.render_sprite]:set()
     
-    audio = create_audio(music_path,true,100)
+    --audio = create_audio(music_path,true,100)
 
+    
+    audio = create_3D_audio(create_object(),Vec3:new(6,0,0),music_path,true,100,5,10)
     
     clear_memory()
     
