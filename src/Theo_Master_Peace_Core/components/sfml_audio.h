@@ -1,5 +1,6 @@
 #pragma once
 #include <iostream>
+#include <memory>
 #include <SFML/Audio.hpp>
 #include "Config.h"
 #include "RecursosT.h"
@@ -40,6 +41,8 @@ public:
 	shared_ptr<sf::SoundBuffer> buffer;
 	float min_distance = 0,atenuation = 0;
 
+	shared_ptr<transform_> tf; 
+
 	void aplicar_info() {
 		carregar_audio_buffer_sfml(info.nome);
 		buffer = buffers_som_sfml.pegar(info.nome);
@@ -56,6 +59,13 @@ public:
 		else
 		{
 			som.play();
+		}
+
+		tf = esse_objeto->pegar_componente<transform_>();
+		if(tf != NULL){
+			vec3 gpos = tf->pegar_pos_global();
+			som.setPosition(gpos.x, gpos.y, gpos.z);
+			som.setRelativeToListener(true);
 		}
 		
 	}
