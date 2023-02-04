@@ -602,10 +602,11 @@ shared_ptr<cena_3D> importar_obj(string local) {
 	}
 
 	shared_ptr<cena_3D> importar_map(string local){
+		//https://github.com/stefanha/map-files/blob/master/MAPFiles.pdf
 		cena_3D ret;
 		ret.caminho = local;
 
-		//https://github.com/stefanha/map-files
+		
 
 		cenas_3D.aplicar(local,ret);
 		return cenas_3D.pegar(local);
