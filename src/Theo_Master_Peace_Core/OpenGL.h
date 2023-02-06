@@ -1000,7 +1000,7 @@ typedef struct mesh_ogl_struct mesh_ogl;
 								bool visivel = true;
 								ivec3 local_tile_selecionado = vec3(b, 0, 0) * vec3(2, 0, 0);
 								mat4 mat_tile = translate(tf->matrizTransform, (vec3)local_tile_selecionado);
-								vec3 pos_tela = cam->pegar_componente<camera>()->matrizProjecao * cam->pegar_componente<camera>()->matrizVisao * mat_tile * vec4(0, 0, 0, 1);
+								vec3 pos_tela = ca->matrizProjecao * ca->matrizVisao * mat_tile * vec4(0, 0, 0, 1);
 
 								float tacha_erro = 1.5f;
 								if (pos_tela.x < -tacha_erro || pos_tela.x > tacha_erro) { visivel = false; }
@@ -1042,7 +1042,7 @@ typedef struct mesh_ogl_struct mesh_ogl;
 							bool visivel = true;
 							ivec3 local_tile_selecionado = vec3(b, 0, 0) * vec3(2, 0, 0);
 							mat4 mat_tile = translate(tf->matrizTransform, (vec3)local_tile_selecionado);
-							vec3 pos_tela = cam->pegar_componente<camera>()->matrizProjecao * cam->pegar_componente<camera>()->matrizVisao * mat_tile * vec4(0, 0, 0, 1);
+							vec3 pos_tela = ca->matrizProjecao * ca->matrizVisao * mat_tile * vec4(0, 0, 0, 1);
 
 							float tacha_erro = 1.5f;
 							if (pos_tela.x < -tacha_erro || pos_tela.x > tacha_erro) { visivel = false; }

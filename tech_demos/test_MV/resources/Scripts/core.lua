@@ -23,9 +23,9 @@ require("TMP_libs.short_cuts.create_camera")
 require("TMP_libs.material")
 
 
+camera = nil
 
-
-
+objects_layesrs = layers_table:new_2D()
 
 
 
@@ -43,26 +43,10 @@ function clean_layer(ptr)
     
 end
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+function setup_objects()
+    objects_layesrs:create()
+    camera = create_camera_ortho(objects_layesrs.camera,Vec3:new(-1, 0, 0),Vec3:new(0, 0, 0),20,20,720,720,0.1,100)
+end
 
 function initialize_render_layers()
     --[[
@@ -100,13 +84,14 @@ tm = tile_map:new()
 function START()
     
 	print("core iniciando")
-    
+    window.res.x = 720
+    window.res.y = 720
+    window:set()
 
     initialize_render_layers()
     
-
+    setup_objects()
     
-
     
     
     
