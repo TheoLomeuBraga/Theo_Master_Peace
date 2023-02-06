@@ -427,7 +427,8 @@ public:
 		box_2D b2d;
 		b2d.gatilho = true;
 		b2d.dinamica = dinamico;
-		b2d.escala = vec2(escala.x - 0.1f, 0.1f);
+		//b2d.escala = vec2(escala.x - 0.1f, 0.1f);
+		b2d.escala = vec2(escala.x , 0.1f);
 		b2d.forma = caixa;
 		detec_chao->adicionar_componente(b2d);
 		cena_objetos_selecionados->adicionar_objetos({ detec_chao });
@@ -437,7 +438,8 @@ public:
 		b2d.gatilho = true;
 		b2d.dinamica = dinamico;
 		b2d.escala_gravidade = 0;
-		b2d.escala = vec2(escala.x - 0.1f, 0.1f);
+		//b2d.escala = vec2(escala.x - 0.1f, 0.1f);
+		b2d.escala = vec2(escala.x, 0.1f);
 		b2d.forma = caixa;
 		detec_teto->adicionar_componente(b2d);
 		cena_objetos_selecionados->adicionar_objetos({ detec_teto });

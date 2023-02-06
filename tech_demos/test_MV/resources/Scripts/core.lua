@@ -24,7 +24,7 @@ require("TMP_libs.material")
 
 
 camera = nil
-map = nil
+map_info = nil
 
 objects_layesrs = layers_table:new_2D()
 
@@ -48,6 +48,10 @@ end
 function setup_objects()
     objects_layesrs:create()
     camera = create_camera_ortho(objects_layesrs.camera,Vec3:new(-1, 0, 0),Vec3:new(0, 0, 0),20,20,720,720,0.1,100)
+    tile_map_material = material:new()
+    tile_map_material.shader = "resources/Shaders/sprite"
+
+    --map_info = load_2D_map(father,pos,rot,sca,tile_map_path,tile_set_path,tile_set_images_folder,tile_map_material)
 end
 
 function initialize_render_layers()
