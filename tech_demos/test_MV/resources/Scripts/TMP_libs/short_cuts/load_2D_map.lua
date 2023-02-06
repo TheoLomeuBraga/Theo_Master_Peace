@@ -11,15 +11,23 @@ require("io")
 json = require "libs.json"
 
 function load_2D_map(father,pos,rot,sca,tile_map_path,tile_set_path,tile_set_images_folder,mat)
-    ret = {map_info={},map_object=""}
+    ret = {tile_map_info={},tile_set_info={},map_object=""}
 
-    --info
+    --tile_map_info
     file = assert(io.open(tile_map_path, "rb"))
     file_content = file:read("*all")
     file:close()
-    ret.map_info = deepcopyjson(json.decode(file_content))
+    ret.tile_map_info = deepcopyjson(json.decode(file_content))
 
-    --objects
+    --tile_set_info
+    file = assert(io.open(tile_set_path, "rb"))
+    file_content = file:read("*all")
+    file:close()
+    ret.tile_set_info = deepcopyjson(json.decode(file_content))
+    
+    
+
+    --map_object
     ret.map_object = game_object:new(create_object(father))
     ret.map_object:add_component(components.transform)
     ret.map_object.components[components.transform].position = deepcopy(pos)

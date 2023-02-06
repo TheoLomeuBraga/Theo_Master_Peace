@@ -24,8 +24,10 @@ require("TMP_libs.material")
 
 
 camera = nil
+map = nil
 
 objects_layesrs = layers_table:new_2D()
+
 
 
 
