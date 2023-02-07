@@ -95,6 +95,8 @@ function load_level(map,background_image_path,music_path)
     cenari_all = load_2D_map(leyers.cenary,Vec3:new(10,0,0),Vec3:new(0,90,0),Vec3:new(0.1,0.1,0.1),map,"resources/Leveis 2D/teste/tile_set_test.json","resources/Leveis 2D/teste",cenary_mat)
     cenary = cenari_all.map_object
     cenary_info = cenari_all.map_info
+    cenari_all.map_object.components[components.render_tile_map].render_tilemap_only_layer = 0
+    cenari_all.map_object.components[components.render_tile_map]:set()
 
     
     

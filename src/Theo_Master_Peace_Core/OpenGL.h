@@ -1005,14 +1005,14 @@ typedef struct mesh_ogl_struct mesh_ogl;
 
 								float tacha_erro = 1.5f;
 								if (pos_tela.x < -tacha_erro || pos_tela.x > tacha_erro) { visivel = false; }
-
+								
 
 								if (visivel) {
 									//para cada tile Y
 									for (int c = 0; c < rtm->map_info->res.y; c++) {
 										int tile_id = rtm->map_info->info[a][(c * rtm->map_info->res.x) + b];
 
-										if (rtm->tiles->tiles[std::max<float>(tile_id-1,0)].visivel ) {
+										if (rtm->tiles->tiles[std::max<float>(tile_id-1,0)].visivel && tile_id != 0 ) {
 											ivec3 local_tile_selecionado = vec3(b, c, a);
 											mat4 mat_tile = translate(tf->matrizTransform, (vec3)local_tile_selecionado * vec3(2, -2, -0.001));
 											ivec2 quant_t = rtm->tiles->quant_tiles;
@@ -1036,44 +1036,42 @@ typedef struct mesh_ogl_struct mesh_ogl;
 					else {
 						int a = rtm->apenas_camada;
 
-						//para cada tile X
 						for (int b = 0; b < rtm->map_info->res.x; b++) {
 
-							//otimizar
-							bool visivel = true;
-							ivec3 local_tile_selecionado = vec3(b, 0, 0) * vec3(2, 0, 0);
-							mat4 mat_tile = translate(tf->matrizTransform, (vec3)local_tile_selecionado);
-							vec3 pos_tela = ca->matrizProjecao * ca->matrizVisao * mat_tile * vec4(0, 0, 0, 1);
+								//otimizar
+								bool visivel = true;
+								ivec3 local_tile_selecionado = vec3(b, 0, 0) * vec3(2, 0, 0);
+								mat4 mat_tile = translate(tf->matrizTransform, (vec3)local_tile_selecionado);
+								vec3 pos_tela = ca->matrizProjecao * ca->matrizVisao * mat_tile * vec4(0, 0, 0, 1);
 
-							float tacha_erro = 1.5f;
-							if (pos_tela.x < -tacha_erro || pos_tela.x > tacha_erro) { visivel = false; }
-							//bool visivel = !(pos_tela.x < -tacha_erro || pos_tela.x > tacha_erro);
-
-
-							if (visivel) {
-								//para cada tile Y
-								for (int c = 0; c < rtm->map_info->res.y; c++) {
-									int tile_id = rtm->map_info->info[a][(c * rtm->map_info->res.x) + b];
-									//
-									if (tile_id != 0 && rtm->tiles->tiles[std::max<float>(tile_id - 1, 0)].visivel) {
-										ivec3 local_tile_selecionado = vec3(b, c, a);
-										mat4 mat_tile = translate(tf->matrizTransform, (vec3)local_tile_selecionado * vec3(2, -2, -0.001));
-										ivec2 quant_t = rtm->tiles->quant_tiles;
-										ivec2 tile_selecionado((tile_id % quant_t.x) - 1, (float)(int)tile_id / quant_t.x);
+								float tacha_erro = 1.5f;
+								if (pos_tela.x < -tacha_erro || pos_tela.x > tacha_erro) { visivel = false; }
 
 
-										glUniform4f(glGetUniformLocation(shader_s, "uv_position_scale"),
-											(float)(tile_selecionado.x) / quant_t.x,
-											(float)(tile_selecionado.y) / quant_t.y,
-											(float)1 / quant_t.x,
-											(float)1 / quant_t.y
-										);
-										glUniformMatrix4fv(glGetUniformLocation(shader_s, "transform"), 1, GL_FALSE, &mat_tile[0][0]);
-										glDrawArrays(GL_TRIANGLES, 0, 6);
+								if (visivel) {
+									//para cada tile Y
+									for (int c = 0; c < rtm->map_info->res.y; c++ ) {
+										int tile_id = rtm->map_info->info[a][(c * rtm->map_info->res.x) + b];
+
+										if (rtm->tiles->tiles[std::max<float>(tile_id-1,0)].visivel && tile_id != 0) {
+											ivec3 local_tile_selecionado = vec3(b, c, a);
+											mat4 mat_tile = translate(tf->matrizTransform, (vec3)local_tile_selecionado * vec3(2, -2, -0.001));
+											ivec2 quant_t = rtm->tiles->quant_tiles;
+											ivec2 tile_selecionado((tile_id % quant_t.x) - 1, (float)(int)tile_id / quant_t.x);
+
+
+											glUniform4f(glGetUniformLocation(shader_s, "uv_position_scale"),
+												(float)(tile_selecionado.x) / quant_t.x,
+												(float)(tile_selecionado.y) / quant_t.y,
+												(float)1 / quant_t.x,
+												(float)1 / quant_t.y
+											);
+											glUniformMatrix4fv(glGetUniformLocation(shader_s, "transform"), 1, GL_FALSE, &mat_tile[0][0]);
+											glDrawArrays(GL_TRIANGLE_STRIP, 0, 4);
+										}
 									}
 								}
 							}
-						}
 					}
 				}
 
