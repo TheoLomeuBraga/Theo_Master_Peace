@@ -47,11 +47,20 @@ end
 
 function setup_objects()
     objects_layesrs:create()
+
+    hud_material = matreial:new()
+    hud_material.shader = "resources/Shaders/text"
+    hub = create_text(objects_layesrs.hud, true, Vec3:new(-0.9, 0.9, 0),Vec3:new(0.0, 0.0, 0.0),Vec3:new(0.05, 0.05, 0.05), hud_material, 2, "ola mundo", "resources/Fonts/pixel_snas.json")
+
+    print("a")
     camera = create_camera_ortho(objects_layesrs.camera,Vec3:new(-1, 0, 0),Vec3:new(0, 0, 0),20,20,720,720,0.1,100)
+    set_lisener_object(camera.object_ptr)
+    
     tile_map_material = material:new()
     tile_map_material.shader = "resources/Shaders/sprite"
-
-    --map_info = load_2D_map(father,pos,rot,sca,tile_map_path,tile_set_path,tile_set_images_folder,tile_map_material)
+    map_info = load_2D_map(objects_layesrs.cenary,Vec3:new(0,0,0),Vec3:new(0,90,0),Vec3:new(0.1,0.1,0.1),"resources/Leveis 2D/tilemaps/tilemap.json","resources/Leveis 2D/tilesets/tileset.json","resources/Leveis 2D/tilesets",tile_map_material)
+    map_info.map_object.components[components.render_tile_map].render_tilemap_only_layer = 1
+    map_info.map_object.components[components.render_tile_map]:set()
 end
 
 function initialize_render_layers()
@@ -85,8 +94,7 @@ function initialize_render_layers()
     
 end
 
-t = tile:new()
-tm = tile_map:new()
+
 function START()
     
 	print("core iniciando")

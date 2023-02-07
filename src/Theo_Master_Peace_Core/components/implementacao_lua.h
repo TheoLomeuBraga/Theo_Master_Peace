@@ -794,9 +794,10 @@ namespace funcoes_ponte {
 			JSON = {
 				{"layer",rtm->camada},
 				{"material",material_json(rtm->mat)},
-				{"render_tilemap_only_layer",rtm->apenas_camada},
+				//{"render_tilemap_only_layer",rtm->apenas_camada},
 				{"tile_set_local",rtm->tiles->local},
 				{"tile_map_local",rtm->map_info->local},
+				{"render_tilemap_only_layer",rtm->apenas_camada},
 			};
 		}
 		lua_pushstring(L, JSON.dump().c_str());
@@ -813,9 +814,10 @@ namespace funcoes_ponte {
 		if (rtm != NULL) {
 			rtm->camada = JSON["layer"].get<int>();
 			rtm->mat = json_material(JSON["material"].get<json>());
-			rtm->apenas_camada = JSON["render_tilemap_only_layer"].get<int>();
+			//rtm->apenas_camada = JSON["render_tilemap_only_layer"].get<int>();
 			rtm->tiles = ManuseioDados::carregar_tile_set(JSON["tile_set_local"].get<string>());
 			rtm->map_info = ManuseioDados::carregar_info_tile_map(JSON["tile_map_local"].get<string>());
+			rtm->apenas_camada = JSON["render_tilemap_only_layer"].get<int>();
 		}
 		return 0;
 	}

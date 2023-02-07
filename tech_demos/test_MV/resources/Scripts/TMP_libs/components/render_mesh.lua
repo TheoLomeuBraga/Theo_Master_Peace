@@ -18,7 +18,7 @@ render_mesh_component = {}
 function render_mesh_component:new(object_ptr)
     rm = {}
     rm.object_ptr = object_ptr
-    rs.layer = 1
+    rm.layer = 1
     rm.use_oclusion = false
     --rm.meshes_cout = 0
     rm.normal_direction = 0

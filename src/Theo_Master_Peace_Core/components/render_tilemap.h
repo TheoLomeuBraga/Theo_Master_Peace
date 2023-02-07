@@ -14,7 +14,7 @@ class render_tilemap : public componente {
 		Material mat;
 		bool ligado = true;
 		uint8_t camada = 0;
-		int apenas_camada = 1;
+		int apenas_camada = -1;
 		shared_ptr<tile_set> tiles;
 		shared_ptr<tile_map_info> map_info;
 		

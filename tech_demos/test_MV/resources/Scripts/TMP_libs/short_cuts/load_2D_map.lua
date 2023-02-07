@@ -11,7 +11,7 @@ require("io")
 json = require "libs.json"
 
 function load_2D_map(father,pos,rot,sca,tile_map_path,tile_set_path,tile_set_images_folder,mat)
-    ret = {tile_map_info={},tile_set_info={},map_object=""}
+    ret = {tile_map_info={},tile_set_info={},map_object={}}
 
     --tile_map_info
     file = assert(io.open(tile_map_path, "rb"))
@@ -34,8 +34,9 @@ function load_2D_map(father,pos,rot,sca,tile_map_path,tile_set_path,tile_set_ima
     ret.map_object.components[components.transform].rotation = deepcopy(rot)
     ret.map_object.components[components.transform].scale = deepcopy(sca)
     ret.map_object.components[components.transform]:set()
+    
     ret.map_object:add_component(components.render_tile_map)
-    ret.map_object.components[components.render_tile_map].render_only_tilemap_layer = 0
+    ret.map_object.components[components.render_tile_map].render_tilemap_only_layer = -1
     ret.map_object.components[components.render_tile_map].tile_map_local = tile_map_path
     ret.map_object.components[components.render_tile_map].tile_set_local = tile_set_path
     ret.map_object.components[components.render_tile_map].tile_set_image_folder = tile_set_images_folder

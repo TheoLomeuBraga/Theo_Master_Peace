@@ -196,6 +196,7 @@ namespace ManuseioDados {
 		}
 		else
 		{
+			cout << local << " not exist \n";
 			shared_ptr<imagem> ret;
 			return ret;
 		}
@@ -265,7 +266,7 @@ namespace ManuseioDados {
 				
 
 				if (j.find("image") != j.end()) {
-					ret.local_imagem = pasta_imagems + '/' + j["image"].get<string>();
+					ret.local_imagem = pasta_imagems  + j["image"].get<string>();
 					ret.tiles_img = carregar_Imagem(ret.local_imagem);
 				}
 				else {
@@ -362,7 +363,7 @@ namespace ManuseioDados {
 
 				
 				ret.res = vec2(j["width"].get<int>(), j["height"].get<int>());
-
+				
 				//carregar camadas
 				vector<json> camadas = j["layers"].get<vector<json>>();
 				ret.info.resize(camadas.size());

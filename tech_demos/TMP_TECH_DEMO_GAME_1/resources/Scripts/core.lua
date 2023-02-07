@@ -148,7 +148,7 @@ function load_level(map,background_image_path,music_path)
     background_3D2:add_component(components.transform)
     background_3D2.components[components.transform].position = Vec3:new(10,-3,0)
     background_3D2.components[components.transform].rotation = Vec3:new(0,0,0)
-    background_3D2.components[components.transform].scale = Vec3:new(2,2,2)
+    background_3D2.components[components.transform].scale = Vec3:new(1,2,1)
     background_3D2.components[components.transform]:set()
 
     

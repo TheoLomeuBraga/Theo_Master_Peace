@@ -933,11 +933,11 @@ typedef struct mesh_ogl_struct mesh_ogl;
 
 				}
 
-
+				
 				//render tile map
 				shared_ptr<render_tilemap> rtm = obj->pegar_componente<render_tilemap>();
 				if (rtm != NULL && rtm->ligado && rtm->map_info != NULL && rtm->tiles != NULL) {
-
+					
 					glDisable(GL_CULL_FACE);
 
 					//shader
@@ -989,6 +989,7 @@ typedef struct mesh_ogl_struct mesh_ogl;
 					
 
 					//para cada camada
+					
 					if (rtm->apenas_camada == -1) {
 
 						for (int a = 0; a < rtm->map_info->info.size(); a++) {
