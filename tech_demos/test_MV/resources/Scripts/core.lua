@@ -19,6 +19,7 @@ require("TMP_libs.short_cuts.create_text")
 require("TMP_libs.short_cuts.create_sound")
 require("TMP_libs.short_cuts.create_mesh")
 require("TMP_libs.short_cuts.create_camera")
+require("TMP_libs.short_cuts.fps_counter")
 
 require("TMP_libs.material")
 
@@ -30,7 +31,7 @@ map_info = nil
 objects_layesrs = layers_table:new_2D()
 
 
-fps_counter = nil
+fps_count = nil
 
 
 function clean_layer(ptr)
@@ -53,9 +54,8 @@ function setup_objects()
     objects_layesrs:create()
 
     --hud
-    fps_counter_material = matreial:new()
-    fps_counter_material.shader = "resources/Shaders/text"
-    fps_counter = create_text(objects_layesrs.hud, true, Vec3:new(-0.9, 0.9, 0),Vec3:new(0.0, 0.0, 0.0),Vec3:new(0.05, 0.05, 0.05), fps_counter_material, 2, "", "resources/Fonts/pixel_snas.json")
+    
+    fps_count = create_fps_counter(objects_layesrs.hud,2,"resources/Fonts/pixel_snas.json")
 
     --camera
     camera = create_camera_ortho(objects_layesrs.camera,Vec3:new(-1, 0, 0),Vec3:new(0, 0, 0),20,20,720,720,0.1,100)
@@ -124,7 +124,7 @@ end
 
 
 function UPDATE()
-    
+    fps_count:update_fps_cout()
     
 end
 
