@@ -66,10 +66,12 @@ json material_json(Material mat){
 }
 
 Material json_material(json JSON) {
+	
 	Material ret = Material();
 	json color = JSON["color"].get<json>(), position_scale = JSON["position_scale"].get<json>();
 	vector<string> textures = JSON["textures"].get<vector<string>>();
 	vector<float> inputs = JSON["inputs"].get<vector<float>>();
+	
 	
 	ret.shad = JSON["shader"].get<string>();
 	ret.cor = vec4(color["r"].get<float>(), color["g"].get<float>(), color["b"].get<float>(), color["a"].get<float>());
@@ -924,6 +926,41 @@ namespace funcoes_ponte {
 		return 0;
 	}
 	
+	int get_render_shader(lua_State* L){
+		int argumentos = lua_gettop(L);
+		objeto_jogo* obj = NULL;
+		if (argumentos > 0) {
+			obj = string_ponteiro<objeto_jogo>(lua_tostring(L, 1));
+		}
+		json JSON = {};
+		shared_ptr<render_shader> rs = obj->pegar_componente<render_shader>();
+		if(rs != NULL){
+			JSON = {
+				{"layer",rs->camada},
+				{"material",material_json(rs->mat)},
+			};
+		}
+		lua_pushstring(L, JSON.dump().c_str());
+		return 1;
+	}
+
+	int set_render_shader(lua_State* L){
+		int argumentos = lua_gettop(L);
+		objeto_jogo* obj = NULL;
+		if (argumentos > 0) {
+			obj = string_ponteiro<objeto_jogo>(lua_tostring(L, 1));
+		}
+		json JSON = {};
+		shared_ptr<render_shader> rs = obj->pegar_componente<render_shader>();
+		if(rs != NULL && argumentos == 2){
+			JSON = json::parse(lua_tostring(L, 2));
+			rs->camada =  JSON["layer"].get<int>();
+			rs->mat = json_material(JSON["material"].get<json>());
+		}
+		return 0;
+	}
+
+	
 
 	//fisica
 
@@ -1123,7 +1160,8 @@ namespace funcoes_ponte {
 	}
 	//geral render
 
-
+	
+	
 
 	int set_render_layer(lua_State* L) {
 		int argumentos = lua_gettop(L);
@@ -1782,7 +1820,10 @@ namespace funcoes_ponte {
 		pair<string, lua_function>("get_text_json", funcoes_ponte::get_text_json),
 		pair<string, lua_function>("set_text_json", funcoes_ponte::set_text_json),
 		
-
+		//shader
+		pair<string, lua_function>("get_render_shader", funcoes_ponte::get_render_shader),
+		pair<string, lua_function>("set_render_shader", funcoes_ponte::set_render_shader),
+		
 		//physic
 		pair<string, lua_function>("add_force", funcoes_ponte::add_force),
 		pair<string, lua_function>("get_physic_2D_json", funcoes_ponte::get_physic_2D_json),

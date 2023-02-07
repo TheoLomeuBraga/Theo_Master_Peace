@@ -28,6 +28,7 @@ require("TMP_libs.material")
 
 camera = nil
 map_info = nil
+background = nil
 
 objects_layesrs = layers_table:new_2D()
 
@@ -54,9 +55,17 @@ end
 function setup_objects()
     objects_layesrs:create()
 
+
+
     --hud
-    
     fps_count = create_fps_counter(objects_layesrs.hud,2,"resources/Fonts/pixel_snas.json")
+
+    --background
+    background_material = material:new()
+    background_material.shader = "resources/Shaders/fundo"
+    background_material.textures[1] = "resources/Textures/fundo A.png"
+    
+    background = create_render_shader(objects_layesrs.background_image,false,Vec3:new(0, 0, 0),Vec3:new(0, 0, 0),Vec3:new(1, 1, 1),1,background_material)
 
     --camera
     camera = create_camera_ortho(objects_layesrs.camera,Vec3:new(-1, 0, 0),Vec3:new(0, 0, 0),20,20,720,720,0.1,100)

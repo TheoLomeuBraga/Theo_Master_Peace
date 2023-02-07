@@ -14,6 +14,7 @@ function deepcopy(orig)
     return copy
 end
 
+
 function deepcopyjson(orig)
     local orig_type = type(orig)
     local copy

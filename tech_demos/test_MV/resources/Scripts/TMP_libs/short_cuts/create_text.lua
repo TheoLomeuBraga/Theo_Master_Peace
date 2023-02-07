@@ -17,6 +17,8 @@ function create_text(father,is_ui,pos,rot,sca,material,layer,text,font)
     ret.components[components.render_text].font = font
     ret.components[components.render_text].text = text
     ret.components[components.render_text]:set()
+
+    
     
     
     return ret

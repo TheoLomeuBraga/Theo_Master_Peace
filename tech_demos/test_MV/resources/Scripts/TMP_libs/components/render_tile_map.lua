@@ -35,8 +35,6 @@ function render_tile_map_component:new(object_ptr)
         
     end
     function rtm:delet()
-        self.material:delet()
-        self = nil
     end
     return rtm
 end

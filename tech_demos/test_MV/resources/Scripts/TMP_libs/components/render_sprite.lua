@@ -38,8 +38,7 @@ function render_sprite_component:new(object_ptr)
 
     end
     function rs:delet()
-        self.material:delet()
-        self = nil
+        
     end
     return rs
 end

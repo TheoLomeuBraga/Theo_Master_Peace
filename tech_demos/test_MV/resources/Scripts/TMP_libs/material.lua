@@ -10,7 +10,7 @@ function material:new()
     m.position_scale = Vec4:new(0,0,1,1)
     m.metallic = 0 
     m.softness = 0
-    m.textures = {}
-    m.inputs = {}
+    m.textures = {"",}
+    m.inputs = {0,}
     return m
 end
