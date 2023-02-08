@@ -23,7 +23,7 @@ require("TMP_libs.short_cuts.fps_counter")
 require("TMP_libs.short_cuts.create_render_shader")
 
 require("TMP_libs.material")
-
+require("all_sceanes")
 
 
 camera = nil
