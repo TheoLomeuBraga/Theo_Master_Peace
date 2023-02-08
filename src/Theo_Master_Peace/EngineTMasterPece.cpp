@@ -7,6 +7,7 @@
 
 
 
+
 #include <iostream>
 #include <fstream>
 #include <functional>
@@ -40,7 +41,7 @@
 
 
 
-void configuracaoInicial() {
+void configuracaoInicial(){
 
 
 
@@ -56,9 +57,9 @@ void configuracaoInicial() {
     Antes_Render_Func.push_back(atualisar_global_box2D);
     Antes_Render_Func.push_back(teste3);
 
-    //Iniciar_Render_Func.push_back(inciar_imgui);
-    //Antes_Render_Func.push_back(antes_imgui);
-    //Depois_Render_Func.push_back(depois_imgui);
+   //Iniciar_Render_Func.push_back(inciar_imgui);
+   //Antes_Render_Func.push_back(antes_imgui);
+   //Depois_Render_Func.push_back(depois_imgui);
 
 
 }
@@ -93,10 +94,10 @@ public:
 
     virtual void falar() { cout << "A\n"; }
 
-    A() {}
+    A(){}
 
     ~A() {
-        cout << "voce deletou A com o valor " << a << endl;
+        cout <<"voce deletou A com o valor " << a << endl;
     }
     virtual void* duplicar() {
         return new A(*this);
@@ -144,7 +145,7 @@ void experimento_ponteiros2() {
 }
 
 void experimento_copia() {
-    shared_ptr<A> sp1, sp2;
+    shared_ptr<A> sp1,sp2;
     sp1 = make_shared<B>(B());
     sp1->falar();
     sp2 = make_shared<A>(*(A*)sp1.get()->duplicar());
@@ -165,9 +166,9 @@ void experimento_ponteiros3() {
 
 void experimento_objeto() {
     objeto_jogo obj;
-    obj.adicionar_componente<Objetos::transform>(Objetos::transform());
-    obj.adicionar_componente<Objetos::camera>(Objetos::camera());
-    obj.remover_componente<Objetos::transform>();
+    obj.adicionar_componente<transform_>(transform_());
+    obj.adicionar_componente<camera>(camera());
+    obj.remover_componente<transform_>();
     cout << "teste obj componentes: " << obj.pegar_lista_componentes().size() << " " << obj.pegar_lista_componentes()[0] << endl;
 }
 
@@ -194,54 +195,38 @@ void exemplo_binario() {
     cout << m2.idade << " " << m2.nome << endl;
 }
 
-void funcao_tread(string* s) {
+void funcao_tread(string *s) {
     //Sleep(2000);
     *s = "ola";
 }
 
-void teste_soma_tread(float a, float b, float* ret) {
+void teste_soma_tread(float a,float b,float* ret) {
     *ret = a + b;
 }
 
-
-
 int main(int argc, char** argv)
 {
-    
-    
-    
 
-    
+
+
+
+	escrever(transicionar(0.5,5,10));
+
+	escrever(pegar_estencao_arquivo("arquivo.abc"));
     aplicar_argumentos(argc, argv);
 
     escrever("argumentos{");
-    for (string s : argumentos) {
-        cout << "	";
-        escrever(s);
+    for(string s : argumentos){
+    	cout << "	";
+    	escrever(s);
     }
     escrever("}");
 
-    if (argumentos.size() > 1) {
-        setar_diretorio_aplicacao(argumentos[1]);
+    if(argumentos.size() > 1){
+    	setar_diretorio_aplicacao(argumentos[1]);
     }
-    else {
-        setar_diretorio_aplicacao("C:/TMP_SDK/TMP_TECH_DEMO_GAME_1");
-    }
-    cout << "diretorio aplica��o setado para " << pegar_local_aplicacao() << endl;
-    cout << "nome do projeto: " << pegar_nome_arquivo(pegar_local_aplicacao()) << endl;
-
-    
-
-    if (ManuseioDados::Existe("config/config window.txt")) {
-        ifstream janela_config("config/config window.txt");
-        janela_config >> configuracoes::janelaConfig.X >> configuracoes::janelaConfig.Y >> configuracoes::janelaConfig.antiCerrilhado >> configuracoes::janelaConfig.transparente;
-    }
-    else {
-        ManuseioDados::Salvar("config/config window.txt", "720 720 1 0");
-        configuracoes::janelaConfig.X = 720;
-        configuracoes::janelaConfig.Y = 720;
-        configuracoes::janelaConfig.antiCerrilhado = 1;
-        configuracoes::janelaConfig.transparente = false;
+    else{
+    	setar_diretorio_aplicacao("/home/theo/Cpp/TMP_TECH_DEMO_2D");
     }
 
     cout << "vamos ao trabalho\n";
