@@ -283,9 +283,9 @@ namespace ManuseioDados {
 				//pegar info tiles
 				if (j.find("tiles") != j.end()) {
 					vector<json> tiles_infos = j["tiles"].get<vector<json>>();
-					ret.tiles.resize(tiles_infos.size());
+					ret.tiles.resize(tiles_infos.size() + 1);
 					
-
+					ret.tiles[0] = tile();
 
 
 					for (int a = 0; a < tiles_infos.size(); a++) {
@@ -306,17 +306,18 @@ namespace ManuseioDados {
 							//else if (name.compare("colision_type") == 0) {
 							//	t.tipo_colisao = propriedades_json[b]["value"].get<int>();
 							//}
-							else if (name.compare("visible") == 0) {
-								t.visivel = propriedades_json[b]["value"].get<int>();
-							}
+							//else if (name.compare("visible") == 0) {
+							//	t.visivel = propriedades_json[b]["value"].get<int>();
+							//}
 							//else if (name.compare("interactive") == 0) {
 							//	t.interativel = propriedades_json[b]["value"].get<int>();
 							//}
 							
 						}
 						
-						ret.tiles[a] = t;
+						ret.tiles[a + 1] = t;
 					}
+					
 				}
 				else { cout << "nao tem tiles\n"; }
 

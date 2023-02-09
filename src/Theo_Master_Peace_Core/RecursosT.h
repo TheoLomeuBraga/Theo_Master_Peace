@@ -200,7 +200,7 @@ public:
 			uint8 sprite_id = 0;
 			string nome = "";
 			//uint8 tipo_colisao = 0;
-			bool visivel = true;
+			//bool visivel = false;
 			//bool interativel = false;
 			//string script = "";
 			//string comentario = "";

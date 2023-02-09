@@ -68,7 +68,7 @@ function setup_objects()
     background = create_render_shader(objects_layesrs.background_image,false,Vec3:new(0, 0, 0),Vec3:new(0, 0, 0),Vec3:new(1, 1, 1),1,background_material)
 
     --camera
-    camera = create_camera_ortho(objects_layesrs.camera,Vec3:new(-1, 0, 0),Vec3:new(0, 0, 0),20,20,720,720,0.1,100)
+    camera = create_camera_ortho(objects_layesrs.camera,Vec3:new(-1, 0, 0),Vec3:new(0, 0, 0),5,5,720,720,0.1,100)
     set_lisener_object(camera.object_ptr)
     
     --cenary

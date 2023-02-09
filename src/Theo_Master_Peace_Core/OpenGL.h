@@ -1012,7 +1012,7 @@ typedef struct mesh_ogl_struct mesh_ogl;
 									for (int c = 0; c < rtm->map_info->res.y; c++) {
 										int tile_id = rtm->map_info->info[a][(c * rtm->map_info->res.x) + b];
 
-										if (rtm->tiles->tiles[std::max<float>(tile_id-1,0)].visivel && tile_id != 0 ) {
+										if (tile_id != 0 ) {
 											ivec3 local_tile_selecionado = vec3(b, c, a);
 											mat4 mat_tile = translate(tf->matrizTransform, (vec3)local_tile_selecionado * vec3(2, -2, -0.001));
 											ivec2 quant_t = rtm->tiles->quant_tiles;
@@ -1053,7 +1053,7 @@ typedef struct mesh_ogl_struct mesh_ogl;
 									for (int c = 0; c < rtm->map_info->res.y; c++ ) {
 										int tile_id = rtm->map_info->info[a][(c * rtm->map_info->res.x) + b];
 
-										if (rtm->tiles->tiles[std::max<float>(tile_id-1,0)].visivel && tile_id != 0) {
+										if ( tile_id != 0) {
 											ivec3 local_tile_selecionado = vec3(b, c, a);
 											mat4 mat_tile = translate(tf->matrizTransform, (vec3)local_tile_selecionado * vec3(2, -2, -0.001));
 											ivec2 quant_t = rtm->tiles->quant_tiles;
