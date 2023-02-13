@@ -978,7 +978,8 @@ public:
 
 
 			vec3 quat_graus(quat q) {
-				return degrees(eulerAngles(q));
+				//return degrees(eulerAngles(q));
+				return degrees(glm::eulerAngles(q) * 3.14159f / 180.f);
 			}
 
 			quat graus_quat(vec3 r) {

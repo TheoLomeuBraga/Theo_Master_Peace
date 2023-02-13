@@ -235,11 +235,15 @@ public:
 		colis_infos.swap(vazio);
 
 		corpo->SetGravityScale(escala_gravidade);
-		
-		if (esse_objeto->pegar_componente<transform_>() != NULL) {
+		shared_ptr<transform_> tf = esse_objeto->pegar_componente<transform_>();
+		if (tf != NULL) {
 			b2Vec2 pos = corpo->GetPosition();
-			esse_objeto->pegar_componente<transform_>()->pos = vec3(pos.x, pos.y,esse_objeto->pegar_componente<transform_>()->pos.z);
-			esse_objeto->pegar_componente<transform_>()->quater = quat(vec3(0, 0, corpo->GetAngle()));
+			tf->pos = vec3(pos.x, pos.y,esse_objeto->pegar_componente<transform_>()->pos.z);
+			vec3 rot = tf->pegar_angulo_graus();
+			tf->quater = quat(vec3(rot.x, rot.y, corpo->GetAngle()));
+			//escrever(esse_objeto->pegar_componente<transform_>()->pos.x);
+			//escrever(esse_objeto->pegar_componente<transform_>()->pos.y);
+			//escrever(esse_objeto->pegar_componente<transform_>()->pos.z);
 		}
 	}
 

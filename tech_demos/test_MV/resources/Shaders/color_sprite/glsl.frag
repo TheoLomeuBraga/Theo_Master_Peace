@@ -46,7 +46,7 @@ void main(){
 
 
 
-    ret = color * texture(textures[0],(uv * uv_position_scale.zw) + uv_position_scale.xy);
+    ret = color;
 
 
   

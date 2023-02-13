@@ -1024,8 +1024,7 @@ namespace funcoes_ponte {
 		}
 		shared_ptr<box_2D> b2d = obj->pegar_componente<box_2D>();
 		if (argumentos == 2 && b2d != NULL ) {
-			json JSON = json::parse(lua_tostring(L, 1));
-
+			json JSON = json::parse(lua_tostring(L, 2));
 			json scale = JSON["scale"].get<json>();
 			b2d->escala = vec2(scale["x"].get<float>(), scale["y"].get<float>());
 			b2d->dinamica = JSON["boady_dynamic"].get<int>();

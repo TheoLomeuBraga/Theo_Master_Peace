@@ -162,7 +162,7 @@
         {
          "draworder":"topdown",
          "id":8,
-         "name":"colision",
+         "name":"collision",
          "objects":[
                 {
                  "class":"",

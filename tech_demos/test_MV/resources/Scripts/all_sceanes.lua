@@ -24,13 +24,40 @@ this_sceane.tile_map_info = nil
 this_sceane.background = nil
 this_sceane.objects_layesrs = nil
 
-function this_sceane:unload()
+
+
+
+
+
+function create_colision_box(pos,rot,sca)
+    ret = game_object:new(this_sceane.objects_layesrs.top)
+
+    
+
+    ret:add_component(components.physics_2D)
+    ret.components[components.physics_2D].scale = Vec2:new(sca.x,sca.y)
+    ret.components[components.physics_2D].colision_shape = colision_shapes.box
+    ret.components[components.physics_2D].rotate = false
+    ret.components[components.physics_2D]:set()
+
+    ret:add_component(components.transform)
+    ret.components[components.transform].position = deepcopy(pos)
+    ret.components[components.transform].rotation = deepcopy(rot)
+    ret.components[components.transform].scale = deepcopy(sca)
+    ret.components[components.transform]:set()
+    ret.components[components.transform]:change_position(pos.x,pos.y,pos.z)
+
+    ret:add_component(components.render_sprite)
+    ret.components[components.render_sprite].layer = 2
+    ret.components[components.render_sprite].selected_tile = 1
+    ret.components[components.render_sprite].tile_set_local = "resources/Leveis 2D/tilesets/tileset.json"
+    mat = material:new()
+    mat.shader = "resources/Shaders/color_sprite"
+    ret.components[components.render_sprite].material = deepcopyjson(mat)
+    ret.components[components.render_sprite]:set()
+
+    return ret
 end
-
-
-
-
-
 
 
 
@@ -65,26 +92,31 @@ function sceanes_db.test:load()
     --this_sceane.tile_map_info.tile_map_info
     --this_sceane.tile_map_info.tile_set_info
 
-    print(this_sceane.tile_map_info.tile_map_info.layers)
+    
 
+    --get info
     tile_map_info_size = {
         x=this_sceane.tile_map_info.tile_map_info.width,
         y=this_sceane.tile_map_info.tile_map_info.height,
         tile_x=this_sceane.tile_map_info.tile_map_info.tilewidth,
         tile_y=this_sceane.tile_map_info.tile_map_info.tileheight,
     }
-    tile_map_info_map = {}
-    for l_id,l in  ipairs(this_sceane.tile_map_info.tile_map_info.layers) do
-        tile_map_info_map[l.name] = deepcopyjson(l)
-    end
 
+    tile_map_layer_info_map = {}
+    for l_id,l in  ipairs(this_sceane.tile_map_info.tile_map_info.layers) do
+        tile_map_layer_info_map[l.name] = deepcopyjson(l)
+    end
     
     tile_set_info_map = {}
     for t_id,t in ipairs(this_sceane.tile_map_info.tile_set_info.tiles) do
         tile_set_info_map[t.id] = deepcopyjson(t)
     end
     
-
+    --create_collision
+    create_colision_box(Vec3:new(1,0,0),Vec3:new(0,90,0),Vec3:new(1,1,1))
+    for v_id,v in ipairs(tile_map_layer_info_map["collision"].objects) do
+        
+    end
 
     
 end

@@ -11,8 +11,7 @@ colision_layer_info = {}
 function colision_layer_info:new()
     cli = {}
     cli.layer = 1
-    cli.layers_can_colide = {}
-    cli.layers_can_colide[0] = 0
+    cli.layers_can_colide = {0}
     return cli
 end
 
@@ -49,6 +48,7 @@ function physics_2D_component:new(object_ptr)
         j.rotate = self.rotate
         j.triger = self.triger
         j.friction = self.friction
+        j.colision_layer = deepcopyjson(self.colision_layer)
         set_physic_2D_json(self.object_ptr,json.encode(j)) 
     end
     function p:to_move(speed_x,speed_y)
