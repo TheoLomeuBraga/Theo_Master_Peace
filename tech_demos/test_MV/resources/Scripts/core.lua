@@ -101,7 +101,8 @@ function START()
     fps_count = create_fps_counter(objects_layesrs.hud,2,"resources/Fonts/pixel_snas.json")
     
     
-    sceanes_db["m1"]:load()
+    sceanes_db["test"]:load()
+    
     
     
     

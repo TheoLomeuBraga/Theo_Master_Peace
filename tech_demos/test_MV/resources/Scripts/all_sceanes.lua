@@ -13,7 +13,9 @@ require("TMP_libs.layers_table")
 
 
 
-
+map_name_list = {
+    "test",
+}
 
 
 this_sceane = {}
@@ -38,8 +40,8 @@ sceanes_db = {}
 
 
 
-sceanes_db.m1 = {}
-function sceanes_db.m1:load()
+sceanes_db.test = {}
+function sceanes_db.test:load()
     print("loading m1")
     --background
     background_material = material:new()
@@ -59,8 +61,8 @@ function sceanes_db.m1:load()
     this_sceane.tile_map_info.map_object.components[components.render_tile_map]:set()
 end
 
-function sceanes_db.m1:unload()
-    print("unloading m1")
+function sceanes_db.test:unload()
+    print("unloading test")
     this_sceane.background:remove()
     this_sceane.background = nil
 
