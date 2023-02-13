@@ -29,7 +29,6 @@ require("all_sceanes")
 camera = nil
 map_info = nil
 background = nil
-
 objects_layesrs = layers_table:new_2D()
 
 
@@ -52,31 +51,12 @@ end
 
 
 
-function setup_objects()
-    objects_layesrs:create()
 
 
-
-    --hud
-    fps_count = create_fps_counter(objects_layesrs.hud,2,"resources/Fonts/pixel_snas.json")
-
-    --background
-    background_material = material:new()
-    background_material.shader = "resources/Shaders/fundo"
-    background_material.textures[1] = "resources/Textures/fundo A.png"
-    
-    background = create_render_shader(objects_layesrs.background_image,false,Vec3:new(0, 0, 0),Vec3:new(0, 0, 0),Vec3:new(1, 1, 1),1,background_material)
-
-    --camera
-    camera = create_camera_ortho(objects_layesrs.camera,Vec3:new(-1, 0, 0),Vec3:new(0, 0, 0),5,5,720,720,0.1,100)
-    set_lisener_object(camera.object_ptr)
-    
-    --cenary
-    tile_map_material = material:new()
-    tile_map_material.shader = "resources/Shaders/sprite"
-    map_info = load_2D_map(objects_layesrs.cenary,Vec3:new(0,0,0),Vec3:new(0,90,0),Vec3:new(0.1,0.1,0.1),"resources/Leveis 2D/tilemaps/tilemap.json","resources/Leveis 2D/tilesets/tileset.json","resources/Leveis 2D/tilesets",tile_map_material)
-    map_info.map_object.components[components.render_tile_map].render_tilemap_only_layer = -1
-    map_info.map_object.components[components.render_tile_map]:set()
+function set_res()
+    window.res.x = 720
+    window.res.y = 720
+    window:set()
 end
 
 function initialize_render_layers()
@@ -114,14 +94,15 @@ end
 function START()
     
 	print("core iniciando")
-    window.res.x = 720
-    window.res.y = 720
-    window:set()
+    set_res()
 
     initialize_render_layers()
+    objects_layesrs:create()
+    fps_count = create_fps_counter(objects_layesrs.hud,2,"resources/Fonts/pixel_snas.json")
+    
     
     sceanes_db["m1"]:load()
-    setup_objects()
+    
     
     
     
