@@ -98,11 +98,11 @@ function START()
 
     initialize_render_layers()
     objects_layesrs:create()
-    fps_count = create_fps_counter(objects_layesrs.hud,2,"resources/Fonts/pixel_snas.json")
+    
     
     
     sceanes_db["test"]:load()
-    
+    fps_count = create_fps_counter(this_sceane.objects_layesrs.hud,2,"resources/Fonts/pixel_snas.json")
     
     
     
