@@ -35,6 +35,7 @@ sceanes_db = {}
 
 sceanes_db.m1 = {}
 function sceanes_db.m1:load()
+    print("loading m1")
 end
 
 

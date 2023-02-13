@@ -120,6 +120,7 @@ function START()
 
     initialize_render_layers()
     
+    sceanes_db["m1"]:load()
     setup_objects()
     
     

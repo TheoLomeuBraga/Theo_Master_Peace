@@ -22,8 +22,6 @@ function render_shader_component:new(object_ptr)
         j = {}
         j.layer = self.layer
         j.material = deepcopyjson(self.material)
-        
-        print(json.encode(j))
         set_render_shader(self.object_ptr,json.encode(j))
     end
     function rs:delet()
