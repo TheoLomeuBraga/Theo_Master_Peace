@@ -26,9 +26,8 @@ this_sceane.objects_layesrs = nil
 
 
 function this_sceane:unload()
-    print("onloading sceane")
-    this_sceane.background:remove()
-    this_sceane.tile_map_info.map_object:remove()
+    print("unloading sceane")
+    this_sceane.objects_layesrs:destroy()
     clear_memory()
 end
 

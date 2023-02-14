@@ -100,12 +100,9 @@ function START()
     objects_layesrs:create()
     
     
-    print("AAAAAA")
+    
+    
     sceanes_db["test"]:load()
-    print("AAAAAA")
-    this_sceane:unload()
-    print("AAAAAA")
-    --sceanes_db["test"]:load()
     fps_count = create_fps_counter(this_sceane.objects_layesrs.hud,2,"resources/Fonts/pixel_snas.json")
     
     
