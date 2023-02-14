@@ -257,6 +257,7 @@ using namespace std;
 			
 
 			for (pair<string, shared_ptr<componente>> p : componentes) {
+				
 				p.second->finalisar();
 			}
 

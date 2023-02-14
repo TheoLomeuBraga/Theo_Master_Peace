@@ -57,28 +57,26 @@ vector<shared_ptr<objeto_jogo>> lixeira;
 		shared_ptr<objeto_jogo> operator [] (string s) { return pegar_objeto_nome(s); }
 
 		void remover_objeto(shared_ptr<objeto_jogo> obj) {
-			cout << "iniciando descarte objeto\n"; 
 			obj->finalisar();
 			obj->marcar_em_cena_como(false);
 			obj->desconectar_componentes();
 
 			
 
-			if (obj->pai != NULL) {
-				for (int i = 0; i < obj->pai->filhos.size(); i++) {
-					if (obj->pai->filhos[i] == obj) {
-
-						obj->pai->filhos.erase(obj->pai->filhos.begin() + i);
-						obj->pai = NULL;
-						break;
-					}
-				}
-			}
+			//if (obj->pai != NULL) {
+			//	for (int i = 0; i < obj->pai->filhos.size(); i++) {
+			//		if (obj->pai->filhos[i] == obj) {
+			//			obj->pai->filhos.erase(obj->pai->filhos.begin() + i);
+			//			obj->pai = NULL;
+			//			break;
+			//		}
+			//	}
+			//}
 			lixeira.push_back(obj);
 			for (shared_ptr<objeto_jogo> f : obj->filhos) {
+				
 				remover_objeto(f);
 			}
-			cout << "descartando objeto: " << obj << endl;
 		}
 
 		void remover_objetos(vector<shared_ptr<objeto_jogo>> objs) {
