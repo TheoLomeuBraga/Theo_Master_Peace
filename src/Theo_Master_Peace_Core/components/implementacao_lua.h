@@ -1046,7 +1046,7 @@ namespace funcoes_ponte {
 			json camada_colisao = JSON["colision_layer"].get<json>();
 			b2d->camada.camada = camada_colisao["layer"].get<int>();
 			b2d->camada.camada_colide = camada_colisao["layers_can_colide"].get<vector<int>>();
-
+			b2d->aplicar();
 		}
 		return 0;
 	}

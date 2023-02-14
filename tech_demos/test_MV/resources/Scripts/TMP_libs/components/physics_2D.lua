@@ -7,6 +7,11 @@ end
 function add_force(object,force_x,force_y)
 end
 
+function get_gravity()
+end
+function set_gravity(x,y,z)
+end
+
 --boady_dynamics
 boady_dynamics = {}
 boady_dynamics.static = 0
@@ -23,7 +28,7 @@ colision_layer_info = {}
 function colision_layer_info:new()
     cli = {}
     cli.layer = 1
-    cli.layers_can_colide = {0}
+    cli.layers_can_colide = {1}
     return cli
 end
 

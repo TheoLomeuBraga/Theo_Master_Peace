@@ -76,16 +76,16 @@ b2Vec2 tile_vertex2[] = {
 
 b2Vec2 tiled_volume[] = {
 	b2Vec2(1,0),
-	b2Vec2(1,1),
+	b2Vec2(1,-1),
 	b2Vec2(0,0),
-	b2Vec2(0,1)
+	b2Vec2(0,-1)
 };
 
 b2Vec2 tiled_volume2[] = {
 	b2Vec2(1,0),
-	b2Vec2(1,1),
+	b2Vec2(1,-1),
 	b2Vec2(0,0),
-	b2Vec2(0,1)
+	b2Vec2(0,-1)
 };
 
 
@@ -206,10 +206,11 @@ public:
 
 		}
 		else if (forma == volume_tiled) {
-			for(int i = 0;i< 8;i++){
+			
+			for(int i = 0;i< 4;i++){
 				tiled_volume2[i] = b2Vec2(tiled_volume[i].x * escala.x,tiled_volume[i].y * escala.y);
 			}
-			Vertex_shape.Set(&tiled_volume2[0], 8);
+			Vertex_shape.Set(&tiled_volume2[0], 4);
 			fixtureDef.shape = &Vertex_shape;
 
 		}

@@ -29,7 +29,7 @@ this_sceane.objects_layesrs = nil
 
 
 
-function create_colision_box(pos,rot,sca)
+function create_colision_tiled_box_volume(pos,rot,sca,debug)
     ret = game_object:new(create_object(this_sceane.tile_map_info.map_object.object_ptr))
 
     
@@ -48,20 +48,52 @@ function create_colision_box(pos,rot,sca)
     ret.components[components.transform]:change_position(pos.x,pos.y,pos.z)
     ret.components[components.transform]:change_rotation(rot.x,rot.y,rot.z)
 
+    if debug then
+        ret:add_component(components.render_sprite)
+        ret.components[components.render_sprite].layer = 2
+        ret.components[components.render_sprite].selected_tile = 1
+        ret.components[components.render_sprite].tile_set_local = "resources/Leveis 2D/tilesets/tileset.json"
+        mat = material:new()
+        mat.shader = "resources/Shaders/tiled_volume"
+        mat.color = {r=0,g=1,b=0,a=1}
+        ret.components[components.render_sprite].material = deepcopyjson(mat)
+        ret.components[components.render_sprite]:set()
+    end
+    
+
+    return ret
+end
+
+function create_crate(pos)
+    ret = game_object:new(create_object(this_sceane.tile_map_info.map_object.object_ptr))
+    set_gravity(0,-9,0)
+    
+
+    ret:add_component(components.physics_2D)
+    ret.components[components.physics_2D].scale = Vec2:new(1,1)
+    ret.components[components.physics_2D].colision_shape = colision_shapes.box
+    ret.components[components.physics_2D].boady_dynamic =  boady_dynamics.dynamic
+    ret.components[components.physics_2D].rotate = true
+    ret.components[components.physics_2D].friction = 1
+    ret.components[components.physics_2D]:set()
+    
+
+    ret:add_component(components.transform)
+    ret.components[components.transform].position = deepcopy(pos)
+    ret.components[components.transform]:set()
+    ret.components[components.transform]:change_position(pos.x,pos.y,pos.z)
+    ret.components[components.transform]:change_rotation(rot.x,rot.y,rot.z)
+
     ret:add_component(components.render_sprite)
     ret.components[components.render_sprite].layer = 2
     ret.components[components.render_sprite].selected_tile = 1
     ret.components[components.render_sprite].tile_set_local = "resources/Leveis 2D/tilesets/tileset.json"
     mat = material:new()
-    mat.shader = "resources/Shaders/tiled_volume"
+    mat.shader = "resources/Shaders/color_sprite"
     mat.color = {r=0,g=1,b=0,a=1}
     ret.components[components.render_sprite].material = deepcopyjson(mat)
     ret.components[components.render_sprite]:set()
-
-    return ret
 end
-
-
 
 
 
@@ -115,14 +147,26 @@ function sceanes_db.test:load()
     end
     
     --create_collision
-    --create_colision_box(Vec3:new(1,0,0),Vec3:new(0,90,0),Vec3:new(1,1,1))
+    --create_colision_tiled_box_volume(Vec3:new(1,0,0),Vec3:new(0,90,0),Vec3:new(1,1,1))
     for v_id,v in ipairs(tile_map_layer_info_map["collision"].objects) do
         
         sca = Vec3:new((v.width / tile_map_info_size.tile_x) * 2 ,(v.height / tile_map_info_size.tile_y) * 2 ,0)
-        pos = Vec3:new(v.x * 2  / tile_map_info_size.tile_x,(-v.y * 2)  / tile_map_info_size.tile_y,0)
+        pos = Vec3:new((v.x * 2)  / tile_map_info_size.tile_x,(-v.y * 2)  / tile_map_info_size.tile_y,0)
         pos = Vec3:new(pos.x -1 ,pos.y + 1  ,0)
         rot = Vec3:new(v.rotation,0,0)
-        create_colision_box(pos,rot,sca)
+        create_colision_tiled_box_volume(pos,rot,sca,false)
+    end
+    
+    create_crate(Vec3:new(0,0,0))
+    for o_id,o in ipairs(tile_map_layer_info_map["objects"].objects) do
+        if o.properties ~= nil then
+            for p_id,p in ipairs(o.properties) do
+                if p.value == "crate" then
+                    
+                end
+            end
+        end
+        
     end
 
     

@@ -152,6 +152,51 @@
                  "width":0,
                  "x":496,
                  "y":176
+                }, 
+                {
+                 "class":"",
+                 "height":16,
+                 "id":27,
+                 "name":"",
+                 "properties":[
+                        {
+                         "name":"name",
+                         "type":"string",
+                         "value":"exit"
+                        }, 
+                        {
+                         "name":"target_map",
+                         "type":"string",
+                         "value":""
+                        }, 
+                        {
+                         "name":"target_point",
+                         "type":"string",
+                         "value":""
+                        }],
+                 "rotation":0,
+                 "visible":true,
+                 "width":16,
+                 "x":0,
+                 "y":176
+                }, 
+                {
+                 "class":"",
+                 "height":0,
+                 "id":30,
+                 "name":"",
+                 "point":true,
+                 "properties":[
+                        {
+                         "name":"name",
+                         "type":"string",
+                         "value":"crate"
+                        }],
+                 "rotation":0,
+                 "visible":true,
+                 "width":0,
+                 "x":64,
+                 "y":176
                 }],
          "opacity":1,
          "type":"objectgroup",
@@ -204,7 +249,7 @@
          "y":0
         }],
  "nextlayerid":9,
- "nextobjectid":27,
+ "nextobjectid":31,
  "orientation":"orthogonal",
  "renderorder":"right-down",
  "tiledversion":"1.9.2",
