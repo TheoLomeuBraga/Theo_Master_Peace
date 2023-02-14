@@ -281,7 +281,7 @@ public:
 
 		corpo = NULL;
 
-
+		
 
 	}
 	~box_2D() {

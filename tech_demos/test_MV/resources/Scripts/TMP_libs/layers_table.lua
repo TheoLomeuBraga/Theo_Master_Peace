@@ -4,6 +4,7 @@ require("TMP_libs.components.component_index")
 layers_table = {}
 function layers_table:new_2D()
     ret = {}
+    ret.main = ""
     ret.camera = ""
     ret.background_image = ""
     ret.background_3D = ""
@@ -14,26 +15,20 @@ function layers_table:new_2D()
     ret.hud = ""
     ret.sound = ""
     function ret:create()
-        self.camera = create_object()
-        self.background_image = create_object()
-        self.background_3D = create_object()
-        self.background_cenary = create_object()
-        self.cenary = create_object()
-        self.charter = create_object()
-        self.top = create_object()
-        self.hud = create_object()
-        self.sound = create_object()
+        self.main = create_object()
+        self.camera = create_object(self.main)
+        self.background_image = create_object(self.main)
+        self.background_3D = create_object(self.main)
+        self.background_cenary = create_object(self.main)
+        self.cenary = create_object(self.main)
+        self.charter = create_object(self.main)
+        self.top = create_object(self.main)
+        self.hud = create_object(self.main)
+        self.sound = create_object(self.main)
     end
     function ret:destroy()
-        remove_object(self.camera)
-        remove_object(self.background_image)
-        remove_object(self.background_3D)
-        remove_object(self.background_cenary)
-        remove_object(self.cenary)
-        remove_object(self.charter)
-        remove_object(self.top)
-        remove_object(self.hud)
-        remove_object(self.sound)
+        remove_object(self.main)
+        
     end
     return ret
 end

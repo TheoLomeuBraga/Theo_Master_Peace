@@ -228,7 +228,7 @@ namespace funcoes_ponte {
 			obj = string_ponteiro<objeto_jogo>(lua_tostring(L, 1));
 		}
 		if (obj != NULL) {
-			vector<json> criancas;
+			vector<string> criancas;
 
 			for (shared_ptr<objeto_jogo> p : obj->filhos) {
 				criancas.push_back(ponteiro_string(p.get()));

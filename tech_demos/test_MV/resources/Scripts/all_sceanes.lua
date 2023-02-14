@@ -24,13 +24,19 @@ this_sceane.tile_map_info = nil
 this_sceane.background = nil
 this_sceane.objects_layesrs = nil
 
+this_sceane.test_father_pysics = nil
 
-
+function this_sceane:unload()
+    print("onloading sceane")
+    this_sceane.background:remove()
+    remove_object(this_sceane.test_father_pysics)
+    clear_memory()
+end
 
 
 
 function create_colision_tiled_box_volume(pos,rot,sca,debug)
-    ret = game_object:new(create_object(this_sceane.tile_map_info.map_object.object_ptr))
+    ret = game_object:new(create_object(this_sceane.test_father_pysics))
 
     
 
@@ -65,7 +71,7 @@ function create_colision_tiled_box_volume(pos,rot,sca,debug)
 end
 
 function create_crate(pos)
-    ret = game_object:new(create_object(this_sceane.tile_map_info.map_object.object_ptr))
+    ret = game_object:new(create_object(this_sceane.test_father_pysics))
     set_gravity(0,-9,0)
     
 
@@ -103,6 +109,7 @@ sceanes_db = {}
 
 sceanes_db.test = {}
 function sceanes_db.test:load()
+    this_sceane.test_father_pysics = create_object()
     print("loading m1")
     this_sceane.objects_layesrs = layers_table:new_2D()
     this_sceane.objects_layesrs:create()
@@ -174,17 +181,5 @@ function sceanes_db.test:load()
     
 end
 
-function sceanes_db.test:unload()
-    print("unloading test")
-    this_sceane.background:remove()
-    this_sceane.background = nil
 
-    this_sceane.camera:remove()
-    this_sceane.camera = nil
-
-    this_sceane.tile_map_info.map_object:remove()
-    this_sceane.tile_map_info = nil
-
-    this_sceane.objects_layesrs:destroy()
-end
 

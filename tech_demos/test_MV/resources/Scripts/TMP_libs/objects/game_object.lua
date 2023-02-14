@@ -64,6 +64,13 @@ function game_object:new(object_ptr)
         self = nil
     end
     function obj:remove()
+        self:get()
+        if self.childrens ~= nil then
+            for p_id,p in ipairs(self.childrens) do
+                game_object:new(p):remove()
+            end
+        end
+        
         remove_object(self.object_ptr)
     end
     return obj

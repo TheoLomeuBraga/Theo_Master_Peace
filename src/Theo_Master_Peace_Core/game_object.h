@@ -80,10 +80,10 @@ using namespace std;
 		}
 
 		void excluir() {
-			lixo = true;
 			for (shared_ptr<objeto_jogo> obj : filhos) {
 				obj->excluir();
 			}
+			lixo = true;
 		}
 
 

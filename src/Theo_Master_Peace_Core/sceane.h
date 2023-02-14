@@ -57,6 +57,7 @@ vector<shared_ptr<objeto_jogo>> lixeira;
 		shared_ptr<objeto_jogo> operator [] (string s) { return pegar_objeto_nome(s); }
 
 		void remover_objeto(shared_ptr<objeto_jogo> obj) {
+			cout << "iniciando descarte objeto\n"; 
 			obj->finalisar();
 			obj->marcar_em_cena_como(false);
 			obj->desconectar_componentes();
@@ -77,6 +78,7 @@ vector<shared_ptr<objeto_jogo>> lixeira;
 			for (shared_ptr<objeto_jogo> f : obj->filhos) {
 				remover_objeto(f);
 			}
+			cout << "descartando objeto: " << obj << endl;
 		}
 
 		void remover_objetos(vector<shared_ptr<objeto_jogo>> objs) {
