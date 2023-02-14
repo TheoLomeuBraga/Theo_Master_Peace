@@ -86,11 +86,11 @@ function create_crate(pos)
 
     ret:add_component(components.render_sprite)
     ret.components[components.render_sprite].layer = 2
-    ret.components[components.render_sprite].selected_tile = 1
+    ret.components[components.render_sprite].selected_tile = 25
     ret.components[components.render_sprite].tile_set_local = "resources/Leveis 2D/tilesets/tileset.json"
     mat = material:new()
-    mat.shader = "resources/Shaders/color_sprite"
-    mat.color = {r=0,g=1,b=0,a=1}
+    mat.shader = "resources/Shaders/sprite"
+    --mat.color = {r=0,g=1,b=0,a=1}
     ret.components[components.render_sprite].material = deepcopyjson(mat)
     ret.components[components.render_sprite]:set()
 end
@@ -157,12 +157,14 @@ function sceanes_db.test:load()
         create_colision_tiled_box_volume(pos,rot,sca,false)
     end
     
-    create_crate(Vec3:new(0,0,0))
+    
     for o_id,o in ipairs(tile_map_layer_info_map["objects"].objects) do
         if o.properties ~= nil then
             for p_id,p in ipairs(o.properties) do
                 if p.value == "crate" then
-                    
+                    pos = Vec3:new((o.x * 2)  / tile_map_info_size.tile_x,(-o.y * 2)  / tile_map_info_size.tile_y,0)
+                    pos = Vec3:new(pos.x -1 ,pos.y + 1  ,0)
+                    create_crate(pos)
                 end
             end
         end
@@ -182,5 +184,7 @@ function sceanes_db.test:unload()
 
     this_sceane.tile_map_info.map_object:remove()
     this_sceane.tile_map_info = nil
+
+    this_sceane.objects_layesrs:destroy()
 end
 
