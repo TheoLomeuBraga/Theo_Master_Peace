@@ -13,7 +13,7 @@
 #include "game_object.h"
 #include "components/camera.h"
 #include "components/transform.h"
-//#include "API_grafica_classe.h"
+#include "components/reder_marching_cubes.h"
 
 
 
