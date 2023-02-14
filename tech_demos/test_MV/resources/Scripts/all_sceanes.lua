@@ -30,7 +30,7 @@ this_sceane.objects_layesrs = nil
 
 
 function create_colision_box(pos,rot,sca)
-    ret = game_object:new(this_sceane.objects_layesrs.top)
+    ret = game_object:new(create_object(this_sceane.tile_map_info.map_object.object_ptr))
 
     
 
@@ -43,9 +43,10 @@ function create_colision_box(pos,rot,sca)
     ret:add_component(components.transform)
     ret.components[components.transform].position = deepcopy(pos)
     ret.components[components.transform].rotation = deepcopy(rot)
-    ret.components[components.transform].scale = deepcopy(sca)
+    ret.components[components.transform].scale = deepcopy(Vec3:new(sca.x,sca.y,sca.z))
     ret.components[components.transform]:set()
     ret.components[components.transform]:change_position(pos.x,pos.y,pos.z)
+    ret.components[components.transform]:change_rotation(rot.x,rot.y,rot.z)
 
     ret:add_component(components.render_sprite)
     ret.components[components.render_sprite].layer = 2
@@ -53,6 +54,7 @@ function create_colision_box(pos,rot,sca)
     ret.components[components.render_sprite].tile_set_local = "resources/Leveis 2D/tilesets/tileset.json"
     mat = material:new()
     mat.shader = "resources/Shaders/color_sprite"
+    mat.color = {r=0,g=1,b=0,a=1}
     ret.components[components.render_sprite].material = deepcopyjson(mat)
     ret.components[components.render_sprite]:set()
 
@@ -79,13 +81,13 @@ function sceanes_db.test:load()
     this_sceane.background = create_render_shader(this_sceane.objects_layesrs.background_image,false,Vec3:new(0, 0, 0),Vec3:new(0, 0, 0),Vec3:new(1, 1, 1),1,background_material)
 
     --camera
-    this_sceane.camera = create_camera_ortho(this_sceane.objects_layesrs.camera,Vec3:new(-1, 0, 0),Vec3:new(0, 0, 0),5,5,720,720,0.1,100)
+    this_sceane.camera = create_camera_ortho(this_sceane.objects_layesrs.camera,Vec3:new(-1, 0, 0),Vec3:new(0, 0, 0),150,150,720,720,0.1,100)
     set_lisener_object(this_sceane.camera.object_ptr)
 
     --tilemap
     tile_map_material = material:new()
     tile_map_material.shader = "resources/Shaders/sprite"
-    this_sceane.tile_map_info = load_2D_map(this_sceane.objects_layesrs.cenary,Vec3:new(0,0,0),Vec3:new(0,90,0),Vec3:new(0.1,0.1,0.1),"resources/Leveis 2D/tilemaps/tilemap.json","resources/Leveis 2D/tilesets/tileset.json","resources/Leveis 2D/tilesets",tile_map_material)
+    this_sceane.tile_map_info = load_2D_map(this_sceane.objects_layesrs.cenary,Vec3:new(0,0,0),Vec3:new(0,90,0),Vec3:new(1,1,1),"resources/Leveis 2D/tilemaps/tilemap.json","resources/Leveis 2D/tilesets/tileset.json","resources/Leveis 2D/tilesets",tile_map_material)
     this_sceane.tile_map_info.map_object.components[components.render_tile_map].render_tilemap_only_layer = -1
     this_sceane.tile_map_info.map_object.components[components.render_tile_map]:set()
 
@@ -113,9 +115,14 @@ function sceanes_db.test:load()
     end
     
     --create_collision
-    create_colision_box(Vec3:new(1,0,0),Vec3:new(0,90,0),Vec3:new(1,1,1))
+    --create_colision_box(Vec3:new(1,0,0),Vec3:new(0,90,0),Vec3:new(1,1,1))
     for v_id,v in ipairs(tile_map_layer_info_map["collision"].objects) do
         
+        sca = Vec3:new((v.width / tile_map_info_size.tile_x) ,(v.height / tile_map_info_size.tile_y),0)
+        pos = Vec3:new(v.x * 2  / tile_map_info_size.tile_x,(-v.y * 2)  / tile_map_info_size.tile_y,0)
+        pos = Vec3:new(pos.x + (sca.x -1) ,pos.y + (-sca.y + 1)  ,0)
+        rot = Vec3:new(v.rotation,0,0)
+        create_colision_box(pos,rot,sca)
     end
 
     

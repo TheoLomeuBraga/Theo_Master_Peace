@@ -651,6 +651,11 @@ namespace funcoes_ponte {
 			vec3 v3 = vec3(lua_tonumber(L, 2), lua_tonumber(L, 3), lua_tonumber(L, 4));
 			tf->pos = v3;
 		}
+		shared_ptr<box_2D> b2d = obj->pegar_componente<box_2D>();
+		if (b2d != NULL) {
+			vec3 v3 = vec3(lua_tonumber(L, 2), lua_tonumber(L, 3), lua_tonumber(L, 4));
+			b2d->mudar_pos(vec2(v3.x,v3.y));
+		}
 		return 0;
 	}
 
@@ -664,6 +669,11 @@ namespace funcoes_ponte {
 		if (tf != NULL) {
 			vec3 v3 = vec3(lua_tonumber(L, 2), lua_tonumber(L, 3), lua_tonumber(L, 4));
 			tf->mudar_angulo_graus(v3);
+		}
+		shared_ptr<box_2D> b2d = obj->pegar_componente<box_2D>();
+		if (b2d != NULL) {
+			vec3 v3 = vec3(lua_tonumber(L, 2), lua_tonumber(L, 3), lua_tonumber(L, 4));
+			b2d->mudar_rot(v3.x);
 		}
 		return 0;
 	}
