@@ -36,7 +36,7 @@ function create_colision_box(pos,rot,sca)
 
     ret:add_component(components.physics_2D)
     ret.components[components.physics_2D].scale = Vec2:new(sca.x,sca.y)
-    ret.components[components.physics_2D].colision_shape = colision_shapes.box
+    ret.components[components.physics_2D].colision_shape = colision_shapes.tiled_volume
     ret.components[components.physics_2D].rotate = false
     ret.components[components.physics_2D]:set()
 
@@ -53,7 +53,7 @@ function create_colision_box(pos,rot,sca)
     ret.components[components.render_sprite].selected_tile = 1
     ret.components[components.render_sprite].tile_set_local = "resources/Leveis 2D/tilesets/tileset.json"
     mat = material:new()
-    mat.shader = "resources/Shaders/color_sprite"
+    mat.shader = "resources/Shaders/tiled_volume"
     mat.color = {r=0,g=1,b=0,a=1}
     ret.components[components.render_sprite].material = deepcopyjson(mat)
     ret.components[components.render_sprite]:set()
@@ -118,9 +118,9 @@ function sceanes_db.test:load()
     --create_colision_box(Vec3:new(1,0,0),Vec3:new(0,90,0),Vec3:new(1,1,1))
     for v_id,v in ipairs(tile_map_layer_info_map["collision"].objects) do
         
-        sca = Vec3:new((v.width / tile_map_info_size.tile_x) ,(v.height / tile_map_info_size.tile_y),0)
+        sca = Vec3:new((v.width / tile_map_info_size.tile_x) * 2 ,(v.height / tile_map_info_size.tile_y) * 2 ,0)
         pos = Vec3:new(v.x * 2  / tile_map_info_size.tile_x,(-v.y * 2)  / tile_map_info_size.tile_y,0)
-        pos = Vec3:new(pos.x + (sca.x -1) ,pos.y + (-sca.y + 1)  ,0)
+        pos = Vec3:new(pos.x -1 ,pos.y + 1  ,0)
         rot = Vec3:new(v.rotation,0,0)
         create_colision_box(pos,rot,sca)
     end

@@ -74,6 +74,20 @@ b2Vec2 tile_vertex2[] = {
 	b2Vec2(-1,1),
 };
 
+b2Vec2 tiled_volume[] = {
+	b2Vec2(1,0),
+	b2Vec2(1,1),
+	b2Vec2(0,0),
+	b2Vec2(0,1)
+};
+
+b2Vec2 tiled_volume2[] = {
+	b2Vec2(1,0),
+	b2Vec2(1,1),
+	b2Vec2(0,0),
+	b2Vec2(0,1)
+};
+
 
 class raycast_retorno : public b2RayCastCallback {
 public:
@@ -188,6 +202,14 @@ public:
 				tile_vertex2[i] = b2Vec2(tile_vertex[i].x * escala.x,tile_vertex[i].y * escala.y);
 			}
 			Vertex_shape.Set(&tile_vertex2[0], 8);
+			fixtureDef.shape = &Vertex_shape;
+
+		}
+		else if (forma == volume_tiled) {
+			for(int i = 0;i< 8;i++){
+				tiled_volume2[i] = b2Vec2(tiled_volume[i].x * escala.x,tiled_volume[i].y * escala.y);
+			}
+			Vertex_shape.Set(&tiled_volume2[0], 8);
 			fixtureDef.shape = &Vertex_shape;
 
 		}

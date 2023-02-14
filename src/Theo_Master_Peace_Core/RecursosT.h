@@ -331,6 +331,7 @@ public:
 			esfera = 1,
 			convexo = 2,
 			tile_suave = 3,
+			volume_tiled = 4,
 		};
 		
 

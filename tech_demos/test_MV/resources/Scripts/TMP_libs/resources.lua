@@ -70,16 +70,7 @@ components.audio_source = "audio_source"
 components.lua_scripts = "lua_scripts"
 
 
---boady_dynamics
-boady_dynamics = {}
-boady_dynamics.static = 0
-boady_dynamics.dynamic = 1
 
---colision_shapes
-colision_shapes = {}
-colision_shapes.box = 0
-colision_shapes.sphere = 1
-colision_shapes.tile = 3
 
 --camera types
 camera_view_types = {}

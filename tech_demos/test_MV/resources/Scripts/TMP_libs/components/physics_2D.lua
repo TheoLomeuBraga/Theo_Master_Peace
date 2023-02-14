@@ -7,6 +7,18 @@ end
 function add_force(object,force_x,force_y)
 end
 
+--boady_dynamics
+boady_dynamics = {}
+boady_dynamics.static = 0
+boady_dynamics.dynamic = 1
+
+--colision_shapes
+colision_shapes = {}
+colision_shapes.box = 0
+colision_shapes.sphere = 1
+colision_shapes.tile = 3
+colision_shapes.tiled_volume = 4
+
 colision_layer_info = {}
 function colision_layer_info:new()
     cli = {}
