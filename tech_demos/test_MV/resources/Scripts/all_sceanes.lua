@@ -11,7 +11,36 @@ require("TMP_libs.components.component_all")
 
 require("TMP_libs.layers_table")
 
+function initialize_render_layers()
+    --[[
+    window.res.x = 720
+    window.res.y = 720
+    window:set()
+    --]]
 
+    renders_layers.layers_size = 4
+
+    renders_layers.layers[1] = render_layer:new()
+    renders_layers.layers[1].end_render = false
+    renders_layers.layers[1].use_deeph = true
+    renders_layers.layers[1].clean_color = false
+    renders_layers.layers[1].start_render = true
+
+    renders_layers.layers[2] = render_layer:new()
+    renders_layers.layers[2].end_render = false
+    renders_layers.layers[2].use_deeph = true
+    renders_layers.layers[2].clean_color = false
+    renders_layers.layers[2].start_render = false
+
+    renders_layers.layers[3] = render_layer:new()
+    renders_layers.layers[3].end_render = true
+    renders_layers.layers[3].use_deeph = true
+    renders_layers.layers[3].clean_color = false
+    renders_layers.layers[3].start_render = false
+
+    renders_layers:set()
+    
+end
 
 map_name_list = {
     "test",
@@ -31,7 +60,12 @@ function this_sceane:unload()
     clear_memory()
 end
 
-
+function create_background(image)
+    background_material = material:new()
+    background_material.shader = "resources/Shaders/background"
+    background_material.textures[1] = image
+    this_sceane.background = create_render_shader(this_sceane.objects_layesrs.background_image,false,Vec3:new(0, 0, 0),Vec3:new(0, 0, 0),Vec3:new(1, 1, 1),1,background_material)
+end
 
 function create_colision_tiled_box_volume(pos,rot,sca,debug)
     ret = game_object:new(create_object(this_sceane.tile_map_info.map_object.object_ptr))
@@ -101,6 +135,7 @@ end
 
 
 
+
 sceanes_db = {}
 
 
@@ -108,13 +143,12 @@ sceanes_db = {}
 sceanes_db.test = {}
 function sceanes_db.test:load()
     print("loading m1")
+    initialize_render_layers()
     this_sceane.objects_layesrs = layers_table:new_2D()
     this_sceane.objects_layesrs:create()
     --background
-    background_material = material:new()
-    background_material.shader = "resources/Shaders/fundo"
-    background_material.textures[1] = "resources/Textures/fundo A.png"
-    this_sceane.background = create_render_shader(this_sceane.objects_layesrs.background_image,false,Vec3:new(0, 0, 0),Vec3:new(0, 0, 0),Vec3:new(1, 1, 1),1,background_material)
+    
+    create_background("resources/Textures/fundo A.png")
 
     --camera
     this_sceane.camera = create_camera_ortho(this_sceane.objects_layesrs.camera,Vec3:new(-1, 0, 0),Vec3:new(0, 0, 0),150,150,720,720,0.1,100)
