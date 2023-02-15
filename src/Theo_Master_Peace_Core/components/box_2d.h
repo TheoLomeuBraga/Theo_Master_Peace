@@ -276,6 +276,7 @@ public:
 		if (corpo != NULL) {
 			corpo->GetWorld()->DestroyBody(corpo);
 			corpo_obj.erase(corpo);
+
 		}
 
 		corpo = NULL;
@@ -284,12 +285,6 @@ public:
 
 	}
 	~box_2D() {
-		iniciado = false;
-		if (corpo != NULL) {
-			corpo->GetWorld()->DestroyBody(corpo);
-			corpo_obj.erase(corpo);
-		}
-
 		vector<colis_info> vazioA;
 		colis_infos.swap(vazioA);
 
