@@ -23,6 +23,8 @@ using namespace std;
 
 
 	};
+
+
 	
 	class objeto_jogo {
 	private:
@@ -32,8 +34,6 @@ using namespace std;
 		static int instancias;
 		void setar_esse_objeto(shared_ptr< objeto_jogo> objeto) {
 			esse_objeto = objeto;
-
-			instancias += 1;
 		}
 		
 		bool lixo = false;
@@ -43,6 +43,31 @@ using namespace std;
 
 		objeto_jogo* pai;
 		vector<shared_ptr<objeto_jogo>> filhos;
+		vector<objeto_jogo*> childrens_to_remove;
+
+		bool is_in_childrens_to_remove(objeto_jogo* children){
+			for(objeto_jogo* c : childrens_to_remove){
+				if(c == children){return true;}
+			}
+			return false;
+		}
+
+		void remove_childrens_to_remove(){
+			for(shared_ptr<objeto_jogo> children : filhos){
+				children->remove_childrens_to_remove();
+			}
+			vector<shared_ptr<objeto_jogo>> new_children_list = {};
+			for(shared_ptr<objeto_jogo> children : filhos){
+				if(!is_in_childrens_to_remove(children.get())){
+					new_children_list.push_back(children);
+				}
+			}
+			filhos.swap(new_children_list);
+			vector<objeto_jogo*> new_childrens_to_remove_list = {};
+			childrens_to_remove.swap(new_childrens_to_remove_list);
+		}
+
+		
 
 		void limpar_lixo() {
 			map<string, shared_ptr<componente>> componentesB;
@@ -69,13 +94,16 @@ using namespace std;
 		}
 
 		objeto_jogo() {
+			instancias += 1;
 		}
 		
 		objeto_jogo(bool en_cena) { 
+			instancias += 1;
 			this->em_cena = em_cena;
 		}
 
 		objeto_jogo(string t) { 
+			instancias += 1;
 			nome = t;
 		}
 
@@ -196,6 +224,8 @@ using namespace std;
 			limpar_parentesco();
 
 			limpar_lixo();
+
+			
 		}
 
 

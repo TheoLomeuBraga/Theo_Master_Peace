@@ -54,7 +54,16 @@ function START()
     
     
     sceanes_db["test"]:load()
-    
+    this_sceane:unload()
+    print("divisoria")
+    sceanes_db["test"]:load()
+    this_sceane:unload()
+    print("divisoria")
+    sceanes_db["test"]:load()
+    this_sceane:unload()
+    print("divisoria")
+    sceanes_db["test"]:load()
+    this_sceane:unload()
     
     
     

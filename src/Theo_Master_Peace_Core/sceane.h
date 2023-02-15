@@ -57,26 +57,23 @@ vector<shared_ptr<objeto_jogo>> lixeira;
 		shared_ptr<objeto_jogo> operator [] (string s) { return pegar_objeto_nome(s); }
 
 		void remover_objeto(shared_ptr<objeto_jogo> obj) {
+			for (shared_ptr<objeto_jogo> f : obj->filhos) {
+				remover_objeto(f);
+			}
+
+			if (obj->pai != NULL) {
+				obj->pai->childrens_to_remove.push_back(obj.get());
+			}
+			
+			obj->lixo = true;
+			lixeira.push_back(obj);
 			obj->finalisar();
 			obj->marcar_em_cena_como(false);
 			obj->desconectar_componentes();
+		}
 
-			
+		void remover_objeto(objeto_jogo* obj) {
 
-			//if (obj->pai != NULL) {
-			//	for (int i = 0; i < obj->pai->filhos.size(); i++) {
-			//		if (obj->pai->filhos[i] == obj) {
-			//			obj->pai->filhos.erase(obj->pai->filhos.begin() + i);
-			//			obj->pai = NULL;
-			//			break;
-			//		}
-			//	}
-			//}
-			lixeira.push_back(obj);
-			for (shared_ptr<objeto_jogo> f : obj->filhos) {
-				
-				remover_objeto(f);
-			}
 		}
 
 		void remover_objetos(vector<shared_ptr<objeto_jogo>> objs) {
@@ -86,12 +83,14 @@ vector<shared_ptr<objeto_jogo>> lixeira;
 		void adicionar_objeto_lista(shared_ptr<objeto_jogo> obj) {
 			if (obj != NULL) {
 				if (obj->lixo) {
+					
+					obj->remove_childrens_to_remove();
 					remover_objeto(obj);
 
 				}
 				else {
 
-
+					obj->remove_childrens_to_remove();
 					obj->em_cena = true;
 
 
@@ -169,6 +168,7 @@ vector<shared_ptr<objeto_jogo>> lixeira;
 					if ((FL != NULL && FL->ligado)) {
 						fontes_luzes_id.push_back(obj->ID);
 					}
+
 
 
 					for (shared_ptr<objeto_jogo> ob : obj->filhos) {

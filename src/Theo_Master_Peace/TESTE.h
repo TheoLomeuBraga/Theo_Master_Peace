@@ -175,11 +175,11 @@ void depois_imgui() {
 
 shared_ptr<objeto_jogo> core;
 
-shared_ptr<objeto_jogo> camera_teste;
+//shared_ptr<objeto_jogo> camera_teste;
 
 void iniciarTeste3() {
 	
-	camera_teste = novo_objeto_jogo();
+	//camera_teste = novo_objeto_jogo();
 	funcoes_OS = new foncoes_Windows();
 	api_grafica = new OpenGL_API();
 	api_grafica->pos_processamento_info.shad = "recursos/Shaders/post_processing";
@@ -248,7 +248,7 @@ void iniciarTeste3() {
 	
 	//cena_objetos_selecionados->adicionar_objeto(test_3D);
 	cena_objetos_selecionados->adicionar_objeto(core);
-	cena_objetos_selecionados->adicionar_objeto(camera_teste);
+	//cena_objetos_selecionados->adicionar_objeto(camera_teste);
 	
 	
 	
@@ -269,7 +269,7 @@ bool boleanas[10];
 
 shared_ptr<objeto_jogo> obj;
 void teste3() {
-	//escrever(Tempo::FPS);
+	cout << "instancias: " << objeto_jogo::instancias << endl;
 	
 
 

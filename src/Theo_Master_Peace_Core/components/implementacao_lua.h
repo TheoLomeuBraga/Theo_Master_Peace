@@ -202,6 +202,7 @@ namespace funcoes_ponte {
 		objeto_jogo* obj = NULL;
 		if (argumentos == 1) {
 			obj = string_ponteiro<objeto_jogo>(lua_tostring(L, 1));
+			//remover_objeto();
 			obj->excluir();
 		}
 

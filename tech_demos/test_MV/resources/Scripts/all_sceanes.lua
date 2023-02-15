@@ -178,6 +178,7 @@ function create_tilemap(tilemap_path,tileset_path,image_folder)
                     pos = Vec3:new((o.x * 2)  / tile_map_info_size.tile_x,(-o.y * 2)  / tile_map_info_size.tile_y,0)
                     pos = Vec3:new(pos.x -1 ,pos.y + 1  ,0)
                     create_crate(pos)
+                    
                 end
             end
         end
