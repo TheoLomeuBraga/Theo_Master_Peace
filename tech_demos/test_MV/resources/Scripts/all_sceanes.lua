@@ -133,36 +133,12 @@ function create_crate(pos)
     ret.components[components.render_sprite]:set()
 end
 
-
-
-
-sceanes_db = {}
-
-
-
-sceanes_db.test = {}
-function sceanes_db.test:load()
-    print("loading m1")
-    initialize_render_layers()
-    this_sceane.objects_layesrs = layers_table:new_2D()
-    this_sceane.objects_layesrs:create()
-    --background
-    
-    create_background("resources/Textures/fundo A.png")
-
-    --camera
-    this_sceane.camera = create_camera_ortho(this_sceane.objects_layesrs.camera,Vec3:new(-1, 0, 0),Vec3:new(0, 0, 0),150,150,720,720,0.1,100)
-    set_lisener_object(this_sceane.camera.object_ptr)
-
-    --tilemap
+function create_tilemap(tilemap_path,tileset_path,image_folder)
     tile_map_material = material:new()
     tile_map_material.shader = "resources/Shaders/sprite"
-    this_sceane.tile_map_info = load_2D_map(this_sceane.objects_layesrs.cenary,Vec3:new(0,0,0),Vec3:new(0,90,0),Vec3:new(1,1,1),"resources/Leveis 2D/tilemaps/tilemap.json","resources/Leveis 2D/tilesets/tileset.json","resources/Leveis 2D/tilesets",tile_map_material)
+    this_sceane.tile_map_info = load_2D_map(this_sceane.objects_layesrs.cenary,Vec3:new(0,0,0),Vec3:new(0,90,0),Vec3:new(1,1,1),tilemap_path,tileset_path,image_folder,tile_map_material)
     this_sceane.tile_map_info.map_object.components[components.render_tile_map].render_tilemap_only_layer = -1
     this_sceane.tile_map_info.map_object.components[components.render_tile_map]:set()
-
-    --this_sceane.tile_map_info.tile_map_info
-    --this_sceane.tile_map_info.tile_set_info
 
     
 
@@ -185,7 +161,6 @@ function sceanes_db.test:load()
     end
     
     --create_collision
-    --create_colision_tiled_box_volume(Vec3:new(1,0,0),Vec3:new(0,90,0),Vec3:new(1,1,1))
     for v_id,v in ipairs(tile_map_layer_info_map["collision"].objects) do
         
         sca = Vec3:new((v.width / tile_map_info_size.tile_x) * 2 ,(v.height / tile_map_info_size.tile_y) * 2 ,0)
@@ -206,9 +181,30 @@ function sceanes_db.test:load()
                 end
             end
         end
-        
     end
+end
 
+
+sceanes_db = {}
+
+
+
+sceanes_db.test = {}
+function sceanes_db.test:load()
+    print("loading m1")
+    initialize_render_layers()
+    this_sceane.objects_layesrs = layers_table:new_2D()
+    this_sceane.objects_layesrs:create()
+    --background
+    
+    create_background("resources/Textures/fundo A.png")
+
+    --camera
+    this_sceane.camera = create_camera_ortho(this_sceane.objects_layesrs.camera,Vec3:new(-1, 0, 0),Vec3:new(0, 0, 0),150,150,720,720,0.1,100)
+    set_lisener_object(this_sceane.camera.object_ptr)
+
+    --tilemap
+    create_tilemap("resources/Leveis 2D/tilemaps/tilemap.json","resources/Leveis 2D/tilesets/tileset.json","resources/Leveis 2D/tilesets")
     
 end
 
