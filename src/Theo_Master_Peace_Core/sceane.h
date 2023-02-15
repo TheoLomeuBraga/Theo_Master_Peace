@@ -82,15 +82,17 @@ vector<shared_ptr<objeto_jogo>> lixeira;
 
 		void adicionar_objeto_lista(shared_ptr<objeto_jogo> obj) {
 			if (obj != NULL) {
+				obj->remove_childrens_to_remove();
 				if (obj->lixo) {
 					
-					obj->remove_childrens_to_remove();
+					
 					remover_objeto(obj);
+					
 
 				}
 				else {
 
-					obj->remove_childrens_to_remove();
+					
 					obj->em_cena = true;
 
 

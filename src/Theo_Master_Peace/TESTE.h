@@ -269,6 +269,7 @@ bool boleanas[10];
 
 shared_ptr<objeto_jogo> obj;
 void teste3() {
+	cout << "alvo instancias: " << 20 << endl;
 	cout << "instancias: " << objeto_jogo::instancias << endl;
 	
 

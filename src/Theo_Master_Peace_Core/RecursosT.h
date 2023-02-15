@@ -296,8 +296,8 @@ public:
 
 
 		struct colis_info_struct {
-			shared_ptr<void> obj_ptr = NULL;
-			shared_ptr<void> cos_obj_ptr = NULL;
+			void* obj = NULL;
+			void* cos_obj = NULL;
 			bool sensor;
 			bool colidindo = true;
 			float distancia;

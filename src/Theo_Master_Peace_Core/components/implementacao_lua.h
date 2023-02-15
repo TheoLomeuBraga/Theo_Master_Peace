@@ -2124,14 +2124,14 @@ public:
 		for (pair<string, lua_State*> p : estados_lua) {
 			lua_State* L = p.second;
 
-			if (col.obj_ptr != NULL) {
+			if (col.obj != NULL) {
 				lua_getglobal(L, "COLIDE");
 
 				//tabela
 				lua_newtable(L);
 				//id obj
 				lua_pushstring(L, "object_ID");
-				lua_pushstring(L, ponteiro_string(col.obj_ptr.get()).c_str());
+				lua_pushstring(L, ponteiro_string(col.obj).c_str());
 
 				lua_settable(L, -3);
 				//fim tabela

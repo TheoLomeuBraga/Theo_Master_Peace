@@ -96,7 +96,7 @@ public:
 	colis_info ci;
 
 	float ReportFixture(b2Fixture* fixture, const b2Vec2& point, const b2Vec2& normal, float fraction) {
-		ci.cos_obj_ptr = corpo_obj[fixture->GetBody()];
+		ci.cos_obj = corpo_obj[fixture->GetBody()].get();
 		ci.pos = vec3(point.x, point.y,0);
 		ci.nor = vec3(normal.x, normal.y, 0);
 		return 0;
@@ -276,7 +276,6 @@ public:
 		if (corpo != NULL) {
 			corpo->GetWorld()->DestroyBody(corpo);
 			corpo_obj.erase(corpo);
-
 		}
 
 		corpo = NULL;
@@ -285,6 +284,12 @@ public:
 
 	}
 	~box_2D() {
+		iniciado = false;
+		if (corpo != NULL) {
+			corpo->GetWorld()->DestroyBody(corpo);
+			corpo_obj.erase(corpo);
+		}
+
 		vector<colis_info> vazioA;
 		colis_infos.swap(vazioA);
 
@@ -320,7 +325,7 @@ public:
 
 		raycast_retorno cb;
 		mundo.RayCast(&cb, b2Vec2(pos.x, pos.y), b2Vec2(pos.x, pos.y) + distancia * b2Vec2(sinf(angulo), cosf(angulo)));
-		if (cb.ci.cos_obj_ptr != NULL) { ret = true; }
+		if (cb.ci.cos_obj != NULL) { ret = true; }
 		return ret;
 	}
 
@@ -332,7 +337,7 @@ public:
 
 		colis = cb.ci;
 
-		if (cb.ci.cos_obj_ptr != NULL) { ret = true; }
+		if (cb.ci.cos_obj != NULL) { ret = true; }
 		return ret;
 	}
 
@@ -372,13 +377,13 @@ public:
 		
 
 		colis_info ci;
-		ci.obj_ptr = corpo_obj[corpoB];
+		ci.obj = corpo_obj[corpoB].get();
 		ci.velocidade = contact->GetTangentSpeed();
 
 		
 
 		corpo_obj[corpoA]->pegar_componente<box_2D>()->colis_infos.push_back(ci);
-		ci.obj_ptr = corpo_obj[corpoA];
+		ci.obj = corpo_obj[corpoA].get();
 		corpo_obj[corpoB]->pegar_componente<box_2D>()->colis_infos.push_back(ci);
 	}
 
