@@ -28,6 +28,7 @@ using namespace Tempo;
 #include <sstream>
 
 #include "table.h"
+#include "table_conversors.h"
 
 bool isNumber(const std::string& str) {
     std::istringstream iss(str);
