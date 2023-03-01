@@ -145,5 +145,31 @@ Material table_material(Table t){
 
 Table material_table(Material m){
     Table t;
+    t.setString("shader",m.shad);
+
+    Table color;
+    color.setFloat("r",m.cor.r);
+    color.setFloat("g",m.cor.g);
+    color.setFloat("b",m.cor.b);
+    color.setFloat("a",m.cor.a);
+    t.setTable("color",color);
+
+    Table position_scale;
+    position_scale.setFloat("x",m.cor.r);
+    position_scale.setFloat("y",m.cor.g);
+    position_scale.setFloat("z",m.cor.b);
+    position_scale.setFloat("w",m.cor.a);
+    t.setTable("position_scale",position_scale);
+
+    t.setFloat("metallic",m.metalico);
+    t.setFloat("softness",m.suave);
+
+    Table textures;
+    t.setTable("textures",textures);
+
+    Table inputs;
+    t.setTable("inputs",inputs);
+
+    
     return t;
 }
