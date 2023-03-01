@@ -20,6 +20,132 @@ using namespace Tempo;
 #include "game_object.h"
 
 
+
+#include <iostream>
+#include <string>
+#include <unordered_map>
+#include <vector>
+#include <sstream>
+
+#include "table.h"
+
+bool isNumber(const std::string& str) {
+    std::istringstream iss(str);
+    double num;
+    iss >> std::noskipws >> num;
+    return iss.eof() && !iss.fail();
+}
+
+float stringToFloat(const std::string& str) {
+    std::istringstream iss(str);
+    float result;
+    iss >> result;
+    return result;
+}
+
+
+
+
+
+void lua_pushtable(lua_State* L, Table t){
+    lua_newtable(L);
+    for(std::pair<std::string, float> p : t.m_floatMap){
+        if(isNumber(p.first)){
+            lua_pushnumber(L, stringToFloat(p.first));
+        }else{
+            lua_pushstring(L, p.first.c_str());
+        }
+        lua_pushnumber(L,p.second);
+        lua_settable(L, -3);
+    }
+    for(std::pair<std::string, std::string> p : t.m_stringMap){
+        if(isNumber(p.first)){
+            lua_pushnumber(L, stringToFloat(p.first));
+        }else{
+            lua_pushstring(L, p.first.c_str());
+        }
+        lua_pushstring(L,p.second.c_str());
+        lua_settable(L, -3);
+    }
+    for(std::pair<std::string, Table> p : t.m_tableMap){
+        if(isNumber(p.first)){
+            lua_pushnumber(L, stringToFloat(p.first));
+        }else{
+            lua_pushstring(L, p.first.c_str());
+        }
+        lua_pushtable(L,p.second);
+        lua_settable(L, -3);
+    }
+    
+
+    
+}
+
+
+
+Table lua_totable(lua_State* L,int index){
+    Table t;
+    // Make sure the argument at tableIndex is a table
+    luaL_checktype(L, index, LUA_TTABLE);
+
+    // Iterate over the table and extract its keys and values
+    lua_pushnil(L);  // Push the first key
+    while (lua_next(L, index) != 0) {
+        std::string key;
+
+        // At this point, the stack contains the key at index -2 and the value at index -1
+        if (lua_isnumber(L, -2)) {
+            // The value is a number
+            float value = lua_tonumber(L, -2);
+            key = std::to_string(value);
+        }
+        else if (lua_isstring(L, -2)) {
+            // The value is a number
+            std::string value = lua_tostring(L, -2);
+            key = value;
+        }
+        else if (lua_isboolean(L, -2)) {
+            // The value is a number
+            float value = lua_toboolean(L, -2);
+            key = std::to_string(value);
+        }
+
+        if (lua_isnumber(L, -1)) {
+            // The value is a number
+            float value = lua_tonumber(L, -1);
+            t.setFloat(key,value);
+        }
+        else if (lua_isstring(L, -1)) {
+            // The value is a number
+            std::string value = lua_tostring(L, -1);
+            t.setString(key,value);
+        }
+        else if (lua_isboolean(L, -1)) {
+            // The value is a number
+            float value = lua_toboolean(L, -1);
+            t.setFloat(key,value);
+        }
+        else if (lua_istable(L, -1)) {
+            // The value is a table, recurse into it
+            t.setTable(key,lua_totable(L, lua_gettop(L)));
+        }
+
+        // Pop the value, but leave the key for the next iteration
+        lua_pop(L, 1);
+    }
+    return t;
+}
+
+
+
+
+
+
+
+
+
+
+
 using lua_function = int(*)(lua_State*);
 
 mapeamento_assets<string> mapeamento_scripts_lua;

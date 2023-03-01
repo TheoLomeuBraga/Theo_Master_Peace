@@ -180,6 +180,8 @@ function create_tilemap(tilemap_path,tileset_path,image_folder)
                     create_crate(pos)
                     
                 end
+                if p.value == "player_start" then
+                end
             end
         end
     end
