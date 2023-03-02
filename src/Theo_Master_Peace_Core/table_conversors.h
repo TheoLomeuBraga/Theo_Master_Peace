@@ -164,11 +164,19 @@ Table material_table(Material m){
     t.setFloat("metallic",m.metalico);
     t.setFloat("softness",m.suave);
 
-    Table textures;
-    t.setTable("textures",textures);
+    vector<std::string> textures;
+    for (int i = 0; i < NO_TEXTURAS; i++) {
+        if(m.texturas[i] != NULL){
+            textures.push_back(m.texturas[i]->local);
+        }
+    }
+    t.setTable("textures",table_vString(textures));
 
-    Table inputs;
-    t.setTable("inputs",inputs);
+    vector<float> inputs;
+    for (int i = 0; i < NO_INPUTS; i++) {
+        inputs.push_back(m.inputs[i]);
+    }
+    t.setTable("inputs",table_vFloat(inputs));
 
     
     return t;
