@@ -603,8 +603,76 @@ shared_ptr<cena_3D> importar_obj(string local) {
 		*ret = importar_obj(local);
 	}
 
+	//gpt sujeriu isso
+	/*
+	#include <fstream>
+#include <sstream>
+#include <string>
+#include <vector>
+
+struct MapVertex {
+    float x, y, z;
+};
+
+struct MapFace {
+    std::vector<MapVertex> vertices;
+};
+
+struct MapEntity {
+    std::string classname;
+    std::vector<MapFace> faces;
+};
+
+std::vector<MapEntity> readMapFile(const std::string& filename) {
+    std::vector<MapEntity> entities;
+    std::ifstream file(filename);
+    std::string line;
+
+    MapEntity entity;
+    MapFace face;
+    bool inEntity = false;
+    bool inFace = false;
+
+    while (std::getline(file, line)) {
+        std::stringstream stream(line);
+        std::string token;
+        stream >> token;
+
+        if (token == "entity") {
+            if (inEntity) {
+                entities.push_back(entity);
+                entity = MapEntity();
+                inEntity = false;
+            }
+            entity.classname = line;
+            inEntity = true;
+        } else if (inEntity && token == "}" && !inFace) {
+            entities.push_back(entity);
+            entity = MapEntity();
+            inEntity = false;
+        } else if (inEntity && token == "patchDef2") {
+            inFace = true;
+        } else if (inFace && token == "(") {
+            MapVertex vertex;
+            stream >> vertex.x >> vertex.y >> vertex.z;
+            face.vertices.push_back(vertex);
+        } else if (inFace && token == ")") {
+            entity.faces.push_back(face);
+            face = MapFace();
+        }
+    }
+
+    if (inEntity) {
+        entities.push_back(entity);
+    }
+
+    return entities;
+}
+	*/
+
 	shared_ptr<cena_3D> importar_map(string local){
 		//https://github.com/stefanha/map-files/blob/master/MAPFiles.pdf
+		//try this on gpt: make a c++ function that read an .map file (like the ones used on quake)
 		cena_3D ret;
 		ret.caminho = local;
 
