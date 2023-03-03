@@ -30,6 +30,9 @@ using namespace Tempo;
 #include "table.h"
 #include "table_conversors.h"
 
+const bool get_lua = false;
+const bool set_lua = true;
+
 bool isNumber(const std::string& str) {
     std::istringstream iss(str);
     double num;
@@ -254,6 +257,22 @@ int call_script_function(lua_State* L);
 
 
 namespace funcoes_ponte {
+
+	//exemplo get set
+	/*
+	int get_set_example(lua_State* L){
+		if(lua_tonumber(L, 1) == get_lua){
+			Table ret;
+
+			lua_pushtable(L,ret);
+			return 1;
+		}else{
+			Table t = lua_totable(L,2);
+			return 0;
+		}
+	}
+	*/
+
 	int hello_world(lua_State* L) {
 		cout << "hello world\n";
 		int ret = 0;
@@ -283,6 +302,22 @@ namespace funcoes_ponte {
 		}
 		else
 		{
+			return 0;
+		}
+	}
+
+	int get_set_window(lua_State* L){
+		if(lua_tonumber(L, 1) == get_lua){
+			Table ret;
+			ret.setTable("resolution",vec2_table(gerente_janela->pegar_res()));
+			ret.setFloat("full_screen",gerente_janela->e_janela_cheia());
+			lua_pushtable(L,ret);
+			return 1;
+		}else{
+			Table t = lua_totable(L,2);
+			Table res = t.getTable("res");
+			loop_principal::mudar_res((int)res.getFloat("x"), (int)res.getFloat("y"));
+			loop_principal::setar_tela_inteira_como((bool)t.getFloat("full_screen"));
 			return 0;
 		}
 	}
@@ -694,7 +729,6 @@ namespace funcoes_ponte {
 	}
 
 	//transform
-
 	int get_transform_json(lua_State* L) {
 		string output = "";
 		int argumentos = lua_gettop(L);
@@ -719,7 +753,6 @@ namespace funcoes_ponte {
 		lua_pushstring(L, output.c_str());
 		return 1;
 	}
-
 	int set_transform_json(lua_State* L) {
 		int argumentos = lua_gettop(L);
 		objeto_jogo* obj = NULL;
@@ -738,6 +771,18 @@ namespace funcoes_ponte {
 
 		}
 		return 0;
+	}
+	int get_set_transform(lua_State* L){
+		if(lua_tonumber(L, 1) == get_lua){
+			Table ret;
+
+			lua_pushtable(L,ret);
+			return 1;
+		}else{
+			Table t = lua_totable(L,2);
+			
+			return 0;
+		}
 	}
 
 	int move_transform(lua_State* L) {
@@ -1937,6 +1982,8 @@ namespace funcoes_ponte {
 		//janela
 		pair<string, lua_function>("set_window", funcoes_ponte::set_window),
 		pair<string, lua_function>("get_window", funcoes_ponte::get_window),
+		pair<string, lua_function>("get_set_window", funcoes_ponte::get_set_window),
+		
 
 		//sprite
 		pair<string, lua_function>("get_sprite_render_json", funcoes_ponte::get_sprite_render_json),

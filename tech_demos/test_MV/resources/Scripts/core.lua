@@ -33,9 +33,9 @@ require("all_sceanes")
 
 
 
-function set_res()
-    window.res.x = 720
-    window.res.y = 720
+function set_resolution()
+    window.resolution.x = 720
+    window.resolution.y = 720
     window:set()
 end
 
@@ -45,7 +45,7 @@ end
 function START()
     
 	print("core iniciando")
-    set_res()
+    set_resolution()
 
     
     --objects_layesrs:create()

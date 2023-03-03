@@ -96,3 +96,7 @@ asset_types.image = "image"
 asset_types.tile_set = "tile_set"
 asset_types.tile_map = "tile_map"
 asset_types.audio = "audio"
+
+--get set
+get_lua = false
+set_lua = true

@@ -130,7 +130,8 @@ end
 function set_render_layer(object,layer)
 end
 
-
+function get_set_window(get_set,object)
+end
 
 
 
