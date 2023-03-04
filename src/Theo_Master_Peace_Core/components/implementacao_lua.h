@@ -1345,54 +1345,9 @@ namespace funcoes_ponte {
 	
 	
 
-	int set_render_layer(lua_State* L) {
-		int argumentos = lua_gettop(L);
-		objeto_jogo* obj = NULL;
-		if (argumentos > 0) {
-			obj = string_ponteiro<objeto_jogo>(lua_tostring(L, 1));
-		}
-		if (argumentos == 2) {
-			if (obj->pegar_componente<render_sprite>() != NULL) {
-				obj->pegar_componente<render_sprite>()->camada = lua_tointeger(L, 2);
-			}
-			if (obj->pegar_componente<render_texto>() != NULL) {
-				obj->pegar_componente<render_texto>()->camada = lua_tointeger(L, 2);
-			}
-			if (obj->pegar_componente<render_tilemap>() != NULL) {
-				obj->pegar_componente<render_tilemap>()->camada = lua_tointeger(L, 2);
-			}
-			if (obj->pegar_componente<render_malha>() != NULL) {
-				obj->pegar_componente<render_malha>()->camada = lua_tointeger(L, 2);
-			}
+	
 
-		}
-		return 0;
-	}
-
-	int get_render_layer(lua_State* L) {
-		int argumentos = lua_gettop(L);
-		int output = 0;
-		objeto_jogo* obj = NULL;
-		if (argumentos > 0) {
-			obj = string_ponteiro<objeto_jogo>(lua_tostring(L, 1));
-		}
-		if (argumentos == 1) {
-			if (obj->pegar_componente<render_sprite>() != NULL) {
-				output = obj->pegar_componente<render_sprite>()->camada;
-			}
-			if (obj->pegar_componente<render_texto>() != NULL) {
-				output = obj->pegar_componente<render_texto>()->camada;
-			}
-			if (obj->pegar_componente<render_tilemap>() != NULL) {
-				output = obj->pegar_componente<render_tilemap>()->camada;
-			}
-			if (obj->pegar_componente<render_malha>() != NULL) {
-				output = obj->pegar_componente<render_malha>()->camada;
-			}
-		}
-		lua_pushnumber(L, output);
-		return 1;
-	}
+	
 
 	//material
 	int set_shader(lua_State* L) {
@@ -1844,6 +1799,18 @@ namespace funcoes_ponte {
 		lua_pushstring(L, output.c_str());
 		return 1;
 	}
+	int get_set_render_layer_instruction(lua_State* L){
+		if(lua_tonumber(L, 1) == get_lua){
+			Table ret;
+
+			lua_pushtable(L,ret);
+			return 1;
+		}else{
+			Table t = lua_totable(L,2);
+			return 0;
+		}
+	}
+	
 
 	int set_mesh_json(lua_State* L) {
 		int argumentos = lua_gettop(L);
@@ -1950,9 +1917,7 @@ namespace funcoes_ponte {
 		
 		
 
-		//camada render
-		pair<string, lua_function>("set_render_layer", funcoes_ponte::set_render_layer),
-		pair<string, lua_function>("get_render_layer", funcoes_ponte::get_render_layer),
+		
 
 		//material
 		pair<string, lua_function>("set_shader", funcoes_ponte::set_shader),
@@ -1975,6 +1940,7 @@ namespace funcoes_ponte {
 		//camadas render
 		pair<string, lua_function>("get_render_layer_instruction_json", funcoes_ponte::get_render_layer_instruction_json),
 		pair<string, lua_function>("set_render_layer_instruction_json", funcoes_ponte::set_render_layer_instruction_json),
+		pair<string, lua_function>("get_set_render_layer_instruction", funcoes_ponte::get_set_render_layer_instruction),
 		
 
 		//janela
