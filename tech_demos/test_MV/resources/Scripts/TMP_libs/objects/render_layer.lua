@@ -2,6 +2,9 @@ function get_post_processing_json()
 end
 function set_post_processing_json(json)
 end
+function get_set_render_layer_instruction()
+    
+end
 
 render_layer = {}
 function render_layer:new()
