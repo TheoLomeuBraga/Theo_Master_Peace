@@ -13,7 +13,8 @@ function remove_component(object,component)
 end
 function get_object_family_json(object)
 end
-
+function get_object_family(object)
+end
 
 game_object = {}
 function game_object:new(object_ptr)
@@ -46,7 +47,8 @@ function game_object:new(object_ptr)
         end
     end
     function obj:get_family()
-        j = get_object_family_json(self.object_ptr)
+        --j = get_object_family_json(self.object_ptr)
+        j = get_object_family(self.object_ptr)
         self.father = j.father
         self.childrens = deepcopyjson(j.childrens)
     end

@@ -1,10 +1,7 @@
 require("TMP_libs.components.component_index")
 
 --transform
-
-function get_transform_json(object)
-end
-function set_transform_json(object,json)
+function get_set_transform(get_set,object)
 end
 
 function move_transform(object,x,y,z)
@@ -28,23 +25,15 @@ function transform_component:new(object_ptr)
     t.rotation = Vec3:new(0,0,0)
     t.scale = Vec3:new(1,1,1)
     function t:get()
-        j = json.decode(get_transform_json(self.object_ptr))
-        self.is_ui = j.is_ui
-        self.position = deepcopyjson(j.position)
-        self.rotation = deepcopyjson(j.rotation)
-        self.scale = deepcopyjson(j.scale)
+        t = get_set_transform(get_lua,t.object_ptr)
+        self.is_ui = t.is_ui
+        self.position = deepcopyjson(t.position)
+        self.rotation = deepcopyjson(t.rotation)
+        self.scale = deepcopyjson(t.scale)
         
     end
     function t:set()
-
-        j = {}
-        j.is_ui = self.is_ui
-        j.position = deepcopyjson(self.position)
-        j.rotation = deepcopyjson(self.rotation)
-        j.scale = deepcopyjson(self.scale)
-        set_transform_json(self.object_ptr,json.encode(j))
-        
-        
+        get_set_transform(set_lua,deepcopyjson(self))
     end
     function t:get_global_position()
         ret = Vec3:new(0,0,0)

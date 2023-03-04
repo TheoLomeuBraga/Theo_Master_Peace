@@ -30,8 +30,8 @@ using namespace Tempo;
 #include "table.h"
 #include "table_conversors.h"
 
-const bool get_lua = false;
-const bool set_lua = true;
+const int get_lua = 0;
+const int set_lua = 1;
 
 bool isNumber(const std::string& str) {
     std::istringstream iss(str);
@@ -96,33 +96,27 @@ Table lua_totable(lua_State* L,int index){
     lua_pushnil(L);  // Push the first key
     while (lua_next(L, index) != 0) {
         std::string key;
-
+		
         // At this point, the stack contains the key at index -2 and the value at index -1
-        if (lua_isnumber(L, -2)) {
-            // The value is a number
-            float value = lua_tonumber(L, -2);
-            key = std::to_string(value);
-        }
-        else if (lua_isstring(L, -2)) {
+        
+        if (lua_isstring(L, -2)) {
             // The value is a number
             std::string value = lua_tostring(L, -2);
-            key = value;
+			if(isNumber(value)){key = stringToFloat(value);} else{key = value;}
+            
         }
         else if (lua_isboolean(L, -2)) {
             // The value is a number
             float value = lua_toboolean(L, -2);
             key = std::to_string(value);
         }
-
-        if (lua_isnumber(L, -1)) {
-            // The value is a number
-            float value = lua_tonumber(L, -1);
-            t.setFloat(key,value);
-        }
-        else if (lua_isstring(L, -1)) {
+		
+        
+        if (lua_isstring(L, -1)) {
             // The value is a number
             std::string value = lua_tostring(L, -1);
-            t.setString(key,value);
+			if(isNumber(value)){t.setFloat(key,stringToFloat(value));} else{t.setString(key,value);}
+			escrever(value);
         }
         else if (lua_isboolean(L, -1)) {
             // The value is a number
@@ -131,6 +125,7 @@ Table lua_totable(lua_State* L,int index){
         }
         else if (lua_istable(L, -1)) {
             // The value is a table, recurse into it
+			escrever("table");
             t.setTable(key,lua_totable(L, lua_gettop(L)));
         }
 
@@ -258,7 +253,7 @@ int call_script_function(lua_State* L);
 
 namespace funcoes_ponte {
 
-	//exemplo get set
+	//exemplos get set
 	/*
 	int get_set_example(lua_State* L){
 		if(lua_tonumber(L, 1) == get_lua){
@@ -268,6 +263,20 @@ namespace funcoes_ponte {
 			return 1;
 		}else{
 			Table t = lua_totable(L,2);
+			return 0;
+		}
+	}
+	int get_set_transform(lua_State* L){
+		if(lua_tonumber(L, 1) == get_lua){
+			Table ret;
+			objeto_jogo* obj = string_ponteiro<objeto_jogo>(lua_tostring(L, 2));
+
+			lua_pushtable(L,ret);
+			return 1;
+		}else{
+			Table t = lua_totable(L,2);
+			objeto_jogo* obj = string_ponteiro<objeto_jogo>(t.getString("object_ptr"));
+			
 			return 0;
 		}
 	}
@@ -315,7 +324,7 @@ namespace funcoes_ponte {
 			return 1;
 		}else{
 			Table t = lua_totable(L,2);
-			Table res = t.getTable("res");
+			Table res = t.getTable("resolution");
 			loop_principal::mudar_res((int)res.getFloat("x"), (int)res.getFloat("y"));
 			loop_principal::setar_tela_inteira_como((bool)t.getFloat("full_screen"));
 			return 0;
@@ -399,13 +408,32 @@ namespace funcoes_ponte {
 
 			json JSON = { 
 				{"father",ponteiro_string(obj->pai)},
-				{"children",criancas},
+				{"childrens",criancas},
 			};
 
 			output = JSON.dump();
 		}
 		
 		lua_pushstring(L, output.c_str());
+		return 1;
+	}
+
+	int get_object_family(lua_State* L){
+		Table ret;
+		int argumentos = lua_gettop(L);
+		string output = "";
+		objeto_jogo* obj = NULL;
+		obj = string_ponteiro<objeto_jogo>(lua_tostring(L, 1));
+
+		ret.setString("father",ponteiro_string(obj->pai));
+
+		vector<string> criancas;
+		for (shared_ptr<objeto_jogo> p : obj->filhos) {
+			criancas.push_back(ponteiro_string(p.get()));
+		}
+
+		ret.setTable("childrens",table_vString(criancas));
+		lua_pushtable(L,ret);
 		return 1;
 	}
 
@@ -729,57 +757,28 @@ namespace funcoes_ponte {
 	}
 
 	//transform
-	int get_transform_json(lua_State* L) {
-		string output = "";
-		int argumentos = lua_gettop(L);
-		objeto_jogo* obj = NULL;
-		if (argumentos > 0) {
-			obj = string_ponteiro<objeto_jogo>(lua_tostring(L, 1));
-		}
-		shared_ptr<transform_> tf = obj->pegar_componente<transform_>();
-		if (argumentos == 1 && tf != NULL) {
-			json JSON;
-
-			JSON["is_ui"] = tf->UI;
-
-			JSON["position"] = { {"x",tf->pos.x} ,{"y",tf->pos.y} ,{"z",tf->pos.z}};
-			vec3 rot = tf->pegar_angulo_graus();
-			JSON["rotation"] = { {"x",rot.x} ,{"y",rot.y} ,{"z",rot.z} };
-			JSON["scale"] = { {"x",tf->esca.x} ,{"y",tf->esca.y} ,{"z",tf->esca.z} };
-
-			output = JSON.dump();
-		}
-
-		lua_pushstring(L, output.c_str());
-		return 1;
-	}
-	int set_transform_json(lua_State* L) {
-		int argumentos = lua_gettop(L);
-		objeto_jogo* obj = NULL;
-		if (argumentos > 0) {
-			obj = string_ponteiro<objeto_jogo>(lua_tostring(L, 1));
-		}
-		shared_ptr<transform_> tf = obj->pegar_componente<transform_>();
-		if (argumentos == 2 && obj != NULL && tf != NULL) {
-			json JSON = json::parse(lua_tostring(L, 2));
-			tf->UI = JSON["is_ui"].get<bool>();
-
-			json pos = JSON["position"].get<json>(), rot = JSON["rotation"].get<json>(), sca = JSON["scale"].get<json>();
-			tf->pos = vec3(pos["x"].get<float>(), pos["y"].get<float>(), pos["z"].get<float>());
-			tf->mudar_angulo_graus(vec3(rot["x"].get<float>(), rot["y"].get<float>(), rot["z"].get<float>()));
-			tf->esca = vec3(sca["x"].get<float>(), sca["y"].get<float>(), sca["z"].get<float>());
-
-		}
-		return 0;
-	}
 	int get_set_transform(lua_State* L){
 		if(lua_tonumber(L, 1) == get_lua){
 			Table ret;
-
+			objeto_jogo* obj = string_ponteiro<objeto_jogo>(lua_tostring(L, 2));
+			shared_ptr<transform_> tf = obj->pegar_componente<transform_>();
+			ret.setFloat("is_ui",tf->UI);
+			ret.setTable("position",vec3_table(tf->pos) );
+			ret.setTable("rotation",vec3_table(tf->pegar_angulo_graus()));
+			ret.setTable("scale",vec3_table(tf->esca));
 			lua_pushtable(L,ret);
 			return 1;
 		}else{
 			Table t = lua_totable(L,2);
+			objeto_jogo* obj = string_ponteiro<objeto_jogo>(t.getString("object_ptr"));
+			escrever(t.getString("object_ptr"));
+			shared_ptr<transform_> tf = obj->pegar_componente<transform_>();
+			if(tf != NULL){
+				tf->UI = t.getFloat("is_ui");
+				tf->pos = table_vec3(t.getTable("position"));
+				tf->mudar_angulo_graus(table_vec3(t.getTable("rotation")));
+				tf->esca = table_vec3(t.getTable("scale"));
+			}
 			
 			return 0;
 		}
@@ -1924,9 +1923,9 @@ namespace funcoes_ponte {
 		pair<string, lua_function>("reset_components", funcoes_ponte::reset_components),
 		pair<string, lua_function>("have_component", have_component),
 
-		
-
 		pair<string, lua_function>("get_object_family_json", funcoes_ponte::get_object_family_json),
+		pair<string, lua_function>("get_object_family", funcoes_ponte::get_object_family),
+		
 		
 
 		//movimento
@@ -1937,8 +1936,7 @@ namespace funcoes_ponte {
 		pair<string, lua_function>("set_gravity", funcoes_ponte::set_gravity),
 
 		//transform
-		pair<string, lua_function>("get_transform_json", funcoes_ponte::get_transform_json),
-		pair<string, lua_function>("set_transform_json", funcoes_ponte::set_transform_json),
+		pair<string, lua_function>("get_set_transform", funcoes_ponte::get_set_transform),
 
 		pair<string, lua_function>("move_transform", funcoes_ponte::move_transform),
 		pair<string, lua_function>("rotate_transform", funcoes_ponte::rotate_transform),

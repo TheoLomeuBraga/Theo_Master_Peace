@@ -25,7 +25,7 @@ function window:get()
 end
 function window:set()
     --set_window(self.resolution.x,self.resolution.y,self.full_screen)
-    get_set_window(set_lua,deepcopyjson(sel))
+    get_set_window(set_lua,deepcopyjson(window))
 end
 
 

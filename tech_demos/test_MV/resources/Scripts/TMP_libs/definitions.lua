@@ -98,5 +98,5 @@ asset_types.tile_map = "tile_map"
 asset_types.audio = "audio"
 
 --get set
-get_lua = false
-set_lua = true
+get_lua = 0
+set_lua = 1
