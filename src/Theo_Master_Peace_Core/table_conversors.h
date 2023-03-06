@@ -52,7 +52,7 @@ Table quat_table(quat q){
 
 //list vectors
 
-vector<float> vFloat_table(Table t){
+vector<float> table_vFloat (Table t){
     vector<float> v;
     int i = 1;
     while(true){
@@ -65,7 +65,7 @@ vector<float> vFloat_table(Table t){
     }
     return v;
 }
-Table table_vFloat(vector<float> v){
+Table vFloat_table(vector<float> v){
     Table t;
     for(int i = 0; i < v.size();i++){
         t.setFloat(to_string(i + 1),v[i]);
@@ -73,7 +73,7 @@ Table table_vFloat(vector<float> v){
     return t;
 }
 
-vector<std::string> vString_table(Table t){
+vector<std::string> table_vString(Table t){
     vector<std::string> v;
     int i = 1;
     while(true){
@@ -86,7 +86,7 @@ vector<std::string> vString_table(Table t){
     }
     return v;
 }
-Table table_vString(vector<std::string> v){
+Table vString_table (vector<std::string> v){
     Table t;
     for(int i = 0; i < v.size();i++){
         t.setString(to_string(i + 1),v[i]);
@@ -94,7 +94,7 @@ Table table_vString(vector<std::string> v){
     return t;
 }
 
-vector<Table> vTable_table(Table t){
+vector<Table> table_vTable (Table t){
     vector<Table> v;
     int i = 1;
     while(true){
@@ -107,7 +107,7 @@ vector<Table> vTable_table(Table t){
     }
     return v;
 }
-Table table_vTable(vector<Table> v){
+Table vTable_table(vector<Table> v){
     Table t;
     for(int i = 0; i < v.size();i++){
         t.setTable(to_string(i + 1),v[i]);
@@ -170,14 +170,38 @@ Table material_table(Material m){
             textures.push_back(m.texturas[i]->local);
         }
     }
-    t.setTable("textures",table_vString(textures));
+    t.setTable("textures",vString_table(textures));
 
     vector<float> inputs;
     for (int i = 0; i < NO_INPUTS; i++) {
         inputs.push_back(m.inputs[i]);
     }
-    t.setTable("inputs",table_vFloat(inputs));
+    t.setTable("inputs",vFloat_table(inputs));
 
     
     return t;
+}
+
+instrucoes_render table_instrucoes_render(Table t){
+    instrucoes_render ret;
+    ret.camera = t.getFloat("camera_selected");
+    ret.iniciar_render = t.getFloat("start_render");
+    ret.limpar_buffer_cores = t.getFloat("clean_color");
+    ret.limpar_buffer_profundidade = t.getFloat("clean_deph");
+    ret.desenhar_objetos = t.getFloat("enable");
+    ret.terminar_render = t.getFloat("end_render");
+    ret.usar_profundidade = t.getFloat("use_deeph");
+    return ret;
+}
+
+Table table_instrucoes_render(instrucoes_render ir){
+    Table ret;
+    ret.setFloat("camera_selected",ir.camera);
+    ret.setFloat("start_render",ir.iniciar_render);
+    ret.setFloat("clean_color",ir.limpar_buffer_cores);
+    ret.setFloat("clean_deph",ir.limpar_buffer_profundidade);
+    ret.setFloat("enable",ir.desenhar_objetos);
+    ret.setFloat("end_render",ir.terminar_render);
+    ret.setFloat("use_deeph",ir.usar_profundidade);
+    return ret;
 }

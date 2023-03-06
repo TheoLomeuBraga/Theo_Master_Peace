@@ -116,7 +116,6 @@ Table lua_totable(lua_State* L,int index){
             // The value is a number
             std::string value = lua_tostring(L, -1);
 			if(isNumber(value)){t.setFloat(key,stringToFloat(value));} else{t.setString(key,value);}
-			escrever(value);
         }
         else if (lua_isboolean(L, -1)) {
             // The value is a number
@@ -125,7 +124,6 @@ Table lua_totable(lua_State* L,int index){
         }
         else if (lua_istable(L, -1)) {
             // The value is a table, recurse into it
-			escrever("table");
             t.setTable(key,lua_totable(L, lua_gettop(L)));
         }
 
@@ -432,7 +430,7 @@ namespace funcoes_ponte {
 			criancas.push_back(ponteiro_string(p.get()));
 		}
 
-		ret.setTable("childrens",table_vString(criancas));
+		ret.setTable("childrens",vString_table(criancas));
 		lua_pushtable(L,ret);
 		return 1;
 	}
@@ -771,7 +769,6 @@ namespace funcoes_ponte {
 		}else{
 			Table t = lua_totable(L,2);
 			objeto_jogo* obj = string_ponteiro<objeto_jogo>(t.getString("object_ptr"));
-			escrever(t.getString("object_ptr"));
 			shared_ptr<transform_> tf = obj->pegar_componente<transform_>();
 			if(tf != NULL){
 				tf->UI = t.getFloat("is_ui");
@@ -1715,55 +1712,20 @@ namespace funcoes_ponte {
 		return 0;
 	}
 
+	int get_set_post_processing(lua_State* L){
+		if(lua_tonumber(L, 1) == get_lua){
+			Table ret;
+			lua_pushtable(L,ret);
+			return 1;
+		}else{
+			Table t = lua_totable(L,2);
+			return 0;
+		}
+	}
+
 	//render layers
 
 	
-
-	int get_render_layer_instruction_json(lua_State* L) {
-		string output = "";
-		vector<json> camadas;
-
-		for (instrucoes_render ir : api_grafica->info_render) {
-			json camada = {
-				{"camera_selected",ir.camera},
-				{"start_render",ir.iniciar_render},
-				{"clean_color",ir.limpar_buffer_cores},
-				{"clean_deph",ir.limpar_buffer_profundidade},
-				{"enable",ir.desenhar_objetos},
-				{"end_render",ir.terminar_render},
-				{"use_deeph",ir.usar_profundidade},
-			};
-			camadas.push_back(camada);
-		}
-
-		json JSON = {"layers",camadas };
-		output = JSON.dump();
-		lua_pushstring(L, output.c_str());
-		return 1;
-	}
-
-	int set_render_layer_instruction_json(lua_State* L) {
-		json JSON = json::parse(lua_tostring(L,1));
-		vector<json> camadas = JSON["layers"].get<vector<json>>();
-
-		api_grafica->info_render.clear();
-
-		for (json j : camadas) {
-			instrucoes_render ir;
-
-			ir.camera = j["camera_selected"].get<int>();
-			ir.iniciar_render = j["start_render"].get<bool>();
-			ir.limpar_buffer_cores = j["clean_color"].get<bool>();
-			ir.limpar_buffer_profundidade = j["clean_deph"].get<bool>();
-			ir.desenhar_objetos = j["enable"].get<bool>();
-			ir.terminar_render = j["end_render"].get<bool>();
-			ir.usar_profundidade = j["use_deeph"].get<bool>();
-
-			api_grafica->info_render.push_back(ir);
-		}
-
-		return 0;
-	}
 
 	int get_mesh_json(lua_State* L) {
 		string output = "";
@@ -1802,11 +1764,21 @@ namespace funcoes_ponte {
 	int get_set_render_layer_instruction(lua_State* L){
 		if(lua_tonumber(L, 1) == get_lua){
 			Table ret;
-
-			lua_pushtable(L,ret);
+			vector<Table> vt;
+			for(instrucoes_render ir : api_grafica->info_render){
+				vt.push_back(table_instrucoes_render(ir));
+			}
+			lua_pushtable(L,vTable_table(vt));
 			return 1;
 		}else{
 			Table t = lua_totable(L,2);
+			vector<Table> vt = table_vTable(t);
+			vector<instrucoes_render> irs;
+			for(Table t2 : vt){
+				irs.push_back(table_instrucoes_render(t2));
+			}
+			api_grafica->info_render.clear();
+			api_grafica->info_render = irs;
 			return 0;
 		}
 	}
@@ -1936,10 +1908,10 @@ namespace funcoes_ponte {
 		//pos-procesing
 		pair<string, lua_function>("get_post_processing_json", funcoes_ponte::get_post_processing_json),
 		pair<string, lua_function>("set_post_processing_json", funcoes_ponte::set_post_processing_json),
+		pair<string, lua_function>("get_set_post_processing", funcoes_ponte::get_set_post_processing),
+		
 
 		//camadas render
-		pair<string, lua_function>("get_render_layer_instruction_json", funcoes_ponte::get_render_layer_instruction_json),
-		pair<string, lua_function>("set_render_layer_instruction_json", funcoes_ponte::set_render_layer_instruction_json),
 		pair<string, lua_function>("get_set_render_layer_instruction", funcoes_ponte::get_set_render_layer_instruction),
 		
 
