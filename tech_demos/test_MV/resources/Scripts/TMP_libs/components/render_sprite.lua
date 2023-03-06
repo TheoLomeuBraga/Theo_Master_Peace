@@ -10,6 +10,8 @@ function get_sprite_render_json(object)
 end
 function set_sprite_render_json(object,json)
 end
+function get_set_sprite_render(get_set,object)
+end
 
 render_sprite_component = {}
 function render_sprite_component:new(object_ptr)
@@ -20,7 +22,7 @@ function render_sprite_component:new(object_ptr)
     rs.tile_set_local = ""
     rs.material = matreial:new()
     function rs:get()
-        j = json.decode(get_sprite_render_json(self.object_ptr))
+        j = get_set_sprite_render(get_lua,self.object_ptr)
         self.layer = j.layer
         self.selected_tile = j.selected_tile
         self.tile_set_local = j.tile_set_local
@@ -28,14 +30,7 @@ function render_sprite_component:new(object_ptr)
 
     end
     function rs:set()
-        j = {}
-        j.layer = self.layer
-        j.selected_tile = self.selected_tile
-        j.tile_set_local = self.tile_set_local
-        j.material = deepcopyjson(self.material)
-
-        set_sprite_render_json(self.object_ptr,json.encode(j))
-
+        get_set_sprite_render(set_lua,self)
     end
     function rs:delet()
         

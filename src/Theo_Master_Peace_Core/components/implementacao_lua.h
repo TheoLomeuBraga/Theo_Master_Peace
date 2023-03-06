@@ -862,57 +862,25 @@ namespace funcoes_ponte {
 	
 	//sprite render
 
-	
-
-
-	int get_sprite_render_json(lua_State* L) {
-		objeto_jogo* obj = NULL;
-		int argumentos = lua_gettop(L);
-		if (argumentos > 0) {
-			obj = string_ponteiro<objeto_jogo>(lua_tostring(L, 1));
-		}
-		json JSON = {};
-		shared_ptr<render_sprite> b2d = obj->pegar_componente<render_sprite>();
-		if (b2d != NULL) {
-			JSON = {
-				{"layer",b2d->camada},
-				{"selected_tile",b2d->tile_selecionado},
-				{"tile_set_local",b2d->tiles->local},
-				{"material",material_json(b2d->mat)},
-			};
-		}
-		lua_pushstring(L, JSON.dump().c_str());
-		return 1;
-	}
-
-	int set_sprite_render_json(lua_State* L) {
-		objeto_jogo* obj = NULL;
-		int argumentos = lua_gettop(L);
-		if (argumentos > 0) {
-			obj = string_ponteiro<objeto_jogo>(lua_tostring(L, 1));
-		}
-		json JSON = json::parse(lua_tostring(L, 2));
-		shared_ptr<render_sprite> b2d = obj->pegar_componente<render_sprite>();
-		if (b2d != NULL) {
-			b2d->camada = JSON["layer"].get<int>();
-			b2d->tile_selecionado = JSON["selected_tile"].get<int>();
-			b2d->tiles = ManuseioDados::carregar_tile_set(JSON["tile_set_local"].get<string>());
-			b2d->mat = json_material(JSON["material"].get<json>());
-		}
-		return 0;
-	}
-
 	int get_set_sprite_render(lua_State* L){
 		if(lua_tonumber(L, 1) == get_lua){
 			Table ret;
 			objeto_jogo* obj = string_ponteiro<objeto_jogo>(lua_tostring(L, 2));
-
+			shared_ptr<render_sprite> rs = obj->pegar_componente<render_sprite>();
+			ret.setFloat("layer",rs->camada);
+			ret.setFloat("selected_tile",rs->tile_selecionado);
+			ret.setString("tile_set_local",rs->tiles->local);
+			ret.setTable("material",material_table(rs->mat));
 			lua_pushtable(L,ret);
 			return 1;
 		}else{
 			Table t = lua_totable(L,2);
 			objeto_jogo* obj = string_ponteiro<objeto_jogo>(t.getString("object_ptr"));
-			
+			shared_ptr<render_sprite> rs = obj->pegar_componente<render_sprite>();
+			rs->camada = t.getFloat("layer");
+			rs->tile_selecionado = t.getFloat("selected_tile");
+			rs->tiles = ManuseioDados::carregar_tile_set( t.getString("tile_set_local"));
+			rs->mat = table_material(t.getTable("material"));
 			return 0;
 		}
 	}
@@ -1015,6 +983,23 @@ namespace funcoes_ponte {
 			rtm->apenas_camada = JSON["render_tilemap_only_layer"].get<int>();
 		}
 		return 0;
+	}
+
+	int get_set_render_tilemap(lua_State* L){
+		if(lua_tonumber(L, 1) == get_lua){
+			Table ret;
+			objeto_jogo* obj = string_ponteiro<objeto_jogo>(lua_tostring(L, 2));
+			shared_ptr<render_tilemap> rtm = obj->pegar_componente<render_tilemap>();
+			return 1;
+		}else{
+			Table t = lua_totable(L,2);
+			objeto_jogo* obj = string_ponteiro<objeto_jogo>(t.getString("object_ptr"));
+			shared_ptr<render_tilemap> rtm = obj->pegar_componente<render_tilemap>();
+			if(rtm != NULL){
+					
+			}
+			return 0;
+		}
 	}
 
 	//texto
@@ -1359,372 +1344,10 @@ namespace funcoes_ponte {
 
 	
 
-	//material
-	int set_shader(lua_State* L) {
-		int argumentos = lua_gettop(L);
-		objeto_jogo* obj = NULL;
-		if (argumentos > 0) {
-			obj = string_ponteiro<objeto_jogo>(lua_tostring(L, 1));
-		}
-		if (argumentos == 3) {
-
-			if (obj->pegar_componente<render_sprite>() != NULL) {
-				obj->pegar_componente<render_sprite>()->mat.shad = lua_tostring(L, 3);
-			}
-			if (obj->pegar_componente<render_texto>() != NULL) {
-				obj->pegar_componente<render_texto>()->mat.shad = lua_tostring(L, 3);
-			}
-			if (obj->pegar_componente<render_tilemap>() != NULL) {
-				obj->pegar_componente<render_tilemap>()->mat.shad = lua_tostring(L, 3);
-			}
-			if (obj->pegar_componente<render_shader>() != NULL) {
-				obj->pegar_componente<render_shader>()->mat.shad = lua_tostring(L, 3);
-			}
-			if (obj->pegar_componente<render_malha>() != NULL) {
-				obj->pegar_componente<render_malha>()->mats[(int)lua_tonumber(L, 2)].shad = lua_tostring(L, 3);
-			}
-
-		}
-		return 0;
-	}
-
-	int get_shader(lua_State* L) {
-		string output = "";
-		int argumentos = lua_gettop(L);
-		objeto_jogo* obj = NULL;
-		if (argumentos > 0) {
-			obj = string_ponteiro<objeto_jogo>(lua_tostring(L, 1));
-		}
-		if (argumentos == 2) {
-
-			if (obj->pegar_componente<render_sprite>() != NULL) {
-				output = obj->pegar_componente<render_sprite>()->mat.shad;
-			}
-			if (obj->pegar_componente<render_texto>() != NULL) {
-				output = obj->pegar_componente<render_texto>()->mat.shad;
-			}
-			if (obj->pegar_componente<render_tilemap>() != NULL) {
-				output = obj->pegar_componente<render_tilemap>()->mat.shad;
-			}
-			if (obj->pegar_componente<render_shader>() != NULL) {
-				output = obj->pegar_componente<render_shader>()->mat.shad;
-			}
-			if (obj->pegar_componente<render_malha>() != NULL) {
-				output = obj->pegar_componente<render_malha>()->mats[(int)lua_tonumber(L, 2)].shad;
-			}
-
-		}
-
-
-		lua_pushstring(L, output.c_str());
-
-		return 1;
-	}
-
-	int get_color(lua_State* L) {
-		vec4 output = vec4();
-		int argumentos = lua_gettop(L);
-		objeto_jogo* obj = NULL;
-		if (argumentos > 0) {
-			obj = string_ponteiro<objeto_jogo>(lua_tostring(L, 1));
-		}
-		if (argumentos == 2) {
-
-			if (obj->pegar_componente<render_sprite>() != NULL) {
-				output = obj->pegar_componente<render_sprite>()->mat.cor;
-			}
-			if (obj->pegar_componente<render_texto>() != NULL) {
-				output = obj->pegar_componente<render_texto>()->mat.cor;
-			}
-			if (obj->pegar_componente<render_tilemap>() != NULL) {
-				output = obj->pegar_componente<render_tilemap>()->mat.cor;
-			}
-			if (obj->pegar_componente<render_shader>() != NULL) {
-				output = obj->pegar_componente<render_shader>()->mat.cor;
-			}
-			if (obj->pegar_componente<render_malha>() != NULL) {
-				output = obj->pegar_componente<render_malha>()->mats[(int)lua_tonumber(L, 2)].cor;
-			}
-
-		}
-		lua_pushnumber(L, output.x);
-		lua_pushnumber(L, output.y);
-		lua_pushnumber(L, output.z);
-		lua_pushnumber(L, output.w);
-		return 4;
-	}
-
-	int set_color(lua_State* L) {
-		int argumentos = lua_gettop(L);
-		objeto_jogo* obj = NULL;
-		if (argumentos > 0) {
-			obj = string_ponteiro<objeto_jogo>(lua_tostring(L, 1));
-		}
-		if (argumentos == 6) {
-
-			if (obj->pegar_componente<render_sprite>() != NULL) {
-				obj->pegar_componente<render_sprite>()->mat.cor = vec4(lua_tonumber(L, 3), lua_tonumber(L, 4), lua_tonumber(L, 5), lua_tonumber(L, 6));
-			}
-			if (obj->pegar_componente<render_texto>() != NULL) {
-				obj->pegar_componente<render_texto>()->mat.cor = vec4(lua_tonumber(L, 3), lua_tonumber(L, 4), lua_tonumber(L, 5), lua_tonumber(L, 6));
-			}
-			if (obj->pegar_componente<render_tilemap>() != NULL) {
-				obj->pegar_componente<render_tilemap>()->mat.cor = vec4(lua_tonumber(L, 3), lua_tonumber(L, 4), lua_tonumber(L, 5), lua_tonumber(L, 6));
-			}
-			if (obj->pegar_componente<render_shader>() != NULL) {
-				obj->pegar_componente<render_shader>()->mat.cor = vec4(lua_tonumber(L, 3), lua_tonumber(L, 4), lua_tonumber(L, 5), lua_tonumber(L, 6));
-			}
-			if (obj->pegar_componente<render_malha>() != NULL) {
-				obj->pegar_componente<render_malha>()->mats[(int)lua_tonumber(L, 2)].cor = vec4(lua_tonumber(L, 3), lua_tonumber(L, 4), lua_tonumber(L, 5), lua_tonumber(L, 6));
-			}
-
-		}
-		return 0;
-	}
-
-	int get_material_position_scale(lua_State* L) {
-		vec4 output = vec4();
-		int argumentos = lua_gettop(L);
-		objeto_jogo* obj = NULL;
-		if (argumentos > 0) {
-			obj = string_ponteiro<objeto_jogo>(lua_tostring(L, 1));
-		}
-		if (argumentos == 2) {
-			if (obj->pegar_componente<render_sprite>() != NULL) {
-				output = obj->pegar_componente<render_sprite>()->mat.uv_pos_sca;
-			}
-			if (obj->pegar_componente<render_texto>() != NULL) {
-				output = obj->pegar_componente<render_texto>()->mat.uv_pos_sca;
-			}
-			if (obj->pegar_componente<render_tilemap>() != NULL) {
-				output = obj->pegar_componente<render_tilemap>()->mat.uv_pos_sca;
-			}
-			if (obj->pegar_componente<render_shader>() != NULL) {
-				output = obj->pegar_componente<render_shader>()->mat.uv_pos_sca;
-			}
-			if (obj->pegar_componente<render_malha>() != NULL) {
-				output = obj->pegar_componente<render_malha>()->mats[(int)lua_tonumber(L, 2)].uv_pos_sca;
-			}
-
-		}
-		lua_pushnumber(L, output.x);
-		lua_pushnumber(L, output.y);
-		lua_pushnumber(L, output.z);
-		lua_pushnumber(L, output.w);
-		return 4;
-	}
-
-	int set_material_position_scale(lua_State* L) {
-		int argumentos = lua_gettop(L);
-		objeto_jogo* obj = NULL;
-		if (argumentos > 0) {
-			obj = string_ponteiro<objeto_jogo>(lua_tostring(L, 1));
-		}
-		if (argumentos == 6) {
-			if (obj->pegar_componente<render_sprite>() != NULL) {
-				obj->pegar_componente<render_sprite>()->mat.uv_pos_sca = vec4(lua_tonumber(L, 3), lua_tonumber(L, 4), lua_tonumber(L, 5), lua_tonumber(L, 6));
-			}
-			if (obj->pegar_componente<render_texto>() != NULL) {
-				obj->pegar_componente<render_texto>()->mat.uv_pos_sca = vec4(lua_tonumber(L, 3), lua_tonumber(L, 4), lua_tonumber(L, 5), lua_tonumber(L, 6));
-			}
-			if (obj->pegar_componente<render_tilemap>() != NULL) {
-				obj->pegar_componente<render_tilemap>()->mat.uv_pos_sca = vec4(lua_tonumber(L, 3), lua_tonumber(L, 4), lua_tonumber(L, 5), lua_tonumber(L, 6));
-			}
-			if (obj->pegar_componente<render_shader>() != NULL) {
-				obj->pegar_componente<render_shader>()->mat.uv_pos_sca = vec4(lua_tonumber(L, 3), lua_tonumber(L, 4), lua_tonumber(L, 5), lua_tonumber(L, 6));
-			}
-			if (obj->pegar_componente<render_malha>() != NULL) {
-				obj->pegar_componente<render_malha>()->mats[(int)lua_tonumber(L, 2)].uv_pos_sca = vec4(lua_tonumber(L, 3), lua_tonumber(L, 4), lua_tonumber(L, 5), lua_tonumber(L, 6));
-			}
-
-		}
-		return 0;
-	}
-
-	int get_max_textures_material(lua_State* L) {
-		lua_pushnumber(L, NO_TEXTURAS);
-		return 1;
-	}
-
-	int set_texture(lua_State* L) {
-		int argumentos = lua_gettop(L);
-		objeto_jogo* obj = NULL;
-		if (argumentos > 0) {
-			obj = string_ponteiro<objeto_jogo>(lua_tostring(L, 1));
-		}
-		if (argumentos == 4) {
-			if (obj->pegar_componente<render_sprite>() != NULL) {
-				ManuseioDados::carregar_Imagem_thread(lua_tostring(L, 4), &obj->pegar_componente<render_sprite>()->mat.texturas[(int)lua_tonumber(L, 3)]);
-			}
-			if (obj->pegar_componente<render_texto>() != NULL) {
-				ManuseioDados::carregar_Imagem_thread(lua_tostring(L, 4), &obj->pegar_componente<render_texto>()->mat.texturas[(int)lua_tonumber(L, 3)]);
-			}
-			if (obj->pegar_componente<render_tilemap>() != NULL) {
-				ManuseioDados::carregar_Imagem_thread(lua_tostring(L, 4), &obj->pegar_componente<render_tilemap>()->mat.texturas[(int)lua_tonumber(L, 3)]);
-			}
-			if (obj->pegar_componente<render_shader>() != NULL) {
-				ManuseioDados::carregar_Imagem_thread(lua_tostring(L, 4), &obj->pegar_componente<render_shader>()->mat.texturas[(int)lua_tonumber(L, 3)]);
-			}
-			if (obj->pegar_componente<render_malha>() != NULL) {
-				ManuseioDados::carregar_Imagem_thread(lua_tostring(L, 4), &obj->pegar_componente<render_malha>()->mats[(int)lua_tonumber(L, 2)].texturas[(int)lua_tonumber(L, 3)]);
-			}
-
-		}
-
-		return 0;
-	}
-
-	int get_texture(lua_State* L) {
-		int argumentos = lua_gettop(L);
-		string output = "";
-		objeto_jogo* obj = NULL;
-		if (argumentos > 0) {
-			obj = string_ponteiro<objeto_jogo>(lua_tostring(L, 1));
-		}
-		if (argumentos == 3) {
-			if (obj->pegar_componente<render_sprite>() != NULL && obj->pegar_componente<render_sprite>()->mat.texturas[(int)lua_tonumber(L, 3)] != NULL) {
-				output = obj->pegar_componente<render_sprite>()->mat.texturas[(int)lua_tonumber(L, 3)]->local;
-			}
-			if (obj->pegar_componente<render_texto>() != NULL && obj->pegar_componente<render_texto>()->mat.texturas[(int)lua_tonumber(L, 3)] != NULL) {
-				output = obj->pegar_componente<render_texto>()->mat.texturas[(int)lua_tonumber(L, 3)]->local;
-			}
-			if (obj->pegar_componente<render_tilemap>() != NULL && obj->pegar_componente<render_tilemap>()->mat.texturas[(int)lua_tonumber(L, 3)] != NULL) {
-				output = obj->pegar_componente<render_tilemap>()->mat.texturas[(int)lua_tonumber(L, 3)]->local;
-			}
-			if (obj->pegar_componente<render_shader>() != NULL && obj->pegar_componente<render_shader>()->mat.texturas[(int)lua_tonumber(L, 3)] != NULL) {
-				output = obj->pegar_componente<render_shader>()->mat.texturas[(int)lua_tonumber(L, 3)]->local;
-			}
-			if (obj->pegar_componente<render_malha>() != NULL && obj->pegar_componente<render_shader>()->mat.texturas[(int)lua_tonumber(L, 3)] != NULL) {
-				output = obj->pegar_componente<render_malha>()->mats[(int)lua_tonumber(L, 2)].texturas[(int)lua_tonumber(L, 3)]->local;
-			}
-
-		}
-		lua_pushstring(L, output.c_str());
-		return 1;
-	}
-
-	int get_max_inputs_material(lua_State* L) {
-		lua_pushnumber(L, NO_INPUTS);
-		return 1;
-	}
-
-	int set_material_input(lua_State* L) {
-		int argumentos = lua_gettop(L);
-		objeto_jogo* obj = NULL;
-		if (argumentos > 0) {
-			obj = string_ponteiro<objeto_jogo>(lua_tostring(L, 1));
-		}
-		if (argumentos == 4) {
-			if (obj->pegar_componente<render_sprite>() != NULL) {
-				obj->pegar_componente<render_sprite>()->mat.inputs[(int)lua_tonumber(L, 3)] = lua_tonumber(L, 4);
-			}
-			if (obj->pegar_componente<render_texto>() != NULL) {
-				obj->pegar_componente<render_texto>()->mat.inputs[(int)lua_tonumber(L, 3)] = lua_tonumber(L, 4);
-			}
-			if (obj->pegar_componente<render_tilemap>() != NULL) {
-				obj->pegar_componente<render_tilemap>()->mat.inputs[(int)lua_tonumber(L, 3)] = lua_tonumber(L, 4);
-			}
-			if (obj->pegar_componente<render_shader>() != NULL) {
-				obj->pegar_componente<render_shader>()->mat.inputs[(int)lua_tonumber(L, 3)] = lua_tonumber(L, 4);
-			}
-			if (obj->pegar_componente<render_malha>() != NULL) {
-				obj->pegar_componente<render_malha>()->mats[(int)lua_tonumber(L, 2)].inputs[(int)lua_tonumber(L, 3)] = lua_tonumber(L, 4);
-			}
-
-		}
-
-		return 0;
-	}
-
-	int get_material_input(lua_State* L) {
-		int argumentos = lua_gettop(L);
-		float output = 0;
-		objeto_jogo* obj = NULL;
-		if (argumentos > 0) {
-			obj = string_ponteiro<objeto_jogo>(lua_tostring(L, 1));
-		}
-		if (argumentos == 3) {
-			if (obj->pegar_componente<render_sprite>() != NULL) {
-				output = obj->pegar_componente<render_sprite>()->mat.inputs[(int)lua_tonumber(L, 3)];
-			}
-			if (obj->pegar_componente<render_texto>() != NULL) {
-				output = obj->pegar_componente<render_texto>()->mat.inputs[(int)lua_tonumber(L, 3)];
-			}
-			if (obj->pegar_componente<render_tilemap>() != NULL) {
-				output = obj->pegar_componente<render_tilemap>()->mat.inputs[(int)lua_tonumber(L, 3)];
-			}
-			if (obj->pegar_componente<render_shader>() != NULL) {
-				output = obj->pegar_componente<render_shader>()->mat.inputs[(int)lua_tonumber(L, 3)];
-			}
-			if (obj->pegar_componente<render_malha>() != NULL) {
-				output = obj->pegar_componente<render_malha>()->mats[(int)lua_tonumber(L, 2)].inputs[(int)lua_tonumber(L, 3)];
-			}
-
-		}
-		lua_pushnumber(L, output);
-		return 1;
-	}
 
 
 
 	//post_processing
-	
-
-	int get_post_processing_json(lua_State* L) {
-		int argumentos = lua_gettop(L);
-		string output = "";
-		if (api_grafica != NULL) {
-			vector<string> textures;
-			for (int i = 0; i < NO_TEXTURAS; i++) {
-				if (api_grafica->pos_processamento_info.texturas[i] != NULL) {
-					textures.push_back(api_grafica->pos_processamento_info.texturas[i]->local);
-				}else{
-					textures.push_back("");
-				}
-			}
-
-
-			vector<float> inputs;
-			for (int i = 0; i < NO_INPUTS; i++) {
-				inputs.push_back(api_grafica->pos_processamento_info.inputs[i]);
-			}
-			json color = { { "r",api_grafica->pos_processamento_info.cor.x }, { "g",api_grafica->pos_processamento_info.cor.y }, { "b",api_grafica->pos_processamento_info.cor.z }, { "a",api_grafica->pos_processamento_info.cor.w } };
-			json position_scale = { {"x",api_grafica->pos_processamento_info.uv_pos_sca.x},{"y",api_grafica->pos_processamento_info.uv_pos_sca.y},{"z",api_grafica->pos_processamento_info.uv_pos_sca.z},{"w",api_grafica->pos_processamento_info.uv_pos_sca.w} };
-
-			json JSON = {
-				{"shader",api_grafica->pos_processamento_info.shad},
-				{"color",color},
-				{"position_scale",position_scale},
-				{"textures",textures},
-				{"inputs",inputs},
-			};
-
-			output = JSON.dump();
-		}
-		lua_pushstring(L, output.c_str());
-		return 1;
-	}
-	int set_post_processing_json(lua_State* L) {
-		int argumentos = lua_gettop(L);
-		if (argumentos == 1 && api_grafica != NULL) {
-			json JSON = json::parse(lua_tostring(L, 1));
-			api_grafica->pos_processamento_info.shad = JSON["shader"].get<string>();
-			json cor = JSON["color"].get<json>();
-			api_grafica->pos_processamento_info.cor = vec4(cor["r"].get<float>(), cor["g"].get<float>(), cor["b"].get<float>(), cor["a"].get<float>());
-			json uv_pos_sca = JSON["position_scale"].get<json>();
-			api_grafica->pos_processamento_info.uv_pos_sca = vec4(uv_pos_sca["x"].get<float>(), uv_pos_sca["y"].get<float>(), uv_pos_sca["z"].get<float>(), uv_pos_sca["w"].get<float>());
-			vector<string> textures = JSON["textures"].get<vector<string>>();
-			for (int i = 0; i < NO_TEXTURAS; i++) {
-					api_grafica->pos_processamento_info.texturas[i] = ManuseioDados::carregar_Imagem(textures[i]);
-			}
-			vector<float> inputs = JSON["inputs"].get<vector<float>>();
-			for (int i = 0; i < NO_INPUTS; i++) {
-				api_grafica->pos_processamento_info.inputs[i] = inputs[i];
-			}
-		}
-		return 0;
-	}
-
 	int get_set_post_processing(lua_State* L){
 		if(lua_tonumber(L, 1) == get_lua){
 			Table ret;
@@ -1905,23 +1528,9 @@ namespace funcoes_ponte {
 
 		
 
-		//material
-		pair<string, lua_function>("set_shader", funcoes_ponte::set_shader),
-		pair<string, lua_function>("get_shader", funcoes_ponte::get_shader),
-		pair<string, lua_function>("get_color", funcoes_ponte::get_color),
-		pair<string, lua_function>("set_color", funcoes_ponte::set_color),
-		pair<string, lua_function>("get_material_position_scale", funcoes_ponte::get_material_position_scale),
-		pair<string, lua_function>("set_material_position_scale", funcoes_ponte::set_material_position_scale),
-		pair<string, lua_function>("get_max_textures_material", funcoes_ponte::get_max_textures_material),
-		pair<string, lua_function>("get_max_inputs_material", funcoes_ponte::get_max_inputs_material),
-		pair<string, lua_function>("set_texture", funcoes_ponte::set_texture),
-		pair<string, lua_function>("get_texture", funcoes_ponte::get_texture),
-		pair<string, lua_function>("set_material_input", funcoes_ponte::set_material_input),
-		pair<string, lua_function>("get_material_input", funcoes_ponte::get_material_input),
+		
 
 		//pos-procesing
-		pair<string, lua_function>("get_post_processing_json", funcoes_ponte::get_post_processing_json),
-		pair<string, lua_function>("set_post_processing_json", funcoes_ponte::set_post_processing_json),
 		pair<string, lua_function>("get_set_post_processing", funcoes_ponte::get_set_post_processing),
 		
 
@@ -1934,8 +1543,6 @@ namespace funcoes_ponte {
 		
 
 		//sprite
-		pair<string, lua_function>("get_sprite_render_json", funcoes_ponte::get_sprite_render_json),
-		pair<string, lua_function>("set_sprite_render_json", funcoes_ponte::set_sprite_render_json),
 		pair<string, lua_function>("get_set_sprite_render", funcoes_ponte::get_set_sprite_render),
 		
 
