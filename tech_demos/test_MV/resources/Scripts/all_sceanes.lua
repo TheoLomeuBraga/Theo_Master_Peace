@@ -6,7 +6,8 @@ require("TMP_libs.short_cuts.create_mesh")
 require("TMP_libs.short_cuts.create_camera")
 require("TMP_libs.short_cuts.fps_counter")
 require("TMP_libs.short_cuts.create_render_shader")
-require("Scripts.TMP_libs.objects.post_processing")
+require("TMP_libs.objects.post_processing")
+require("TMP_libs.objects.window")
 
 require("TMP_libs.components.component_all")
 
@@ -14,8 +15,8 @@ require("TMP_libs.layers_table")
 
 function initialize_render_settings()
     
-    window.res.x = 720
-    window.res.y = 720
+    window.resolution.x = 720
+    window.resolution.y = 720
     window:set()
     
 
@@ -41,6 +42,7 @@ function initialize_render_settings()
 
     renders_layers:set()
 
+    post_processing:get()
     post_processing.material.shader = "resources/Shaders/post_processing"
     post_processing:set()
     

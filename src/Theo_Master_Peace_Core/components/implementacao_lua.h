@@ -48,6 +48,13 @@ float stringToFloat(const std::string& str) {
 }
 
 
+std::string floatToString(float value) {
+    std::stringstream ss;
+    ss << value;
+    return ss.str();
+}
+
+
 
 
 
@@ -99,30 +106,44 @@ Table lua_totable(lua_State* L,int index){
 		
         // At this point, the stack contains the key at index -2 and the value at index -1
         
-        if (lua_isstring(L, -2)) {
+       
+		 if (lua_type(L, -2) == LUA_TNUMBER) {
             // The value is a number
-            std::string value = lua_tostring(L, -2);
-			if(isNumber(value)){key = stringToFloat(value);} else{key = value;}
+            float value = lua_tonumber(L, -2);
+			key = floatToString(value);
             
         }
-        else if (lua_isboolean(L, -2)) {
+		else if (lua_type(L, -2) == LUA_TSTRING) {
+            // The value is a number
+            std::string value = lua_tostring(L, -2);
+			key = value;
+            
+        }
+        else if (lua_type(L, -2) == LUA_TBOOLEAN) {
             // The value is a number
             float value = lua_toboolean(L, -2);
             key = std::to_string(value);
         }
 		
         
-        if (lua_isstring(L, -1)) {
+		if (lua_type(L, -1) == LUA_TNUMBER) {
+            // The value is a number
+            float value = lua_tonumber(L, -1);
+			t.setFloat(key,value);
+            
+        }
+        else if (lua_type(L, -1) == LUA_TSTRING) {
             // The value is a number
             std::string value = lua_tostring(L, -1);
-			if(isNumber(value)){t.setFloat(key,stringToFloat(value));} else{t.setString(key,value);}
+			t.setString(key,value);
+            
         }
-        else if (lua_isboolean(L, -1)) {
+        else if (lua_type(L, -1) == LUA_TBOOLEAN) {
             // The value is a number
             float value = lua_toboolean(L, -1);
             t.setFloat(key,value);
         }
-        else if (lua_istable(L, -1)) {
+        else if (lua_type(L, -1) == LUA_TTABLE) {
             // The value is a table, recurse into it
             t.setTable(key,lua_totable(L, lua_gettop(L)));
         }
@@ -288,30 +309,6 @@ namespace funcoes_ponte {
 	}
 
 	//screen
-	int set_window(lua_State* L) {
-		int argumentos = lua_gettop(L);
-		if (argumentos == 3) {
-			loop_principal::mudar_res((int)lua_tonumber(L, 1), (int)lua_tonumber(L, 2));
-			loop_principal::setar_tela_inteira_como((bool)lua_toboolean(L, 3));
-			//cout << "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA: " << lua_tonumber(L, 1) << " " << lua_tonumber(L, 2) <<endl;
-		}
-		return 0;
-	}
-
-	int get_window(lua_State* L) {
-		if (gerente_janela != NULL) {
-			vec2 res = gerente_janela->pegar_res();
-			bool janela_cheia = gerente_janela->e_janela_cheia();
-			lua_pushnumber(L, res.x);
-			lua_pushnumber(L, res.y);
-			lua_pushboolean(L, janela_cheia);
-			return 3;
-		}
-		else
-		{
-			return 0;
-		}
-	}
 
 	int get_set_window(lua_State* L){
 		if(lua_tonumber(L, 1) == get_lua){
@@ -904,6 +901,22 @@ namespace funcoes_ponte {
 		}
 		return 0;
 	}
+
+	int get_set_sprite_render(lua_State* L){
+		if(lua_tonumber(L, 1) == get_lua){
+			Table ret;
+			objeto_jogo* obj = string_ponteiro<objeto_jogo>(lua_tostring(L, 2));
+
+			lua_pushtable(L,ret);
+			return 1;
+		}else{
+			Table t = lua_totable(L,2);
+			objeto_jogo* obj = string_ponteiro<objeto_jogo>(t.getString("object_ptr"));
+			
+			return 0;
+		}
+	}
+
 
 	//render tilemap
 
@@ -1715,10 +1728,11 @@ namespace funcoes_ponte {
 	int get_set_post_processing(lua_State* L){
 		if(lua_tonumber(L, 1) == get_lua){
 			Table ret;
-			lua_pushtable(L,ret);
+			lua_pushtable(L,material_table(api_grafica->pos_processamento_info));
 			return 1;
 		}else{
 			Table t = lua_totable(L,2);
+			api_grafica->pos_processamento_info = table_material(t);
 			return 0;
 		}
 	}
@@ -1916,14 +1930,13 @@ namespace funcoes_ponte {
 		
 
 		//janela
-		pair<string, lua_function>("set_window", funcoes_ponte::set_window),
-		pair<string, lua_function>("get_window", funcoes_ponte::get_window),
 		pair<string, lua_function>("get_set_window", funcoes_ponte::get_set_window),
 		
 
 		//sprite
 		pair<string, lua_function>("get_sprite_render_json", funcoes_ponte::get_sprite_render_json),
 		pair<string, lua_function>("set_sprite_render_json", funcoes_ponte::set_sprite_render_json),
+		pair<string, lua_function>("get_set_sprite_render", funcoes_ponte::get_set_sprite_render),
 		
 
 		//render tilemap
