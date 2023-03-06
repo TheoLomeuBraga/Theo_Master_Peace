@@ -2,18 +2,12 @@ require("TMP_libs.components.component_index")
 
 --text
 
-function set_font(object,font)
-end
-function get_font(object)
-end
-function set_text(object,text)
-end
-function get_text(object)
-end
-
 function get_text_json(object)
 end
 function set_text_json(object,json)
+end
+
+function get_set_render_text(get_set,object)
 end
 
 render_text_component = {}
@@ -30,8 +24,9 @@ function render_text_component:new(object_ptr)
     rs.material = matreial:new()
     function rs:get()
 
-        j = {}
-        j = deepcopyjson(json.decode(get_text_json(self.object_ptr)))
+        --j = {}
+        --j = deepcopyjson(json.decode(get_text_json(self.object_ptr)))
+        j = get_set_render_text(get_lua,self.object_ptr)
 
         self.layer = j.layer
         self.font = j.font
@@ -42,17 +37,11 @@ function render_text_component:new(object_ptr)
         self.min_space_betwen_chars = j.min_space_betwen_chars
         self.material = j.material
 
-        --[[
-        self.text = get_text(self.object_ptr)
-        --layer
-        self.layer = get_render_layer(self.object_ptr)
-        --material
-        self.material:get(self.object_ptr,0)
-        self.font = get_font(self.object_ptr)
-        ]]
+        
     end
     function rs:set()
 
+        --[[
         j = {}
 
         j.layer = self.layer
@@ -66,15 +55,9 @@ function render_text_component:new(object_ptr)
         j.material = deepcopyjson(self.material)
 
         set_text_json(self.object_ptr,json.encode(j))
-        
-        --[[
-        set_text(self.object_ptr,self.text)
-        --layer
-        set_render_layer(self.object_ptr,self.layer)
-        --material
-        self.material:set(self.object_ptr,0)
-        set_font(self.object_ptr,self.font)
         ]]
+        get_set_render_text(set_lua,deepcopyjson(self))
+        
 
     end
     function rs:delet()

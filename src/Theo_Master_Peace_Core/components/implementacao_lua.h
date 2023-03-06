@@ -945,165 +945,65 @@ namespace funcoes_ponte {
 
 
 
-	int get_render_tilemap_json(lua_State* L) {
-		objeto_jogo* obj = NULL;
-		int argumentos = lua_gettop(L);
-		if (argumentos > 0) {
-			obj = string_ponteiro<objeto_jogo>(lua_tostring(L, 1));
-		}
-		json JSON = {};
-		shared_ptr<render_tilemap> rtm = obj->pegar_componente<render_tilemap>();
-		if (rtm != NULL) {
-			JSON = {
-				{"layer",rtm->camada},
-				{"material",material_json(rtm->mat)},
-				//{"render_tilemap_only_layer",rtm->apenas_camada},
-				{"tile_set_local",rtm->tiles->local},
-				{"tile_map_local",rtm->map_info->local},
-				{"render_tilemap_only_layer",rtm->apenas_camada},
-			};
-		}
-		lua_pushstring(L, JSON.dump().c_str());
-		return 1;
-	}
-	int set_render_tilemap_json(lua_State* L) {
-		objeto_jogo* obj = NULL;
-		int argumentos = lua_gettop(L);
-		if (argumentos > 0) {
-			obj = string_ponteiro<objeto_jogo>(lua_tostring(L, 1));
-		}
-		json JSON = json::parse(lua_tostring(L, 2));
-		shared_ptr<render_tilemap> rtm = obj->pegar_componente<render_tilemap>();
-		if (rtm != NULL) {
-			rtm->camada = JSON["layer"].get<int>();
-			rtm->mat = json_material(JSON["material"].get<json>());
-			//rtm->apenas_camada = JSON["render_tilemap_only_layer"].get<int>();
-			rtm->tiles = ManuseioDados::carregar_tile_set(JSON["tile_set_local"].get<string>());
-			rtm->map_info = ManuseioDados::carregar_info_tile_map(JSON["tile_map_local"].get<string>());
-			rtm->apenas_camada = JSON["render_tilemap_only_layer"].get<int>();
-		}
-		return 0;
-	}
+	
 
 	int get_set_render_tilemap(lua_State* L){
 		if(lua_tonumber(L, 1) == get_lua){
 			Table ret;
 			objeto_jogo* obj = string_ponteiro<objeto_jogo>(lua_tostring(L, 2));
 			shared_ptr<render_tilemap> rtm = obj->pegar_componente<render_tilemap>();
-
+			ret.setFloat("layer",rtm->camada);
+			ret.setTable("material",material_table(rtm->mat));
+			ret.setFloat("render_tilemap_only_layer",rtm->apenas_camada);
+			ret.setString("tile_set_local",rtm->tiles->local);
+			ret.setString("tile_map_local",rtm->map_info->local);
 			lua_pushtable(L,ret);
 			return 1;
 		}else{
 			Table t = lua_totable(L,2);
 			objeto_jogo* obj = string_ponteiro<objeto_jogo>(t.getString("object_ptr"));
 			shared_ptr<render_tilemap> rtm = obj->pegar_componente<render_tilemap>();
-			
+			rtm->camada = t.getFloat("layer");
+			rtm->mat = table_material(t.getTable("material"));
+			rtm->apenas_camada = t.getFloat("render_tilemap_only_layer");
+			rtm->tiles = ManuseioDados::carregar_tile_set( t.getString("tile_set_local"));
+			rtm->map_info = ManuseioDados::carregar_info_tile_map(t.getString("tile_map_local"));
 			return 0;
 		}
 	}
 
 	//texto
-
-	int set_font(lua_State* L) {
-		int argumentos = lua_gettop(L);
-		objeto_jogo* obj = NULL;
-		if (argumentos > 0) {
-			obj = string_ponteiro<objeto_jogo>(lua_tostring(L, 1));
+	int get_set_render_text(lua_State* L){
+		if(lua_tonumber(L, 1) == get_lua){
+			Table ret;
+			objeto_jogo* obj = string_ponteiro<objeto_jogo>(lua_tostring(L, 2));
+			shared_ptr<render_texto> rt = obj->pegar_componente<render_texto>();
+			ret.setFloat("layer",rt->camada);
+			ret.setString("font",rt->font->local);
+			ret.setString("text",rt->texto);
+			ret.setFloat("line_size",rt->tamanho_max_linha);
+			ret.setFloat("space_betwen_chars",rt->espaco_entre_letras);
+			ret.setFloat("max_space_betwen_chars",rt->espaco_entre_letras_max);
+			ret.setFloat("min_space_betwen_chars",rt->espaco_entre_letras_min);
+			ret.setTable("material",material_table(rt->mat));
+			lua_pushtable(L,ret);
+			return 1;
+		}else{
+			Table t = lua_totable(L,2);
+			objeto_jogo* obj = string_ponteiro<objeto_jogo>(t.getString("object_ptr"));
+			shared_ptr<render_texto> rt = obj->pegar_componente<render_texto>();
+			rt->camada = t.getFloat("layer");
+			rt->font = ManuseioDados::carregar_fonte(t.getString("font"));
+			rt->texto = t.getString("text");
+			rt->tamanho_max_linha = t.getFloat("line_size");
+			rt->espaco_entre_letras = t.getFloat("space_betwen_chars");
+			rt->espaco_entre_letras_max = t.getFloat("max_space_betwen_chars");
+			rt->espaco_entre_letras_min = t.getFloat("min_space_betwen_chars");
+			rt->mat = table_material(t.getTable("material"));
+			return 0;
 		}
-		if (argumentos == 2 && obj != NULL && obj->pegar_componente<render_texto>() != NULL) {
-			//ManuseioDados::carregar_fonte_thread(lua_tostring(L, 2), &obj->pegar_componente<render_texto>()->font);
-			obj->pegar_componente<render_texto>()->font = ManuseioDados::carregar_fonte(lua_tostring(L, 2));
-		}
-		return 0;
 	}
 
-	int get_font(lua_State* L) {
-		string output = "";
-		int argumentos = lua_gettop(L);
-		objeto_jogo* obj = NULL;
-		if (argumentos > 0) {
-			obj = string_ponteiro<objeto_jogo>(lua_tostring(L, 1));
-		}
-		if (argumentos == 1 && obj != NULL && obj->pegar_componente<render_texto>() != NULL) {
-			output = obj->pegar_componente<render_texto>()->font->local;
-		}
-		lua_pushstring(L, output.c_str());
-
-		return 0;
-	}
-
-	int set_text(lua_State* L) {
-		int argumentos = lua_gettop(L);
-		objeto_jogo* obj = NULL;
-		if (argumentos > 0) {
-			obj = string_ponteiro<objeto_jogo>(lua_tostring(L, 1));
-		}
-		if (argumentos == 2 && obj != NULL && obj->pegar_componente<render_texto>() != NULL) {
-			obj->pegar_componente<render_texto>()->texto = lua_tostring(L, 2);
-		}
-		return 0;
-	}
-
-	int get_text(lua_State* L) {
-		int argumentos = lua_gettop(L);
-		objeto_jogo* obj = NULL;
-		string output = "";
-		if (argumentos > 0) {
-			obj = string_ponteiro<objeto_jogo>(lua_tostring(L, 1));
-		}
-		if (obj->pegar_componente<render_texto>() != NULL) {
-			output = obj->pegar_componente<render_texto>()->texto;
-		}
-		lua_pushstring(L, output.c_str());
-		return 1;
-	}
-
-	int get_text_json(lua_State* L) {
-		int argumentos = lua_gettop(L);
-		objeto_jogo* obj = NULL;
-		if (argumentos > 0) {
-			obj = string_ponteiro<objeto_jogo>(lua_tostring(L, 1));
-		}
-		json JSON = {};
-		shared_ptr<render_texto> rt = obj->pegar_componente<render_texto>();
-		if (rt != NULL && argumentos == 1) {
-			JSON = {
-				{"layer",rt->camada},
-				{"font",rt->font->local},
-				{"text",rt->texto},
-				{"line_size",rt->tamanho_max_linha},
-				{"space_betwen_chars",rt->espaco_entre_letras},
-				{"max_space_betwen_chars",rt->espaco_entre_letras_max},
-				{"min_space_betwen_chars",rt->espaco_entre_letras_min},
-				{"material",material_json(rt->mat)},
-			};
-		}
-		lua_pushstring(L, JSON.dump().c_str());
-		return 1;
-	}
-
-	int set_text_json(lua_State* L) {
-		int argumentos = lua_gettop(L);
-		objeto_jogo* obj = NULL;
-		if (argumentos > 0) {
-			obj = string_ponteiro<objeto_jogo>(lua_tostring(L, 1));
-		}
-		json JSON = {};
-		shared_ptr<render_texto> rt = obj->pegar_componente<render_texto>();
-		if (rt != NULL && argumentos == 2) {
-			JSON = json::parse(lua_tostring(L, 2));
-			rt->camada = JSON["layer"].get<int>();
-			rt->font = ManuseioDados::carregar_fonte(JSON["font"].get<string>());
-			rt->texto = JSON["text"].get<string>();
-			rt->espaco_entre_letras = JSON["space_betwen_chars"].get<float>();
-			rt->espaco_entre_letras_max = JSON["max_space_betwen_chars"].get<float>();
-			rt->espaco_entre_letras_min = JSON["min_space_betwen_chars"].get<float>();
-			rt->tamanho_max_linha = JSON["line_size"].get<float>();
-			rt->mat = json_material(JSON["material"].get<json>());
-		}
-		return 0;
-	}
-	
 	int get_render_shader(lua_State* L){
 		int argumentos = lua_gettop(L);
 		objeto_jogo* obj = NULL;
@@ -1138,7 +1038,22 @@ namespace funcoes_ponte {
 		return 0;
 	}
 
-	
+	int get_set_render_shader(lua_State* L){
+		if(lua_tonumber(L, 1) == get_lua){
+			Table ret;
+			objeto_jogo* obj = string_ponteiro<objeto_jogo>(lua_tostring(L, 2));
+			shared_ptr<render_shader> rt = obj->pegar_componente<render_shader>();
+
+			lua_pushtable(L,ret);
+			return 1;
+		}else{
+			Table t = lua_totable(L,2);
+			objeto_jogo* obj = string_ponteiro<objeto_jogo>(t.getString("object_ptr"));
+			shared_ptr<render_shader> rt = obj->pegar_componente<render_shader>();
+
+			return 0;
+		}
+	}
 
 	//fisica
 
@@ -1450,13 +1365,7 @@ namespace funcoes_ponte {
 	}
 
 
-	int get_projectile_json(lua_State* L) {
-		return 0;
-	}
-
-	int set_projectile_json(lua_State* L) {
-		return 0;
-	}
+	
 	
 
 	map<string, lua_function> funcoes_ponte_map = {
@@ -1520,15 +1429,6 @@ namespace funcoes_ponte {
 		pair<string, lua_function>("change_transfotm_position", funcoes_ponte::change_transfotm_position),
 		pair<string, lua_function>("change_transfotm_rotation", funcoes_ponte::change_transfotm_rotation),
 		pair<string, lua_function>("change_transfotm_scale", funcoes_ponte::change_transfotm_scale),
-		
-	
-	
-		
-		
-
-		
-
-		
 
 		//pos-procesing
 		pair<string, lua_function>("get_set_post_processing", funcoes_ponte::get_set_post_processing),
@@ -1547,23 +1447,21 @@ namespace funcoes_ponte {
 		
 
 		//render tilemap
-		pair<string, lua_function>("get_render_tilemap_json", funcoes_ponte::get_render_tilemap_json),
-		pair<string, lua_function>("set_render_tilemap_json", funcoes_ponte::set_render_tilemap_json),
+		pair<string, lua_function>("get_set_render_tilemap", funcoes_ponte::get_set_render_tilemap),
+		
 		
 
 
 		//text
-		pair<string, lua_function>("set_font", funcoes_ponte::set_font),
-		pair<string, lua_function>("get_font", funcoes_ponte::get_font),
-		pair<string, lua_function>("set_text", funcoes_ponte::set_text),
-		pair<string, lua_function>("get_text", funcoes_ponte::get_text),
-
-		pair<string, lua_function>("get_text_json", funcoes_ponte::get_text_json),
-		pair<string, lua_function>("set_text_json", funcoes_ponte::set_text_json),
+		pair<string, lua_function>("get_set_render_text", funcoes_ponte::get_set_render_text),
+		
+		
 		
 		//shader
 		pair<string, lua_function>("get_render_shader", funcoes_ponte::get_render_shader),
 		pair<string, lua_function>("set_render_shader", funcoes_ponte::set_render_shader),
+		pair<string, lua_function>("set_render_shader", funcoes_ponte::set_render_shader),
+		
 		
 		//physic
 		pair<string, lua_function>("add_force", funcoes_ponte::add_force),
@@ -1595,10 +1493,6 @@ namespace funcoes_ponte {
 
 		pair<string, lua_function>("get_mesh_json", funcoes_ponte::get_mesh_json),
 		pair<string, lua_function>("set_mesh_json", funcoes_ponte::set_mesh_json),
-
-		//projetil
-			pair<string, lua_function>("get_projectile_json", funcoes_ponte::get_projectile_json),
-			pair<string, lua_function>("get_projectile_json", funcoes_ponte::get_projectile_json),
 			
 			
 	};
