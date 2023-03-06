@@ -990,14 +990,14 @@ namespace funcoes_ponte {
 			Table ret;
 			objeto_jogo* obj = string_ponteiro<objeto_jogo>(lua_tostring(L, 2));
 			shared_ptr<render_tilemap> rtm = obj->pegar_componente<render_tilemap>();
+
+			lua_pushtable(L,ret);
 			return 1;
 		}else{
 			Table t = lua_totable(L,2);
 			objeto_jogo* obj = string_ponteiro<objeto_jogo>(t.getString("object_ptr"));
 			shared_ptr<render_tilemap> rtm = obj->pegar_componente<render_tilemap>();
-			if(rtm != NULL){
-					
-			}
+			
 			return 0;
 		}
 	}
