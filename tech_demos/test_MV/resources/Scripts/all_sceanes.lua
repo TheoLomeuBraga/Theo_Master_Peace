@@ -6,17 +6,18 @@ require("TMP_libs.short_cuts.create_mesh")
 require("TMP_libs.short_cuts.create_camera")
 require("TMP_libs.short_cuts.fps_counter")
 require("TMP_libs.short_cuts.create_render_shader")
+require("Scripts.TMP_libs.objects.post_processing")
 
 require("TMP_libs.components.component_all")
 
 require("TMP_libs.layers_table")
 
-function initialize_render_layers()
-    --[[
+function initialize_render_settings()
+    
     window.res.x = 720
     window.res.y = 720
     window:set()
-    --]]
+    
 
     renders_layers.layers_size = 4
 
@@ -39,8 +40,13 @@ function initialize_render_layers()
     renders_layers.layers[3].start_render = false
 
     renders_layers:set()
+
+    post_processing.material.shader = "resources/Shaders/post_processing"
+    post_processing:set()
     
 end
+
+
 
 map_name_list = {
     "test",
@@ -195,7 +201,7 @@ sceanes_db = {}
 sceanes_db.test = {}
 function sceanes_db.test:load()
     print("loading m1")
-    initialize_render_layers()
+    initialize_render_settings()
     this_sceane.objects_layesrs = layers_table:new_2D()
     this_sceane.objects_layesrs:create()
     --background
