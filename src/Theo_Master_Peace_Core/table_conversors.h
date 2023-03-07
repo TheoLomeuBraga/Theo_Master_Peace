@@ -2,6 +2,7 @@
 #include "table.h"
 #include "RecursosT.h"
 #include "ManusearArquivos.h"
+#include <algorithm>
 
 //vectors
 
@@ -130,14 +131,15 @@ Material table_material(Table t){
     m.metalico = t.getFloat("metallic");
     m.suave = t.getFloat("softness");
 
-    Table textures = t.getTable("textures");
-    for (int i = 0; i < NO_TEXTURAS; i++) {
-		if(textures.haveString(to_string(i))){ManuseioDados::carregar_Imagem_thread(textures.getString(to_string(i)),&m.texturas[i]);}else{break;}
+    
+    vector<string> textures = table_vString(t.getTable("textures"));
+    for (int i = 0; i < std::min((int)NO_TEXTURAS,(int)textures.size()); i++) {
+		m.texturas[i] = ManuseioDados::carregar_Imagem(textures[i]);
 	}
 
-    Table inputs = t.getTable("inputs");
-	for (int i = 0; i < NO_INPUTS; i++) {
-		if(textures.haveString(to_string(i))){m.inputs[i] = inputs.getFloat(to_string(i));}else{break;}
+    vector<float> inputs = table_vFloat(t.getTable("inputs"));
+	for (int i = 0; i < std::min((int)NO_INPUTS,(int)inputs.size()); i++) {
+        m.inputs[i] = inputs[i];
 	}
 
     return m;

@@ -1004,53 +1004,23 @@ namespace funcoes_ponte {
 		}
 	}
 
-	int get_render_shader(lua_State* L){
-		int argumentos = lua_gettop(L);
-		objeto_jogo* obj = NULL;
-		if (argumentos > 0) {
-			obj = string_ponteiro<objeto_jogo>(lua_tostring(L, 1));
-		}
-		json JSON = {};
-		shared_ptr<render_shader> rs = obj->pegar_componente<render_shader>();
-		if(rs != NULL){
-			JSON = {
-				{"layer",rs->camada},
-				{"material",material_json(rs->mat)},
-			};
-		}
-		lua_pushstring(L, JSON.dump().c_str());
-		return 1;
-	}
-
-	int set_render_shader(lua_State* L){
-		int argumentos = lua_gettop(L);
-		objeto_jogo* obj = NULL;
-		if (argumentos > 0) {
-			obj = string_ponteiro<objeto_jogo>(lua_tostring(L, 1));
-		}
-		json JSON = {};
-		shared_ptr<render_shader> rs = obj->pegar_componente<render_shader>();
-		if(rs != NULL && argumentos == 2){
-			JSON = json::parse(lua_tostring(L, 2));
-			rs->camada =  JSON["layer"].get<int>();
-			rs->mat = json_material(JSON["material"].get<json>());
-		}
-		return 0;
-	}
-
 	int get_set_render_shader(lua_State* L){
 		if(lua_tonumber(L, 1) == get_lua){
 			Table ret;
 			objeto_jogo* obj = string_ponteiro<objeto_jogo>(lua_tostring(L, 2));
 			shared_ptr<render_shader> rt = obj->pegar_componente<render_shader>();
-
+			ret.setFloat("layer",rt->camada);
+			ret.setFloat("vertex_size",rt->tamanho);
+			ret.setTable("material",material_table(rt->mat));
 			lua_pushtable(L,ret);
 			return 1;
 		}else{
 			Table t = lua_totable(L,2);
 			objeto_jogo* obj = string_ponteiro<objeto_jogo>(t.getString("object_ptr"));
 			shared_ptr<render_shader> rt = obj->pegar_componente<render_shader>();
-
+			rt->camada = t.getFloat("layer");
+			rt->tamanho = t.getFloat("vertex_size");
+			rt->mat = table_material(t.getTable("material"));
 			return 0;
 		}
 	}
@@ -1133,6 +1103,26 @@ namespace funcoes_ponte {
 		}
 		return 0;
 	}
+
+	int get_set_physic_2D(lua_State* L){
+		if(lua_tonumber(L, 1) == get_lua){
+			Table ret;
+			objeto_jogo* obj = string_ponteiro<objeto_jogo>(lua_tostring(L, 2));
+			shared_ptr<box_2D> b2d = obj->pegar_componente<box_2D>();
+
+			lua_pushtable(L,ret);
+			return 1;
+		}else{
+			Table t = lua_totable(L,2);
+			objeto_jogo* obj = string_ponteiro<objeto_jogo>(t.getString("object_ptr"));
+			shared_ptr<box_2D> b2d = obj->pegar_componente<box_2D>();
+
+			return 0;
+		}
+	}
+
+	
+
 	//camera
 
 	int set_camera(lua_State* L) {
@@ -1458,15 +1448,16 @@ namespace funcoes_ponte {
 		
 		
 		//shader
-		pair<string, lua_function>("get_render_shader", funcoes_ponte::get_render_shader),
-		pair<string, lua_function>("set_render_shader", funcoes_ponte::set_render_shader),
-		pair<string, lua_function>("set_render_shader", funcoes_ponte::set_render_shader),
+		pair<string, lua_function>("get_set_render_shader", funcoes_ponte::get_set_render_shader),
 		
 		
 		//physic
-		pair<string, lua_function>("add_force", funcoes_ponte::add_force),
 		pair<string, lua_function>("get_physic_2D_json", funcoes_ponte::get_physic_2D_json),
 		pair<string, lua_function>("set_physic_2D_json", funcoes_ponte::set_physic_2D_json),
+		pair<string, lua_function>("get_set_physic_2D", funcoes_ponte::get_set_physic_2D),
+
+		pair<string, lua_function>("add_force", funcoes_ponte::add_force),
+		
 		
 
 		//camera

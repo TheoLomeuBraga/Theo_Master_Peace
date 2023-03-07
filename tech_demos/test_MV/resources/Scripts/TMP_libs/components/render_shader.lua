@@ -1,9 +1,6 @@
 require("TMP_libs.components.component_index")
 
-
-function get_render_shader(object)
-end
-function set_render_shader(object,json)
+function get_set_render_shader(get_set,object)
 end
 
 
@@ -12,17 +9,16 @@ function render_shader_component:new(object_ptr)
     rs = {}
     rs.object_ptr = object_ptr
     rs.layer = 1
+    rs.vertex_size = 6
     rs.material = matreial:new()
     function rs:get()
-        j = json.decode(get_render_shader(self.object_ptr))
+        j = get_set_render_shader(get_lua,self.object_ptr)
         self.layer =  j.layer
         self.material = deepcopyjson(j.material) 
+        self.vertex_size = j.vertex_size
     end
     function rs:set()
-        j = {}
-        j.layer = self.layer
-        j.material = deepcopyjson(self.material)
-        set_render_shader(self.object_ptr,json.encode(j))
+        get_set_render_shader(set_lua,deepcopyjson(self))
     end
     function rs:delet()
         
