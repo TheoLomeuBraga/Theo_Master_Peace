@@ -21,8 +21,11 @@ boady_dynamics.dynamic = 1
 colision_shapes = {}
 colision_shapes.box = 0
 colision_shapes.sphere = 1
+colision_shapes.convex = 2
 colision_shapes.tile = 3
 colision_shapes.tiled_volume = 4
+colision_shapes.convex = 5
+
 
 colision_layer_info = {}
 function colision_layer_info:new()
