@@ -1,3 +1,6 @@
+atualizar interface lua para performance
+atualizar imputs da interface lua
+
 adicionar fisica 3d
 adicionar suporte a arquivos .map
 adicionar marching cubes

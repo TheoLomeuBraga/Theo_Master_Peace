@@ -581,14 +581,6 @@ namespace funcoes_ponte {
 		lua_pushboolean(L, precao);
 		lua_settable(L, -3);
 	}
-	
-	int set_keyboard_text_input(lua_State* L) {
-		int argumentos = lua_gettop(L);
-		if (argumentos == 1) {
-			TECLADO.pegar_input_texto = lua_toboolean(L, 1);
-		}
-		return 0;
-	}
 	int set_cursor_position(lua_State* L) {
 		int argumentos = lua_gettop(L);
 		if (argumentos == 2) {
@@ -605,7 +597,6 @@ namespace funcoes_ponte {
 		}
 		return 1;
 	}
-
 	int get_mouse_input(lua_State* L) {
 		lua_newtable(L);
 		{
@@ -625,7 +616,6 @@ namespace funcoes_ponte {
 		}
 		return 1;
 	}
-
 	int get_joystick_input(lua_State* L) {
 
 		lua_newtable(L);
@@ -678,6 +668,18 @@ namespace funcoes_ponte {
 
 		return 1;
 	}
+
+	int set_keyboard_text_input(lua_State* L) {
+		int argumentos = lua_gettop(L);
+		if (argumentos == 1) {
+			TECLADO.pegar_input_texto = lua_toboolean(L, 1);
+		}
+		return 0;
+	}
+	int get_inputs(lua_State* L){
+		return 0;
+	}
+
 
 	//char control
 
@@ -1364,8 +1366,10 @@ namespace funcoes_ponte {
 		pair<string, lua_function>("get_keyboard_input", funcoes_ponte::get_keyboard_input),
 		pair<string, lua_function>("get_mouse_input", funcoes_ponte::get_mouse_input),
 		pair<string, lua_function>("get_joystick_input", funcoes_ponte::get_joystick_input),
-		pair<string, lua_function>("set_keyboard_text_input", funcoes_ponte::set_keyboard_text_input),
 		pair<string, lua_function>("set_cursor_position", funcoes_ponte::set_cursor_position),
+
+		pair<string, lua_function>("set_keyboard_text_input", funcoes_ponte::set_keyboard_text_input),
+		pair<string, lua_function>("get_inputs", funcoes_ponte::get_inputs),
 
 		
 		
@@ -1454,8 +1458,8 @@ namespace funcoes_ponte {
 		//physic
 		pair<string, lua_function>("get_physic_2D_json", funcoes_ponte::get_physic_2D_json),
 		pair<string, lua_function>("set_physic_2D_json", funcoes_ponte::set_physic_2D_json),
-		pair<string, lua_function>("get_set_physic_2D", funcoes_ponte::get_set_physic_2D),
 
+		pair<string, lua_function>("get_set_physic_2D", funcoes_ponte::get_set_physic_2D),
 		pair<string, lua_function>("add_force", funcoes_ponte::add_force),
 		
 		
