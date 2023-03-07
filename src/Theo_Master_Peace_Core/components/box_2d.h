@@ -170,20 +170,12 @@ public:
 		//b2FixtureDef
 		if (forma == caixa) {
 			Vertex_shape.SetAsBox(escala.x, escala.y);
-
-
 			fixtureDef.shape = &Vertex_shape;
-			
-			
 		}
 		else if (forma == esfera) {
 			Circle.m_p.Set(0.0f, 0.0f);
-			
 			Circle.m_radius = escala.x;
-
 			fixtureDef.shape = &Circle;
-			
-			
 		}
 		else if (forma == convexo) {
 			if (esse_objeto->pegar_componente<transform_>() != NULL) {
