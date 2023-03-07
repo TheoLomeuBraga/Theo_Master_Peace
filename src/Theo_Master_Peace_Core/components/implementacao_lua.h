@@ -1111,7 +1111,23 @@ namespace funcoes_ponte {
 			Table ret;
 			objeto_jogo* obj = string_ponteiro<objeto_jogo>(lua_tostring(L, 2));
 			shared_ptr<box_2D> b2d = obj->pegar_componente<box_2D>();
-
+			ret.setTable("scale",vec2_table(b2d->escala));
+			ret.setFloat("boady_dynamic",b2d->dinamica);
+			ret.setFloat("colision_shape",b2d->forma);
+			ret.setFloat("rotate",b2d->rotacionar);
+			ret.setFloat("triger",b2d->gatilho);
+			ret.setFloat("friction",b2d->atrito);
+			vector<string> objects_coliding;
+			for(shared_ptr<objeto_jogo> obj : b2d->objs_colidindo){
+				objects_coliding.push_back(ponteiro_string(obj.get()));
+			}
+			ret.setTable("objects_coliding",vString_table(objects_coliding));
+			ret.setTable("colision_layer",info_camada_table(b2d->camada));
+			vector<Table> vertex;
+			for(vec2 v2 : b2d->vertices){
+				vertex.push_back(vec2_table(v2));
+			}
+			ret.setTable("vertex",vTable_table(vertex));
 			lua_pushtable(L,ret);
 			return 1;
 		}else{

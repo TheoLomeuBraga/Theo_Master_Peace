@@ -207,3 +207,25 @@ Table table_instrucoes_render(instrucoes_render ir){
     ret.setFloat("use_deeph",ir.usar_profundidade);
     return ret;
 }
+
+info_camada table_info_camada(Table t){
+    info_camada ret;
+    ret.camada = t.getFloat("layer");
+    vector<int> camada_colide;
+    for(int i : table_vFloat(t.getTable("layers_can_colide"))){
+        camada_colide.push_back(i);
+    }
+    ret.camada_colide = camada_colide;
+    return ret;
+}
+
+Table info_camada_table(info_camada ic){
+    Table ret;
+    ret.setFloat("layer",ic.camada);
+    vector<float> layers_can_colide;
+    for(int i : ic.camada_colide){
+        layers_can_colide.push_back(i);
+    }
+    ret.setTable("layers_can_colide",vFloat_table(layers_can_colide));
+    return ret;
+}

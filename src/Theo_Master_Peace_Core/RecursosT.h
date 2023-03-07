@@ -314,12 +314,12 @@ public:
 
 
 
-		struct info_camada_render_struct {
+		struct info_camada_colision_struct {
 			int camada = 0;
 			vector<int> camada_colide = {0,};
 
 		};
-		typedef info_camada_render_struct info_camada;
+		typedef info_camada_colision_struct info_camada;
 
 		enum tipo_dinamica_corpo {
 			estatico = 0,
