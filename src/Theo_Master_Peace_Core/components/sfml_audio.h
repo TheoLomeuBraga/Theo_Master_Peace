@@ -114,19 +114,10 @@ public:
 	sfml_audio(audio_info info) {
 		this->info = info;
 	}
-
-	
-
-
-	
-
-	
 	
 
 	void finalisar() {
-		cout << "bbbbbbbbbbbbbbbbbbbbbbbbbbb\n";
 		som.pause();
-		
 	}
 
 	

@@ -1126,68 +1126,34 @@ namespace funcoes_ponte {
 	}
 
 	//audio
-
-	int set_audio(lua_State* L) {
-		int argumentos = lua_gettop(L);
-		objeto_jogo* obj = NULL;
-		if (argumentos > 0) {
-			obj = string_ponteiro<objeto_jogo>(lua_tostring(L, 1));
-		}
-
-		if (obj->pegar_componente<sfml_audio>() != NULL && argumentos == 9) {
-
-			audio_info* info = &obj->pegar_componente<sfml_audio>()->info;
-			info->nome = lua_tostring(L, 2);
-			info->pausa = lua_toboolean(L, 3);
-			info->loop = lua_toboolean(L, 4);
-			info->tempo = lua_tonumber(L, 5);
-			info->velocidade = lua_tonumber(L, 6);
-			info->volume = lua_tonumber(L, 7);
-			info->min_distance = lua_tonumber(L, 8);
-			info->atenuation = lua_tonumber(L, 9);
-
-			obj->pegar_componente<sfml_audio>()->aplicar_info();
-		}
-
-
-		return 0;
-	}
-
-	int get_audio(lua_State* L) {
-		int argumentos = lua_gettop(L);
-		objeto_jogo* obj = NULL;
-		audio_info output;
-		if (argumentos > 0) {
-			obj = string_ponteiro<objeto_jogo>(lua_tostring(L, 1));
-		}
-		if (obj->pegar_componente<sfml_audio>() != NULL && argumentos == 1) {
-			output = obj->pegar_componente<sfml_audio>()->info;
-
-		}
-		lua_pushstring(L, output.nome.c_str());
-		lua_pushboolean(L, output.pausa);
-		lua_pushboolean(L, output.loop);
-		lua_pushnumber(L, output.tempo);
-		lua_pushnumber(L, output.velocidade);
-		lua_pushnumber(L, output.volume);
-		lua_pushnumber(L, output.min_distance);
-		lua_pushnumber(L, output.atenuation);
-		return 6;
-	}
-
 	int get_set_audio(lua_State* L){
 		if(lua_tonumber(L, 1) == get_lua){
 			Table ret;
 			objeto_jogo* obj = string_ponteiro<objeto_jogo>(lua_tostring(L, 2));
 			shared_ptr<sfml_audio> au = obj->pegar_componente<sfml_audio>();
-			
+			ret.setString("path",au->info.nome);
+			ret.setFloat("pause",au->info.pausa);
+			ret.setFloat("loop",au->info.loop);
+			ret.setFloat("time",au->info.tempo);
+			ret.setFloat("speed",au->info.velocidade);
+			ret.setFloat("volume",au->info.volume);
+			ret.setFloat("min_distance",au->info.min_distance);
+			ret.setFloat("atenuation",au->info.atenuation);
 			lua_pushtable(L,ret);
 			return 1;
 		}else{
 			Table t = lua_totable(L,2);
 			objeto_jogo* obj = string_ponteiro<objeto_jogo>(t.getString("object_ptr"));
 			shared_ptr<sfml_audio> au = obj->pegar_componente<sfml_audio>();
-			
+			au->info.nome = t.getString("path");
+			au->info.pausa = t.getFloat("pause");
+			au->info.loop = t.getFloat("loop");
+			au->info.tempo = t.getFloat("time");
+			au->info.velocidade = t.getFloat("speed");
+			au->info.volume = t.getFloat("volume");
+			au->info.min_distance = t.getFloat("min_distance");
+			au->info.atenuation = t.getFloat("atenuation");
+			au->aplicar_info();
 			return 0;
 		}
 	}
@@ -1425,8 +1391,6 @@ namespace funcoes_ponte {
 		pair<string, lua_function>("get_set_camera", funcoes_ponte::get_set_camera),
 
 		//audio
-		pair<string, lua_function>("get_audio", funcoes_ponte::get_audio),
-		pair<string, lua_function>("set_audio", funcoes_ponte::set_audio),
 		pair<string, lua_function>("get_set_audio", funcoes_ponte::get_set_audio),
 
 		pair<string, lua_function>("set_lisener_object", funcoes_ponte::set_lisener_object),

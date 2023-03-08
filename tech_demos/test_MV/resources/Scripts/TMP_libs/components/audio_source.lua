@@ -7,6 +7,9 @@ function set_audio(object,path,pause,loop,time,speed,volume,min_distance,atenuat
 end
 function get_audio(object)
 end
+
+function get_set_audio(get_set,object)
+end
 function set_lisener_object(object)
 end
 
@@ -23,11 +26,21 @@ function audio_component:new(object_ptr)
     a.min_distance = 1
     a.atenuation = 10
 
-    function a:set()
-        set_audio(self.object_ptr,self.path,self.pause,self.loop,self.time,self.speed,self.volume,self.min_distance,self.atenuation)
-    end
     function a:get()
-        self.path,self.pause,self.loop,self.time,self.speed,self.volume,self.min_distance,self.atenuation = get_audio(self.object_ptr)
+        --self.path,self.pause,self.loop,self.time,self.speed,self.volume,self.min_distance,self.atenuation = get_audio(self.object_ptr)
+        get_set_audio(get_lua,self.object_ptr)
+    end
+    function a:set()
+        --set_audio(self.object_ptr,self.path,self.pause,self.loop,self.time,self.speed,self.volume,self.min_distance,self.atenuation)
+        a = get_set_audio(set_lua,deepcopyjson(self))
+        self.path = a.path
+	    self.pause = a.pause
+	    self.loop = a.loop
+	    self.time = a.time
+	    self.speed = a.speed
+        self.volume = a.volume
+        self.min_distance = a.min_distance
+        self.atenuation = a.atenuation
     end
     function a:delet()
         self = nil
