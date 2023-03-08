@@ -1145,6 +1145,7 @@ namespace funcoes_ponte {
 			Table t = lua_totable(L,2);
 			objeto_jogo* obj = string_ponteiro<objeto_jogo>(t.getString("object_ptr"));
 			shared_ptr<sfml_audio> au = obj->pegar_componente<sfml_audio>();
+			
 			au->info.nome = t.getString("path");
 			au->info.pausa = t.getFloat("pause");
 			au->info.loop = t.getFloat("loop");
@@ -1282,6 +1283,23 @@ namespace funcoes_ponte {
 		return 0;
 	}
 
+	int get_set_mesh_json(lua_State* L) {
+		if(lua_tonumber(L, 1) == get_lua){
+			Table ret;
+			objeto_jogo* obj = string_ponteiro<objeto_jogo>(lua_tostring(L, 2));
+			shared_ptr<render_malha> mesh = obj->pegar_componente<render_malha>();
+
+			lua_pushtable(L,ret);
+			return 1;
+		}else{
+			Table t = lua_totable(L,2);
+			objeto_jogo* obj = string_ponteiro<objeto_jogo>(t.getString("object_ptr"));
+			shared_ptr<render_malha> mesh = obj->pegar_componente<render_malha>();
+			
+			return 0;
+		}
+	}
+
 
 	
 	
@@ -1398,6 +1416,8 @@ namespace funcoes_ponte {
 		//mesh
 		pair<string, lua_function>("get_mesh_json", funcoes_ponte::get_mesh_json),
 		pair<string, lua_function>("set_mesh_json", funcoes_ponte::set_mesh_json),
+		pair<string, lua_function>("get_set_mesh_json", funcoes_ponte::get_set_mesh_json),
+		
 
 		//script
 		pair<string, lua_function>("get_script_size", get_script_size),

@@ -45,10 +45,11 @@ public:
 
 	void aplicar_info() {
 		carregar_audio_buffer_sfml(info.nome);
-		buffer = buffers_som_sfml.pegar(info.nome);
-		som.setBuffer(*buffer);
-		
-		
+		buffer = buffers_som_sfml.pegar(info.nome); // <-- erro aqui
+		if(buffer.get() != NULL){
+			som.setBuffer(*(buffer.get()));
+		}
+		cout << "ponteiro audio buffer: " << buffer.get() << endl;
 		som.setPlayingOffset(sf::seconds(info.tempo));
 		som.setVolume(info.volume);
 		som.setLoop(info.loop);
@@ -61,7 +62,7 @@ public:
 			som.play();
 		}
 		som.setMinDistance(info.min_distance);
-			som.setAttenuation(info.atenuation);
+		som.setAttenuation(info.atenuation);
 		tf = esse_objeto->pegar_componente<transform_>();
 		
 		
@@ -84,7 +85,7 @@ public:
 
 	int iniciado = 0;
 	void iniciar() {
-		aplicar_info();
+		//aplicar_info();
 		
 	}
 

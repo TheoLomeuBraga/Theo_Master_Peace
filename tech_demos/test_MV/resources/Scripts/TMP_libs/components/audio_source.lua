@@ -17,7 +17,7 @@ audio_component = {}
 function audio_component:new(object_ptr)
     a = {}
     a.object_ptr = object_ptr
-    a.path = ""
+    a.path = "resources/Audio/teste de audio.wav"
 	a.pause = false
 	a.loop = false
 	a.time = 0.001
@@ -28,11 +28,7 @@ function audio_component:new(object_ptr)
 
     function a:get()
         --self.path,self.pause,self.loop,self.time,self.speed,self.volume,self.min_distance,self.atenuation = get_audio(self.object_ptr)
-        get_set_audio(get_lua,self.object_ptr)
-    end
-    function a:set()
-        --set_audio(self.object_ptr,self.path,self.pause,self.loop,self.time,self.speed,self.volume,self.min_distance,self.atenuation)
-        a = get_set_audio(set_lua,deepcopyjson(self))
+        a = get_set_audio(get_lua,self.object_ptr)
         self.path = a.path
 	    self.pause = a.pause
 	    self.loop = a.loop
@@ -41,6 +37,10 @@ function audio_component:new(object_ptr)
         self.volume = a.volume
         self.min_distance = a.min_distance
         self.atenuation = a.atenuation
+    end
+    function a:set()
+        --set_audio(self.object_ptr,self.path,self.pause,self.loop,self.time,self.speed,self.volume,self.min_distance,self.atenuation)
+        get_set_audio(set_lua,deepcopyjson(self))
     end
     function a:delet()
         self = nil

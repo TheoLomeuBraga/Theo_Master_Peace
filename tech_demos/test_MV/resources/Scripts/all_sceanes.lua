@@ -206,6 +206,8 @@ function sceanes_db.test:load()
     initialize_render_settings()
     this_sceane.objects_layesrs = layers_table:new_2D()
     this_sceane.objects_layesrs:create()
+    
+    create_audio(this_sceane.objects_layesrs.sound,"resources/Audio/teste de audio.wav",true,5)
     --background
     
     create_background("resources/Textures/fundo A.png")

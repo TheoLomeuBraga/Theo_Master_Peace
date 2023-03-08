@@ -2,8 +2,8 @@ require("TMP_libs.objects.game_object")
 require("TMP_libs.components.transform")
 require("TMP_libs.components.audio_source")
 
-function create_audio(music_path,loop,volume)
-    ret = game_object:new(create_object()) 
+function create_audio(father,music_path,loop,volume)
+    ret = game_object:new(create_object(father)) 
     ret:add_component(components.audio_source)
     ret.components[components.audio_source].path = music_path
     ret.components[components.audio_source].loop = loop

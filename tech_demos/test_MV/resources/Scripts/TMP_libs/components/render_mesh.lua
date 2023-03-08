@@ -6,6 +6,9 @@ end
 function set_mesh_json(object,json)
 end
 
+function set_mesh_json(get_set,object)
+end
+
 mesh_location = {}
 function mesh_location:new(file,name)
     ret = {}
