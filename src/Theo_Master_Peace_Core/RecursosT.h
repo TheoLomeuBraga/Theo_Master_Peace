@@ -315,8 +315,8 @@ public:
 
 
 		struct info_camada_colision_struct {
-			int camada = 0;
-			vector<int> camada_colide = {0,};
+			int camada = 1;
+			vector<int> camada_colide = {1,};
 
 		};
 		typedef info_camada_colision_struct info_camada;

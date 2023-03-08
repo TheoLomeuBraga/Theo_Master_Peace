@@ -1,9 +1,5 @@
 require("TMP_libs.components.component_index")
 
-function get_physic_2D_json(object) 
-end
-function set_physic_2D_json(object,json) 
-end
 function add_force(object,force_x,force_y)
 end
 function get_set_physic_2D(get_set,object) 
@@ -34,7 +30,7 @@ colision_layer_info = {}
 function colision_layer_info:new()
     cli = {}
     cli.layer = 1
-    cli.layers_can_colide = {1}
+    cli.layers_can_colide = {1,}
     return cli
 end
 
@@ -52,17 +48,6 @@ function physics_2D_component:new(object_ptr)
     p.colision_layer = colision_layer_info:new()
     p.vertex = {}
     function p:get()
-        
-        --j = json.decode(get_physic_2D_json(self.object_ptr))
-        --self.scale = deepcopyjson(j.scale)
-        --self.boady_dynamic = j.boady_dynamic
-        --self.colision_shape = j.colision_shape
-        --self.rotate = j.rotate
-        --self.triger = j.triger
-        --self.friction = j.friction
-        --self.objects_coliding = deepcopyjson(j.objects_coliding)
-        --self.colision_layer = deepcopyjson(j.colision_layer)
-
         j = get_set_physic_2D(get_lua,self.object_ptr)
         self.scale = deepcopyjson(j.scale)
         self.boady_dynamic = j.boady_dynamic
@@ -76,15 +61,7 @@ function physics_2D_component:new(object_ptr)
         
     end
     function p:set()
-        --j = {}
-        --j.scale = deepcopyjson(self.scale)
-        --j.boady_dynamic = self.boady_dynamic
-        --j.colision_shape = self.colision_shape
-        --j.rotate = self.rotate
-        --j.triger = self.triger
-        --j.friction = self.friction
-        --j.colision_layer = deepcopyjson(self.colision_layer)
-        --set_physic_2D_json(self.object_ptr,json.encode(j)) 
+
         get_set_physic_2D(set_lua,deepcopyjson(self))
     end
     function p:to_move(speed_x,speed_y)

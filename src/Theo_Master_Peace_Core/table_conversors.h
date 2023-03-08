@@ -57,12 +57,12 @@ vector<float> table_vFloat (Table t){
     vector<float> v;
     int i = 1;
     while(true){
-        if(t.haveString(to_string(i))){
+        if(t.haveFloat(to_string(i))){
             v.push_back(t.getFloat(to_string(i)));
+            i++;
         }else{
             break;
         }
-        i++;
     }
     return v;
 }
@@ -80,10 +80,10 @@ vector<std::string> table_vString(Table t){
     while(true){
         if(t.haveString(to_string(i))){
             v.push_back(t.getString(to_string(i)));
+            i++;
         }else{
             break;
         }
-        i++;
     }
     return v;
 }
@@ -101,10 +101,10 @@ vector<Table> table_vTable (Table t){
     while(true){
         if(t.haveTable(to_string(i))){
             v.push_back(t.getTable(to_string(i)));
+            i++;
         }else{
             break;
         }
-        i++;
     }
     return v;
 }
@@ -212,7 +212,7 @@ info_camada table_info_camada(Table t){
     info_camada ret;
     ret.camada = t.getFloat("layer");
     vector<int> camada_colide;
-    for(int i : table_vFloat(t.getTable("layers_can_colide"))){
+    for(float i : table_vFloat(t.getTable("layers_can_colide"))){
         camada_colide.push_back(i);
     }
     ret.camada_colide = camada_colide;

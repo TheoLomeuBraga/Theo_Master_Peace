@@ -1046,65 +1046,7 @@ namespace funcoes_ponte {
 
 	
 
-	int get_physic_2D_json(lua_State* L) {
-		objeto_jogo* obj = NULL;
-		int argumentos = lua_gettop(L);
-		if (argumentos > 0) {
-			obj = string_ponteiro<objeto_jogo>(lua_tostring(L, 1));
-		}
-		json JSON = {};
-		shared_ptr<box_2D> b2d = obj->pegar_componente<box_2D>();
-		if (b2d != NULL) {
-			json scale = { {"x",b2d->escala.x},{"y",b2d->escala.y}};
-			vector<string> objetos_colidindo;
-			vector<json> camada_colisao;
-			for (shared_ptr<objeto_jogo> oc : b2d->objs_colidindo) {
-				objetos_colidindo.push_back(ponteiro_string<objeto_jogo>(oc.get()));
-			}
-
-			camada_colisao.push_back({"layer",b2d->camada.camada} );
-			camada_colisao.push_back({ "layers_can_colide",b2d->camada.camada_colide });
-			
-
-
-			JSON = { 
-				{"scale",scale},
-				{"boady_dynamic",b2d->dinamica},
-				{"colision_shape",b2d->forma},
-				{"rotate",b2d->rotacionar},
-				{"triger",b2d->gatilho},
-				{"friction",b2d->atrito},
-				{"objects_coliding",objetos_colidindo},
-				{"colision_layer",camada_colisao},
-			};
-		}
-		lua_pushstring(L, JSON.dump().c_str());
-		return 1;
-	}
-	int set_physic_2D_json(lua_State* L) {
-		int argumentos = lua_gettop(L);
-		objeto_jogo* obj = NULL;
-		if (argumentos > 0) {
-			obj = string_ponteiro<objeto_jogo>(lua_tostring(L, 1));
-		}
-		shared_ptr<box_2D> b2d = obj->pegar_componente<box_2D>();
-		if (argumentos == 2 && b2d != NULL ) {
-			json JSON = json::parse(lua_tostring(L, 2));
-			json scale = JSON["scale"].get<json>();
-			b2d->escala = vec2(scale["x"].get<float>(), scale["y"].get<float>());
-			b2d->dinamica = JSON["boady_dynamic"].get<int>();
-			b2d->forma = JSON["colision_shape"].get<int>();
-			b2d->rotacionar = JSON["rotate"].get<bool>();
-			b2d->gatilho = JSON["triger"].get<bool>();
-			b2d->atrito = JSON["friction"].get<float>();
-
-			json camada_colisao = JSON["colision_layer"].get<json>();
-			b2d->camada.camada = camada_colisao["layer"].get<int>();
-			b2d->camada.camada_colide = camada_colisao["layers_can_colide"].get<vector<int>>();
-			b2d->aplicar();
-		}
-		return 0;
-	}
+	
 
 	int get_set_physic_2D(lua_State* L){
 		if(lua_tonumber(L, 1) == get_lua){
@@ -1134,7 +1076,19 @@ namespace funcoes_ponte {
 			Table t = lua_totable(L,2);
 			objeto_jogo* obj = string_ponteiro<objeto_jogo>(t.getString("object_ptr"));
 			shared_ptr<box_2D> b2d = obj->pegar_componente<box_2D>();
-
+			b2d->escala = table_vec2(t.getTable("scale"));
+			b2d->dinamica = t.getFloat("boady_dynamic");
+			b2d->forma = t.getFloat("colision_shape");
+			b2d->rotacionar = t.getFloat("rotate");
+			b2d->gatilho = t.getFloat("triger");
+			b2d->atrito = t.getFloat("friction");
+			b2d->camada = table_info_camada(t.getTable("colision_layer"));
+			vector<vec2> vertex;
+			for(Table tvec2 : table_vTable(t.getTable("vertex"))){
+				vertex.push_back(table_vec2(tvec2));
+			}
+			b2d->vertices = vertex;
+			b2d->aplicar();
 			return 0;
 		}
 	}
@@ -1472,9 +1426,6 @@ namespace funcoes_ponte {
 		
 		
 		//physic
-		pair<string, lua_function>("get_physic_2D_json", funcoes_ponte::get_physic_2D_json),
-		pair<string, lua_function>("set_physic_2D_json", funcoes_ponte::set_physic_2D_json),
-
 		pair<string, lua_function>("get_set_physic_2D", funcoes_ponte::get_set_physic_2D),
 		pair<string, lua_function>("add_force", funcoes_ponte::add_force),
 		
@@ -1488,7 +1439,10 @@ namespace funcoes_ponte {
 		pair<string, lua_function>("get_audio", funcoes_ponte::get_audio),
 		pair<string, lua_function>("set_audio", funcoes_ponte::set_audio),
 		pair<string, lua_function>("set_lisener_object", funcoes_ponte::set_lisener_object),
-		
+
+		//mesh
+		pair<string, lua_function>("get_mesh_json", funcoes_ponte::get_mesh_json),
+		pair<string, lua_function>("set_mesh_json", funcoes_ponte::set_mesh_json),
 
 		//script
 		pair<string, lua_function>("get_script_size", get_script_size),
@@ -1500,10 +1454,7 @@ namespace funcoes_ponte {
 		pair<string, lua_function>("set_script_var", set_script_var),
 		pair<string, lua_function>("call_script_function", call_script_function),
 
-		//mesh
-
-		pair<string, lua_function>("get_mesh_json", funcoes_ponte::get_mesh_json),
-		pair<string, lua_function>("set_mesh_json", funcoes_ponte::set_mesh_json),
+		
 			
 			
 	};

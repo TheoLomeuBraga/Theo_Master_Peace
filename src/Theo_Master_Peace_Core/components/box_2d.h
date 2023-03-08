@@ -339,10 +339,10 @@ public:
 		bool ret = false;
 		b2Body* corpoA = fixtureA->GetBody();
 		b2Body* corpoB = fixtureB->GetBody();
-
 		for (int i : corpo_obj[corpoA]->pegar_componente<box_2D>()->camada.camada_colide) {
 			if(i == corpo_obj[corpoB]->pegar_componente<box_2D>()->camada.camada){
 				ret = true;
+				break;
 			}
 		}
 
