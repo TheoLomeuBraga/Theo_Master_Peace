@@ -1095,61 +1095,34 @@ namespace funcoes_ponte {
 
 	
 
-	//camera
+	//camerareturn 
 
-	int set_camera(lua_State* L) {
-		int argumentos = lua_gettop(L);
-		objeto_jogo* obj = NULL;
-		if (argumentos > 0) {
-			obj = string_ponteiro<objeto_jogo>(lua_tostring(L, 1));
-		}
-
-		if (obj->pegar_componente<camera>() != NULL) {
-			if (argumentos == 5) {
-				obj->pegar_componente<camera>()->configurar_camera(vec3(0.0f, 0.0f, 0.0f), vec3(1.0f, 0.0f, 0.0f), vec3(0.0f, 1.0f, 0.0f), (float)lua_tonumber(L, 2), (float)lua_tonumber(L, 3), (float)lua_tonumber(L, 4), (float)lua_tonumber(L, 5));
-			}
-			else if (argumentos == 6) {
-				obj->pegar_componente<camera>()->configurar_camera(vec3(0.0f, 0.0f, 0.0f), vec3(1.0f, 0.0f, 0.0f), vec3(0.0f, 1.0f, 0.0f), (float)lua_tonumber(L, 2), (float)lua_tonumber(L, 3), (float)lua_tonumber(L, 4), (float)lua_tonumber(L, 5), (float)lua_tonumber(L, 6));
-			}
-		}
-
-
-
-		return 0;
-	}
-
-	int get_camera(lua_State* L) {
-		int argumentos = lua_gettop(L);
-		int ret = 0;
-		objeto_jogo* obj = NULL;
-		if (argumentos > 0) {
-			obj = string_ponteiro<objeto_jogo>(lua_tostring(L, 1));
-		}
-		if (obj != NULL) {
-
+	int get_set_camera(lua_State* L){
+		if(lua_tonumber(L, 1) == get_lua){
+			Table ret;
+			objeto_jogo* obj = string_ponteiro<objeto_jogo>(lua_tostring(L, 2));
 			shared_ptr<camera> cam = obj->pegar_componente<camera>();
-			if (cam != NULL) {
-				if (cam->ortografica) {
-					lua_pushstring(L, "ortho");
-					lua_pushnumber(L, cam->tamanho.x);
-					lua_pushnumber(L, cam->tamanho.y);
-					ret = 5;
-				}
-				else
-				{
-					lua_pushstring(L, "perspective");
-					lua_pushnumber(L, cam->zoom);
-					lua_pushnumber(L, cam->res.x);
-					lua_pushnumber(L, cam->res.y);
-					ret = 6;
-				}
-
-				lua_pushnumber(L, cam->ncp);
-				lua_pushnumber(L, cam->fcp);
+			ret.setFloat("orthographc",cam->ortografica);
+			ret.setTable("size",vec2_table(cam->tamanho));
+			ret.setFloat("zoom",cam->zoom);
+			ret.setTable("resolution",vec2_table(cam->res));
+			ret.setFloat("fcp",cam->fcp);
+			ret.setFloat("ncp",cam->ncp);
+			lua_pushtable(L,ret);
+			return 1;
+		}else{
+			Table t = lua_totable(L,2);
+			objeto_jogo* obj = string_ponteiro<objeto_jogo>(t.getString("object_ptr"));
+			shared_ptr<camera> cam = obj->pegar_componente<camera>();
+			if(t.getFloat("orthographc")){
+				vec2 size = table_vec2( t.getTable("size"));
+				cam->configurar_camera(vec3(0.0f, 0.0f, 0.0f), vec3(1.0f, 0.0f, 0.0f), vec3(0.0f, 1.0f, 0.0f), size.x, size.y, t.getFloat("ncp"), t.getFloat("fcp"));
+			}else{
+				vec2 res = table_vec2( t.getTable("resolution"));
+				cam->configurar_camera(vec3(0.0f, 0.0f, 0.0f), vec3(1.0f, 0.0f, 0.0f), vec3(0.0f, 1.0f, 0.0f),t.getFloat("zoom"),res.x,res.y,t.getFloat("ncp"), t.getFloat("fcp"));
 			}
+			return 0;
 		}
-
-		return ret;
 	}
 
 	//audio
@@ -1200,6 +1173,23 @@ namespace funcoes_ponte {
 		lua_pushnumber(L, output.min_distance);
 		lua_pushnumber(L, output.atenuation);
 		return 6;
+	}
+
+	int get_set_audio(lua_State* L){
+		if(lua_tonumber(L, 1) == get_lua){
+			Table ret;
+			objeto_jogo* obj = string_ponteiro<objeto_jogo>(lua_tostring(L, 2));
+			shared_ptr<sfml_audio> au = obj->pegar_componente<sfml_audio>();
+			
+			lua_pushtable(L,ret);
+			return 1;
+		}else{
+			Table t = lua_totable(L,2);
+			objeto_jogo* obj = string_ponteiro<objeto_jogo>(t.getString("object_ptr"));
+			shared_ptr<sfml_audio> au = obj->pegar_componente<sfml_audio>();
+			
+			return 0;
+		}
 	}
 
 	int set_lisener_object(lua_State* L){
@@ -1432,12 +1422,13 @@ namespace funcoes_ponte {
 		
 
 		//camera
-		pair<string, lua_function>("get_camera", funcoes_ponte::get_camera),
-		pair<string, lua_function>("set_camera", funcoes_ponte::set_camera),
+		pair<string, lua_function>("get_set_camera", funcoes_ponte::get_set_camera),
 
 		//audio
 		pair<string, lua_function>("get_audio", funcoes_ponte::get_audio),
 		pair<string, lua_function>("set_audio", funcoes_ponte::set_audio),
+		pair<string, lua_function>("get_set_audio", funcoes_ponte::get_set_audio),
+
 		pair<string, lua_function>("set_lisener_object", funcoes_ponte::set_lisener_object),
 
 		//mesh
