@@ -6,8 +6,9 @@ end
 function set_mesh_json(object,json)
 end
 
-function set_mesh_json(get_set,object)
+function get_set_mesh_json(get_set,object)
 end
+
 
 mesh_location = {}
 function mesh_location:new(file,name)
@@ -23,7 +24,6 @@ function render_mesh_component:new(object_ptr)
     rm.object_ptr = object_ptr
     rm.layer = 1
     rm.use_oclusion = false
-    --rm.meshes_cout = 0
     rm.normal_direction = 0
     rm.meshes = {}
     rm.materials = {}
