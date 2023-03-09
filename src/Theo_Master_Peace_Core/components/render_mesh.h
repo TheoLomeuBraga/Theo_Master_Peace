@@ -17,10 +17,6 @@ class render_malha : public componente {
 		float porcentagem_pode_ocupar_tela = 1;
 		uint8_t camada = 0;
 		map<string,float> shape_keys_state;
-		vector<shared_ptr<malha>> minhas_malhas;
+		vector<shared_ptr<malha>> malhas;
 		vector<Material> mats;
-
-
-
-
 	};

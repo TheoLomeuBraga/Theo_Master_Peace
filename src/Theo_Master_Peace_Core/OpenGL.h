@@ -310,7 +310,7 @@ typedef struct mesh_ogl_struct mesh_ogl;
 				glUseProgram(shader_s);
 				//transform
 				vec3 tamanho = vec3(0, 0, 0);
-				for (shared_ptr<malha> m : rm->minhas_malhas) {
+				for (shared_ptr<malha> m : rm->malhas) {
 					tamanho.x = std::max<float>(tamanho.x, m->tamanho_maximo.x);
 					tamanho.y = std::max<float>(tamanho.y, m->tamanho_maximo.y);
 					tamanho.z = std::max<float>(tamanho.z, m->tamanho_maximo.z);
@@ -1136,7 +1136,7 @@ typedef struct mesh_ogl_struct mesh_ogl;
 				shared_ptr<render_malha> RM = obj->pegar_componente<render_malha>();
 				
 				
-				if (RM != NULL && RM->minhas_malhas.size() > 0 && RM->ligado && RM->minhas_malhas.size() > 0 && RM->mats.size() > 0) {
+				if (RM != NULL && RM->malhas.size() > 0 && RM->ligado && RM->malhas.size() > 0 && RM->mats.size() > 0) {
 
 					//iniciar_teste_tf_teste_cam();
 					//teste_desenhar_malha(teste_tf, cam);
@@ -1148,10 +1148,10 @@ typedef struct mesh_ogl_struct mesh_ogl;
 					criar_oclusion_querie(obj);
 
 
-					for(int i = 0; i < std::min<float>((int)RM->mats.size(),(int)RM->minhas_malhas.size()); i++){
+					for(int i = 0; i < std::min<float>((int)RM->mats.size(),(int)RM->malhas.size()); i++){
 						
 
-						shared_ptr<malha> ma = RM->minhas_malhas[i];
+						shared_ptr<malha> ma = RM->malhas[i];
 						Material mat = RM->mats[i];
 						if(malhas.find(ma.get()) == malhas.end()){
 							adicionar_malha(ma.get());
