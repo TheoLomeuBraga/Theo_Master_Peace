@@ -207,8 +207,7 @@ function create_tilemap(tilemap_path,tileset_path,image_folder)
         elseif properties.name == "3D_model" then
             mat = material:new()
             mat.shader = "resources/Shaders/mesh"
-            print("model_file",properties.model_file,"model_name",properties.model_name)
-            --create_mesh(this_sceane.objects_layesrs.background_3D,false,pos,Vec3:new(0,0,0),Vec3:new(1,1,1),3,{mat},{mesh_location:new(p.model_file,p.model_name)})
+            create_mesh(this_sceane.objects_layesrs.background_3D,false,pos,Vec3:new(0,0,0),Vec3:new(1,1,1),3,{mat},{mesh_location:new(properties.model_file,properties.model_name)})
         end
     end
 end

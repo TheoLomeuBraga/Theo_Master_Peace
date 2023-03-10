@@ -1318,16 +1318,19 @@ namespace funcoes_ponte {
 			escrever("BBBBB");
 			mesh->lado_render = t.getFloat("normal_direction");
 			escrever("CCCCC");
+			vector<Table> vt = table_vTable(t.getTable("meshes"));
 			vector<shared_ptr<malha>> meshes;
-			for(Table mesh : table_vTable(t.getTable("meshes"))){
+			for(Table mesh : vt){
 				escrever("CCCCC2");
+				cout << "file: " << mesh.getString("file") << "name: " << mesh.getString("name") << endl;
 				meshes.push_back(ManuseioDados::carregar_malha(mesh.getString("file"),mesh.getString("name")));
 				escrever("CCCCC3");
 			}
 			mesh->malhas = meshes;
 			escrever("DDDDD");
+			vt = table_vTable(t.getTable("materials"));
 			vector<Material> materials;
-			for(Table mat : table_vTable(t.getTable("materials"))){
+			for(Table mat : vt){
 				materials.push_back(table_material(mat));
 			}
 			mesh->mats = materials;

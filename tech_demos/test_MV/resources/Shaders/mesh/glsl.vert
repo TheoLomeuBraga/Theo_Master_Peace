@@ -19,7 +19,7 @@ uniform mat4 projection,vision,transform;
  
  void main(){
 
-   vert_out.POS = vec4(position,1)
+   vert_out.POS = vec4(position,1);
    vert_out.UV = uv;
    
    if(ui){
