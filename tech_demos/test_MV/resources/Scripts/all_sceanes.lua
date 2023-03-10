@@ -8,6 +8,7 @@ require("TMP_libs.short_cuts.fps_counter")
 require("TMP_libs.short_cuts.create_render_shader")
 require("TMP_libs.objects.post_processing")
 require("TMP_libs.objects.window")
+require("TMP_libs.short_cuts.create_mesh")
 
 require("TMP_libs.components.component_all")
 

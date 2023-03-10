@@ -1,5 +1,0 @@
-name
-colision_type
-visible
-interactive
-script
