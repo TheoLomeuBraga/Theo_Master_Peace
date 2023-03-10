@@ -6,7 +6,7 @@ end
 function set_mesh_json(object,json)
 end
 
-function get_set_mesh_json(get_set,object)
+function get_set_render_mesh(get_set,object)
 end
 
 
@@ -28,7 +28,8 @@ function render_mesh_component:new(object_ptr)
     rm.meshes = {}
     rm.materials = {}
     function rm:get()
-        j = json.decode(get_mesh_json(self.object_ptr));
+        --j = json.decode(get_mesh_json(self.object_ptr))
+        j = get_set_render_mesh(get_lua,self.object_ptr)
         self.layer = j.layer
         self.use_oclusion = j.use_oclusion
         self.normal_direction = j.normal_direction
@@ -40,14 +41,16 @@ function render_mesh_component:new(object_ptr)
     end
     --buscar por erros
     function rm:set()
+        --[[
         j = {}
         j.layer = self.layer
         j.use_oclusion = self.use_oclusion
         j.normal_direction = self.normal_direction
         j.meshes = deepcopyjson(self.meshes)
         j.materials = deepcopyjson(self.materials)
-        set_mesh_json(self.object_ptr,json.encode(j));
-
+        set_mesh_json(self.object_ptr,json.encode(j))
+        ]]
+        get_set_render_mesh(set_lua,deepcopyjson(self))
         
     end
     return rm

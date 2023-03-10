@@ -14,6 +14,19 @@ require("TMP_libs.components.component_all")
 
 require("TMP_libs.layers_table")
 
+function extract_object_properties(object)
+    ret = {}
+    name = ""
+    value = {}
+    if object.properties ~= nil then
+        for p_id,p in ipairs(object.properties) do
+            ret[p.name] = p.value
+        end
+        ret[name] = value
+    end
+    return ret
+end
+
 function initialize_render_settings()
     
     window.resolution.x = 720
@@ -142,6 +155,8 @@ function create_crate(pos)
     ret.components[components.render_sprite]:set()
 end
 
+
+
 function create_tilemap(tilemap_path,tileset_path,image_folder)
     tile_map_material = material:new()
     tile_map_material.shader = "resources/Shaders/sprite"
@@ -181,17 +196,19 @@ function create_tilemap(tilemap_path,tileset_path,image_folder)
     
     
     for o_id,o in ipairs(tile_map_layer_info_map["objects"].objects) do
-        if o.properties ~= nil then
-            for p_id,p in ipairs(o.properties) do
-                if p.value == "crate" then
-                    pos = Vec3:new((o.x * 2)  / tile_map_info_size.tile_x,(-o.y * 2)  / tile_map_info_size.tile_y,0)
-                    pos = Vec3:new(pos.x -1 ,pos.y + 1  ,0)
-                    create_crate(pos)
-                    
-                end
-                if p.value == "player_start" then
-                end
-            end
+        properties = extract_object_properties(o)
+        pos = Vec3:new((o.x * 2)  / tile_map_info_size.tile_x,(-o.y * 2)  / tile_map_info_size.tile_y,0)
+        pos = Vec3:new(pos.x -1 ,pos.y + 1  ,0)
+        print("pos",pos.x,pos.y,pos.z)
+        if properties.name == "player_start" then
+        elseif properties.name  == "crate" then
+            
+            create_crate(pos)
+        elseif properties.name == "3D_model" then
+            mat = material:new()
+            mat.shader = "resources/Shaders/mesh"
+            print("model_file",properties.model_file,"model_name",properties.model_name)
+            --create_mesh(this_sceane.objects_layesrs.background_3D,false,pos,Vec3:new(0,0,0),Vec3:new(1,1,1),3,{mat},{mesh_location:new(p.model_file,p.model_name)})
         end
     end
 end

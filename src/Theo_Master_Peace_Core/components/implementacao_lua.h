@@ -1283,7 +1283,8 @@ namespace funcoes_ponte {
 		return 0;
 	}
 
-	int get_set_mesh_json(lua_State* L) {
+	int get_set_render_mesh(lua_State* L) {
+		escrever("00000");
 		if(lua_tonumber(L, 1) == get_lua){
 			Table ret;
 			objeto_jogo* obj = string_ponteiro<objeto_jogo>(lua_tostring(L, 2));
@@ -1307,22 +1308,30 @@ namespace funcoes_ponte {
 			lua_pushtable(L,ret);
 			return 1;
 		}else{
+			
 			Table t = lua_totable(L,2);
 			objeto_jogo* obj = string_ponteiro<objeto_jogo>(t.getString("object_ptr"));
 			shared_ptr<render_malha> mesh = obj->pegar_componente<render_malha>();
 			mesh->camada = t.getFloat("layer");
+			escrever("AAAAA");
 			mesh->usar_oclusao = t.getFloat("use_oclusion");
+			escrever("BBBBB");
 			mesh->lado_render = t.getFloat("normal_direction");
+			escrever("CCCCC");
 			vector<shared_ptr<malha>> meshes;
-			for(Table meshe : table_vTable(t.getTable("meshes"))){
-				meshes.push_back(ManuseioDados::carregar_malha(meshe.getString("file"),meshe.getString("name")));
+			for(Table mesh : table_vTable(t.getTable("meshes"))){
+				escrever("CCCCC2");
+				meshes.push_back(ManuseioDados::carregar_malha(mesh.getString("file"),mesh.getString("name")));
+				escrever("CCCCC3");
 			}
 			mesh->malhas = meshes;
+			escrever("DDDDD");
 			vector<Material> materials;
 			for(Table mat : table_vTable(t.getTable("materials"))){
 				materials.push_back(table_material(mat));
 			}
 			mesh->mats = materials;
+			escrever("EEEEE");
 			return 0;
 		}
 	}
@@ -1443,7 +1452,7 @@ namespace funcoes_ponte {
 		//mesh
 		pair<string, lua_function>("get_mesh_json", funcoes_ponte::get_mesh_json),
 		pair<string, lua_function>("set_mesh_json", funcoes_ponte::set_mesh_json),
-		pair<string, lua_function>("get_set_mesh_json", funcoes_ponte::get_set_mesh_json),
+		pair<string, lua_function>("get_set_render_mesh", funcoes_ponte::get_set_render_mesh),
 		
 
 		//script
