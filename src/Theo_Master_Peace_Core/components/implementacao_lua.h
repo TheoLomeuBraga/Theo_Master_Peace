@@ -1291,11 +1291,14 @@ namespace funcoes_ponte {
 			ret.setFloat("layer",mesh->camada);
 			ret.setFloat("use_oclusion",mesh->usar_oclusao);
 			ret.setFloat("normal_direction",mesh->lado_render);
-			vector<string> meshes;
+			vector<Table> meshes;
 			for(shared_ptr<malha> m : mesh->malhas){
-				meshes.push_back(m->arquivo_origem);
+				Table mesh_info;
+				mesh_info.setString("file",m->arquivo_origem);
+				mesh_info.setString("name",m->nome);
+				meshes.push_back(mesh_info);
 			}
-			ret.setTable("meshes",vString_table(meshes));
+			ret.setTable("meshes",vTable_table(meshes));
 			vector<Table> materials;
 			for(Material m : mesh->mats){
 				materials.push_back(material_table(m));
@@ -1307,7 +1310,19 @@ namespace funcoes_ponte {
 			Table t = lua_totable(L,2);
 			objeto_jogo* obj = string_ponteiro<objeto_jogo>(t.getString("object_ptr"));
 			shared_ptr<render_malha> mesh = obj->pegar_componente<render_malha>();
-			
+			mesh->camada = t.getFloat("layer");
+			mesh->usar_oclusao = t.getFloat("use_oclusion");
+			mesh->lado_render = t.getFloat("normal_direction");
+			vector<shared_ptr<malha>> meshes;
+			for(Table meshe : table_vTable(t.getTable("meshes"))){
+				meshes.push_back(ManuseioDados::carregar_malha(meshe.getString("file"),meshe.getString("name")));
+			}
+			mesh->malhas = meshes;
+			vector<Material> materials;
+			for(Table mat : table_vTable(t.getTable("materials"))){
+				materials.push_back(table_material(mat));
+			}
+			mesh->mats = materials;
 			return 0;
 		}
 	}
