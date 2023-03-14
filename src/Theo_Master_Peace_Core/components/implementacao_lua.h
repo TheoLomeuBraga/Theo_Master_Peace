@@ -267,6 +267,8 @@ int set_script_var(lua_State* L);
 
 int call_script_function(lua_State* L);
 
+int get_lua_component(lua_State* L);
+
 
 
 
@@ -1399,7 +1401,7 @@ namespace funcoes_ponte {
 		pair<string, lua_function>("set_script_var", set_script_var),
 		pair<string, lua_function>("call_script_function", call_script_function),
 
-		
+		pair<string, lua_function>("get_lua_component", get_lua_component),
 			
 			
 	};
@@ -1996,4 +1998,15 @@ int call_script_function(lua_State* L) {
 		cl->chamar_funcao(lua_tostring(L, 2), lua_tostring(L, 3));
 	}
 	return 0;
+}
+
+int get_lua_component(lua_State* L){
+	Table ret;
+	objeto_jogo* obj = string_ponteiro<objeto_jogo>(lua_tostring(L, 2));
+	shared_ptr<componente_lua> cl = obj->pegar_componente<componente_lua>();
+	if(cl != NULL){
+		ret.setTable("scripts", vString_table(cl->pegar_lista_scripts()));
+	}
+	lua_pushtable(L,ret);
+	return 1;
 }

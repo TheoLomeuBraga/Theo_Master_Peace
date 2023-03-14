@@ -19,12 +19,16 @@ end
 function call_script_function(object,script_name,function_name)
 end
 
+function get_lua_component()
+end
+
 lua_scripts_component = {}
 function lua_scripts_component:new(object_ptr)
     ls = {}
     ls.object_ptr = object_ptr
     ls.scripts = {}
     function ls:get()
+        --[[
         self.scripts = nil
         self.scripts = {}
         i = 0
@@ -32,6 +36,8 @@ function lua_scripts_component:new(object_ptr)
             self.scripts[i] = get_script_name(self.object_ptr,i)
             i = i + 1
         end
+        ]]
+        self.scripts = deepcopyjson(get_lua_component(self.object_ptr).scripts)
     end
     function ls:set()
     end
